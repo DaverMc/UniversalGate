@@ -4,6 +4,14 @@ import de.daver.unigate.lang.LanguageKey;
 
 public enum LanguageKeys implements LanguageKey {
 
+    BORDER_UNLIMITED("border.unlimited"),
+    BORDER_DEFAULT("border.default"),
+    NIGHTVISION_ADD("nightvision.add"),
+    NIGHTVISION_REMOVED("nightvision.removed"),
+    ITEM_LIGHT_WATER_TITLE("item.light.water.title", "level"),
+    ITEM_LIGHT_AIR_TITLE("item.light.air.title", "level"),
+    GUI_CREATIVE_ITEMS_TITLE("gui.creativeitems.title"),
+    DEBUG_STICK_GIVEN("debugstick.given"),
     DIMENSION_INVITE_RECEIVE("dimension.invite.receive", "sender", "dimension"),
     DIMENSION_INVITE_ACCEPT("dimension.invite.accept", "dimension"),
     DIMENSION_INVITE_SEND("dimension.invite.send", "target", "dimension"),
