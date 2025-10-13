@@ -47,10 +47,10 @@ class CreateSubCommand extends LiteralNode {
         dimension.create();
         context.plugin().dimensionCache().insert(dimension);
 
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.DIMENSION_CREATE_SUCCESS)
-                .parsed("dimension", dimension.name())
-                .parsed("type", dimension.type())
-                .build().send(context.sender());
+        context.plugin().languageManager()
+                .message(LanguageKeys.DIMENSION_CREATE_SUCCESS)
+                .argument("dimension", dimension.name())
+                .argument("type", dimension.type())
+                .send(context.sender());
     }
 }

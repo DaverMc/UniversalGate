@@ -7,6 +7,7 @@ import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.core.lang.LanguageKey;
 import de.daver.unigate.core.lang.LanguageManager;
+import de.daver.unigate.core.lang.neu.LanguagesCache;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.data.type.Light;
@@ -25,15 +26,16 @@ public class CreativeItemsCommand extends LiteralNode {
 
     private void openCreativeItemsInv(PluginContext context) throws CommandSyntaxException {
         var player = context.senderPlayer();
-        var title = context.plugin().languageManager().message()
-                .key(LanguageKeys.GUI_CREATIVE_ITEMS_TITLE)
-                .build().get(player);
+        var title = context.plugin().languageManager()
+                .message(LanguageKeys.GUI_CREATIVE_ITEMS_TITLE)
+                .get(player);
+
         var inventory = Bukkit.createInventory(player, 6 * 9, title);
         fillInventory(inventory, context.plugin().languageManager(), player);
         player.openInventory(inventory);
     }
 
-    private void fillInventory(Inventory inventory, LanguageManager languageManager, Player player) {
+    private void fillInventory(Inventory inventory, LanguagesCache languageManager, Player player) {
         var barrier = new ItemStack(Material.BARRIER);
         var structureBlock = new ItemStack(Material.STRUCTURE_BLOCK);
         var structureVoid = new ItemStack(Material.STRUCTURE_VOID);
@@ -52,7 +54,7 @@ public class CreativeItemsCommand extends LiteralNode {
         inventory.addItem(commandBlock, commandBlockMinecart, chainedCommandBlock, repeatingCommandBlock);
     }
 
-    private void fillLightBlocks(Inventory inventory, LanguageManager languageManager, Player player) {
+    private void fillLightBlocks(Inventory inventory, LanguagesCache languageManager, Player player) {
         for(int i = 0; i < 15; i++) {
             var lightBlockAir = createLightItem(i + 1, false, languageManager, player);
             var lightBlockWater = createLightItem(i + 1, true, languageManager, player);
@@ -60,7 +62,7 @@ public class CreativeItemsCommand extends LiteralNode {
         }
     }
 
-    private ItemStack createLightItem(int level, boolean waterlogged, LanguageManager languageManager, Player player) {
+    private ItemStack createLightItem(int level, boolean waterlogged, LanguagesCache languageManager, Player player) {
         var item = new ItemStack(Material.LIGHT);
         BlockDataMeta meta = (BlockDataMeta) item.getItemMeta();
         Light light = (Light) Material.LIGHT.createBlockData();
@@ -70,9 +72,9 @@ public class CreativeItemsCommand extends LiteralNode {
         LanguageKey languageKey;
         if(waterlogged) languageKey = LanguageKeys.ITEM_LIGHT_WATER_TITLE;
         else languageKey = LanguageKeys.ITEM_LIGHT_AIR_TITLE;
-        meta.displayName(languageManager.message().key(languageKey)
-                .parsed("level", level)
-                .build().get(player));
+        meta.displayName(languageManager.message(languageKey)
+                .argument("level", level)
+                .get(player));
 
         item.setItemMeta(meta);
         return item;

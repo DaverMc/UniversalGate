@@ -15,17 +15,18 @@ public class ListSubCommand extends LiteralNode {
 
     public void listDimensions(PluginContext context) throws Exception {
         var dimensions = context.plugin().dimensionCache().getAll();
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.DIMENSION_LIST_HEADER)
-                .parsed("dimensions", dimensions.size())
-                .build().send(context.sender());
+        context.plugin().languageManager()
+                .message(LanguageKeys.DIMENSION_LIST_HEADER)
+                .argument("dimensions", dimensions.size())
+                .send(context.sender());
         if(dimensions.isEmpty()) return;
+
         for (var dimension : dimensions) {
-            context.plugin().languageManager().message()
-                    .key(LanguageKeys.DIMENSION_LIST_ENTRY)
-                    .parsed("dimension", dimension.name())
-                    .parsed("state", dimension.meta().state())
-                    .build().send(context.sender());
+            context.plugin().languageManager()
+                    .message(LanguageKeys.DIMENSION_LIST_ENTRY)
+                    .argument("dimension", dimension.name())
+                    .argument("state", dimension.meta().state())
+                    .send(context.sender());
         }
     }
 

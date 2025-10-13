@@ -144,9 +144,7 @@ public class Message {
      * @return
      */
     public Component get(CommandSender sender) {
-        Locale locale = null;
-        if(sender instanceof Player player) locale = player.locale();
-        return get(locale);
+        return get(getLocale(sender));
     }
 
     /**
@@ -162,11 +160,23 @@ public class Message {
      * @param locale
      * @return
      */
-    public List<Component> getLines(Locale locale) {
+    private List<Component> deserializeLines(Locale locale) {
         String raw = raw(locale);
         return Arrays.stream(raw.split("<br>"))
                 .map(line -> deserialize(locale, line))
                 .toList();
+    }
+
+    public List<Component> getLines(Locale locale) {
+        return deserializeLines(locale);
+    }
+
+    public List<Component> getLines(CommandSender sender) {
+        return deserializeLines(getLocale(sender));
+    }
+
+    public List<Component> getLines() {
+        return deserializeLines(null);
     }
 
     /**
@@ -199,6 +209,10 @@ public class Message {
 
     private TagResolver parseTagResolver() {
         return TagResolver.resolver(resolvers.toArray(new TagResolver[0]));
+    }
+
+    private Locale getLocale(CommandSender sender) {
+        return sender instanceof Player player ? player.locale() : null;
     }
 
 }

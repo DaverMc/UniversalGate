@@ -19,10 +19,10 @@ public class JoinListener extends PluginEventListener {
         plugin().tabList().update(player);
 
         for(var online : plugin().getServer().getOnlinePlayers()) {
-            plugin().languageManager().message()
-                    .key(LanguageKeys.EVENT_JOIN)
-                    .parsed("player", player.getName())
-                    .build().send(online);
+            plugin().languageManager()
+                    .message(LanguageKeys.EVENT_JOIN)
+                    .argument("player", player.getName())
+                    .send(online);
             plugin().tabList().sendHeaderFooter(online);
         }
 

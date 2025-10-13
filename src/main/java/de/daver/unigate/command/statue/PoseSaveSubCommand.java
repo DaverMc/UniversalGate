@@ -20,10 +20,10 @@ public class PoseSaveSubCommand extends LiteralNode {
         var path = context.plugin().poseDir().resolve(name + ".pose");
         statue.parseToFile(path);
 
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.STATUE_POSE_SAVE_SUCCESS)
-                .parsed("name", name)
-                .build().send(context.sender());
+        context.plugin().languageManager()
+                .message(LanguageKeys.STATUE_POSE_SAVE_SUCCESS)
+                .argument("name", name)
+                .send(context.sender());
     }
 
 

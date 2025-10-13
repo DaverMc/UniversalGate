@@ -30,17 +30,17 @@ public class StopLagSubCommand extends LiteralNode {
 
     private void enableStopLag(PluginContext context, Dimension dimension, Player player) {
         dimension.meta().setStopLag(true);
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.DIMENSION_STOPLAG_ENABLE)
-                .parsed("dimension", dimension.name())
-                .build().send(player);
+        context.plugin().languageManager()
+                .message(LanguageKeys.DIMENSION_STOPLAG_ENABLE)
+                .argument("dimension", dimension.name())
+                .send(player);
     }
 
     private void disableStopLag(PluginContext context, Dimension dimension, Player player) {
         dimension.meta().setStopLag(false);
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.DIMENSION_STOPLAG_DISABLE)
-                .parsed("dimension", dimension.name())
-                .build().send(player);
+        context.plugin().languageManager()
+                .message(LanguageKeys.DIMENSION_STOPLAG_DISABLE)
+                .argument("dimension", dimension.name())
+                .send(player);
     }
 }

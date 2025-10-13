@@ -60,9 +60,9 @@ public class StatueInteractListener extends PluginEventListener {
     public void deselect(Player player) {
         var statue = statues.remove(player.getUniqueId());
         if(statue == null) return;
-        plugin().languageManager().message()
-                .key(LanguageKeys.STATUE_DESELECTED)
-                .build().send(player);
+        plugin().languageManager()
+                .message(LanguageKeys.STATUE_DESELECTED)
+                .send(player);
         giveBackInventory(player);
         statue.getEntity().removePotionEffect(PotionEffectType.GLOWING);
     }
@@ -71,9 +71,9 @@ public class StatueInteractListener extends PluginEventListener {
         if(statues.containsKey(player.getUniqueId())) return;
         Statue statue = new Statue(armorStand);
         statues.put(player.getUniqueId(), statue);
-        plugin().languageManager().message()
-                .key(LanguageKeys.STATUE_SELECTED)
-                .build().send(player);
+        plugin().languageManager()
+                .message(LanguageKeys.STATUE_SELECTED)
+                .send(player);
         giveTools(player);
         statue.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, Integer.MAX_VALUE, 0, false, false));
     }
@@ -106,18 +106,17 @@ public class StatueInteractListener extends PluginEventListener {
         inventory.setItem(7, inventoryItem);
         inventory.setItem(8, settingsItem);
 
-        plugin().languageManager().message()
-                .key(LanguageKeys.STATUE_TOOLS_RECEIVED)
-                .build().send(player);
+        plugin().languageManager()
+                .message(LanguageKeys.STATUE_TOOLS_RECEIVED)
+                .send(player);
     }
 
-    private ItemStack editorItem(Player player, Material material, LanguageKey name, String actionId) {
+    private ItemStack editorItem(Player player, Material material, LanguageKey nameKey, String actionId) {
         return new ItemWrapper(plugin(), material)
-                .displayName(plugin -> plugin.languageManager().message()
-                        .key(name).build().get(player))
-                .lore(plugin -> plugin.languageManager().message()
-                        .key(LanguageKeys.ITEM_STATUE_EDITOR_LORE_X)
-                        .build().lines(player))
+                .displayName(plugin -> plugin.languageManager().message(nameKey).get(player))
+                .lore(plugin -> plugin.languageManager()
+                        .message(LanguageKeys.ITEM_STATUE_EDITOR_LORE_X)
+                        .getLines(player))
                 .mode(AXIS_X)
                 .clickAction(actionId)
                 .itemStack();
@@ -125,18 +124,18 @@ public class StatueInteractListener extends PluginEventListener {
 
     private ItemStack settingsItem(Player player) {
         return new ItemWrapper(plugin(), Material.NETHER_STAR)
-                .displayName(plugin -> plugin.languageManager().message()
-                        .key(LanguageKeys.ITEM_STATUE_SETTINGS_TITLE)
-                        .build().get(player))
+                .displayName(plugin -> plugin.languageManager()
+                        .message(LanguageKeys.ITEM_STATUE_SETTINGS_TITLE)
+                        .get(player))
                 .clickAction(SettingsItemListener.ID)
                 .itemStack();
     }
 
     private ItemStack inventoryItem( Player player) {
         return new ItemWrapper(plugin(), Material.BROWN_BUNDLE)
-                .displayName(plugin -> plugin.languageManager().message()
-                        .key(LanguageKeys.ITEM_STATUE_INVENTORY_TITLE)
-                        .build().get(player))
+                .displayName(plugin -> plugin.languageManager()
+                        .message(LanguageKeys.ITEM_STATUE_INVENTORY_TITLE)
+                        .get(player))
                 .clickAction(InventoryItemListener.ID)
                 .itemStack();
     }

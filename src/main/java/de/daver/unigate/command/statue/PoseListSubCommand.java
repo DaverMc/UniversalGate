@@ -17,8 +17,10 @@ public class PoseListSubCommand extends LiteralNode {
 
     void listFileNames(PluginContext context) {
         try {
-            context.plugin().languageManager().message()
-                    .key(LanguageKeys.STATUE_POSE_LIST_HEADER).build().send(context.sender());
+            context.plugin().languageManager()
+                    .message(LanguageKeys.STATUE_POSE_LIST_HEADER)
+                    .send(context.sender());
+
             Files.list(context.plugin().poseDir())
                     .forEach(path -> listPoseFile(path, context));
         } catch (IOException e) {
@@ -28,9 +30,9 @@ public class PoseListSubCommand extends LiteralNode {
 
     void listPoseFile(Path path, PluginContext context) {
         var name = path.getFileName().toString().replace(".pose", "");
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.STATUE_POSE_LIST_ENTRY)
-                .parsed("pose", name)
-                .build().send(context.sender());
+        context.plugin().languageManager()
+                .message(LanguageKeys.STATUE_POSE_LIST_ENTRY)
+                .argument("pose", name)
+                .send(context.sender());
     }
 }

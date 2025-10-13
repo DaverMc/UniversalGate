@@ -35,9 +35,9 @@ public class SpeedCommand extends LiteralNode {
         if(player.isFlying()) player.setFlySpeed(speedF);
         else player.setWalkSpeed(speedF);
 
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.SPEED_SET)
-                .parsed("speed", speed)
-                .build().send(context.sender());
+        context.plugin().languageManager()
+                .message(LanguageKeys.SPEED_SET)
+                .argument("speed", speed)
+                .send(context.sender());
     }
 }

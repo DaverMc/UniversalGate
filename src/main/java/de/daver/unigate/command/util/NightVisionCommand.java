@@ -6,6 +6,7 @@ import de.daver.unigate.Permissions;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.core.lang.LanguageManager;
+import de.daver.unigate.core.lang.neu.LanguagesCache;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -27,16 +28,14 @@ public class NightVisionCommand extends LiteralNode {
         }
     }
 
-    private void addNightVision(Player player, LanguageManager languageManager) {
+    private void addNightVision(Player player, LanguagesCache languageManager) {
         var effect = new PotionEffect(PotionEffectType.NIGHT_VISION, PotionEffect.INFINITE_DURATION, 0, false, false);
         player.addPotionEffect(effect);
-        languageManager.message().key(LanguageKeys.NIGHTVISION_ADD)
-                .build().send(player);
+        languageManager.message(LanguageKeys.NIGHTVISION_ADD).send(player);
     }
 
-    private void removeNightVision(Player player, LanguageManager languageManager) {
+    private void removeNightVision(Player player, LanguagesCache languageManager) {
         player.removePotionEffect(PotionEffectType.NIGHT_VISION);
-        languageManager.message().key(LanguageKeys.NIGHTVISION_REMOVED)
-                .build().send(player);
+        languageManager.message(LanguageKeys.NIGHTVISION_REMOVED).send(player);
     }
 }

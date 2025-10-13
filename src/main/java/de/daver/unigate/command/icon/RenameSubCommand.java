@@ -30,9 +30,9 @@ public class RenameSubCommand extends LiteralNode {
         var itemWrapper = new ItemWrapper(context.plugin(), itemStack);
         itemWrapper.displayName(nameComponent);
 
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.COMMAND_ITEM_RENAME)
+        context.plugin().languageManager()
+                .message(LanguageKeys.COMMAND_ITEM_RENAME)
                 .component("name", nameComponent)
-                .build().send(player);
+                .send(player);
     }
 }

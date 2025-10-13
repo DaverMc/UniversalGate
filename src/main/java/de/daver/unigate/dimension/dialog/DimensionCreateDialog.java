@@ -2,6 +2,7 @@ package de.daver.unigate.dimension.dialog;
 
 import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.core.lang.LanguageManager;
+import de.daver.unigate.core.lang.neu.LanguagesCache;
 import io.papermc.paper.dialog.Dialog;
 import io.papermc.paper.registry.data.dialog.ActionButton;
 import io.papermc.paper.registry.data.dialog.DialogBase;
@@ -19,32 +20,32 @@ public class DimensionCreateDialog {
                 .type(dialogType(plugin.languageManager(), player)));
     }
 
-    private static DialogBase dialogBase(LanguageManager lang, Player player) {
-        var title = lang.message().key(null).build().get(player);
+    private static DialogBase dialogBase(LanguagesCache lang, Player player) {
+        var title = lang.message(null).get(player);
         var inputs = List.of(nameInput(lang, player));
         return DialogBase.builder(title)
                 .inputs(inputs)
                 .build();
     }
 
-    private static DialogType dialogType(LanguageManager lang, Player player) {
+    private static DialogType dialogType(LanguagesCache lang, Player player) {
         return DialogType.confirmation(confirmButton(lang, player), discardButton(lang, player));
     }
 
-    private static DialogInput nameInput(LanguageManager lang, Player player) {
-        var label = lang.message().key(null).build().get(player);
+    private static DialogInput nameInput(LanguagesCache lang, Player player) {
+        var label = lang.message(null).get(player);
         return DialogInput.text("name", label)
                 .build();
     }
 
-    private static ActionButton confirmButton(LanguageManager lang, Player player) {
-        var label = lang.message().key(null).build().get(player);
+    private static ActionButton confirmButton(LanguagesCache lang, Player player) {
+        var label = lang.message(null).get(player);
 
         return ActionButton.create(label, label, 100, null);
     }
 
-    private static ActionButton discardButton(LanguageManager lang, Player player) {
-        var label = lang.message().key(null).build().get(player);
+    private static ActionButton discardButton(LanguagesCache lang, Player player) {
+        var label = lang.message(null).get(player);
 
         return ActionButton.create(label, label, 100, null);
     }

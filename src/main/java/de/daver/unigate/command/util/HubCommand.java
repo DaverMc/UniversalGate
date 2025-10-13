@@ -17,9 +17,9 @@ public class HubCommand extends LiteralNode {
     void teleportToHub(PluginContext context) throws CommandSyntaxException {
         teleport(context.senderPlayer());
 
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.COMMAND_HUB)
-                .build().send(context.senderPlayer());
+        context.plugin().languageManager()
+                .message(LanguageKeys.COMMAND_HUB)
+                .send(context.senderPlayer());
     }
 
     public static void teleport(Player player) {

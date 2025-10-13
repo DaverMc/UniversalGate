@@ -42,11 +42,11 @@ public class RenameSubCommand extends LiteralNode {
 
         FileUtils.deleteDir(sourcePath);
 
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.DIMENSION_RENAMED)
-                .parsed("old", oldName)
-                .parsed("new", newName)
-                .build().send(context.sender());
+        context.plugin().languageManager()
+                .message(LanguageKeys.DIMENSION_RENAMED)
+                .argument("old", oldName)
+                .argument("new", newName)
+                .send(context.sender());
     }
 
 }

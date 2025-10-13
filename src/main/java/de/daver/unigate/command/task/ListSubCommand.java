@@ -34,15 +34,15 @@ public class ListSubCommand extends LiteralNode {
 
     private void listTasks(Collection<Task> tasks, PluginContext context) throws CommandSyntaxException {
         var player = context.senderPlayer();
-        context.plugin().languageManager().message().key(LanguageKeys.TASK_LIST_HEADER)
-                .parsed("tasks", tasks.size())
-                .build().send(player);
+        context.plugin().languageManager().message(LanguageKeys.TASK_LIST_HEADER)
+                .argument("tasks", tasks.size())
+                .send(player);
 
         for(var task : tasks) {
-            context.plugin().languageManager().message().key(LanguageKeys.TASK_LIST_ENTRY)
-                    .parsed("name", task.id())
-                    .parsed("action", task.type().name())
-                    .build().send(player);
+            context.plugin().languageManager().message(LanguageKeys.TASK_LIST_ENTRY)
+                    .argument("name", task.id())
+                    .argument("type", task.type().name())
+                    .send(player);
         }
     }
 }

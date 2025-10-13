@@ -34,11 +34,12 @@ public class LiteralNode extends CommandNodeWrapper<LiteralArgumentBuilder<Comma
 
     protected void showSubCommands(PluginContext context) throws CommandSyntaxException {
 
-        context.plugin().languageManager().message().key(LanguageKeys.COMMAND_SUB_COMMAND_HEADER)
-                .parsed("name", name)
-                .parsed("description", description)
+        context.plugin().languageManager()
+                .message(LanguageKeys.COMMAND_SUB_COMMAND_HEADER)
+                .argument("name", name)
+                .argument("description", description)
                 .component("arguments", createArgumentComponent())
-                .build().send(context.sender());
+                .send(context.sender());
 
         children.forEach(child -> {
             if (child instanceof LiteralNode subCommand) sendSubCommandLine(subCommand, context);
@@ -46,10 +47,11 @@ public class LiteralNode extends CommandNodeWrapper<LiteralArgumentBuilder<Comma
     }
 
     private void sendSubCommandLine(LiteralNode subCommand, PluginContext context) {
-        context.plugin().languageManager().message().key(LanguageKeys.COMMAND_SUB_COMMAND_ENTRY)
-                .parsed("name", subCommand.name)
-                .parsed("description", subCommand.description)
-                .build().send(context.sender());
+        context.plugin().languageManager()
+                .message(LanguageKeys.COMMAND_SUB_COMMAND_ENTRY)
+                .argument("name", subCommand.name)
+                .argument("description", subCommand.description)
+                .send(context.sender());
     }
 
     protected Component createArgumentComponent() {

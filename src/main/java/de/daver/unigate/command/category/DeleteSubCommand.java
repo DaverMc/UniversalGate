@@ -19,9 +19,9 @@ public class DeleteSubCommand extends LiteralNode {
     public void deleteCategory(PluginContext context) throws Exception {
         var category = context.getArgument("category", Category.class);
         context.plugin().categoryCache().delete(category);
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.CATEGORY_DELETE_SUCCESS)
-                .parsed("category", category.name())
-                .build().send(context.sender());
+        context.plugin().languageManager()
+                .message(LanguageKeys.CATEGORY_DELETE_SUCCESS)
+                .argument("category", category.name())
+                .send(context.sender());
     }
 }

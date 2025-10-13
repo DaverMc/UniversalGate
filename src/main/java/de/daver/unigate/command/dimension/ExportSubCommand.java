@@ -43,10 +43,10 @@ public class ExportSubCommand extends LiteralNode {
         FileUtils.compressDirectory(source, target, allowedEntries);
 
 
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.DIMENSION_EXPORT_SUCCESS)
-                .parsed("dimension", dimension.name())
-                .parsed("tag", tag)
-                .build().send(context.sender());
+        context.plugin().languageManager()
+                .message(LanguageKeys.DIMENSION_EXPORT_SUCCESS)
+                .argument("dimension", dimension.name())
+                .argument("tag", tag)
+                .send(context.sender());
     }
 }

@@ -59,11 +59,11 @@ public class ImportSubCommand extends LiteralNode {
         var dimension = new Dimension(category, theme, type ,creator.getUniqueId());
         dimension.create();
         context.plugin().dimensionCache().insert(dimension);
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.DIMENSION_IMPORT_SUCCESS)
-                .parsed("dimension", dimension.name())
-                .parsed("source", file)
-                .build().send(context.sender());
+        context.plugin().languageManager()
+                .message(LanguageKeys.DIMENSION_IMPORT_SUCCESS)
+                .argument("dimension", dimension.name())
+                .argument("source", file)
+                .send(context.sender());
     }
 
 

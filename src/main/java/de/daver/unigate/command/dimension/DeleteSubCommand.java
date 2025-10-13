@@ -22,19 +22,19 @@ public class DeleteSubCommand extends LiteralNode {
 
 
     private void sendConfirmMessage(PluginContext context) {
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.DIMENSION_DELETE_CONFIRM)
-                .parsed("dimension", context.getArgument("dimension", Dimension.class).name())
-                .build().send(context.sender());
+        context.plugin().languageManager()
+                .message(LanguageKeys.DIMENSION_DELETE_CONFIRM)
+                .argument("dimension", context.getArgument("dimension", Dimension.class).name())
+                .send(context.sender());
     }
 
     private void deleteDimension(PluginContext context) throws Exception {
         Dimension dimension = context.getArgument("dimension", Dimension.class);
         dimension.delete();
         UniversalGatePlugin.getInstance().dimensionCache().delete(dimension);
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.DIMENSION_DELETE_SUCCESS)
-                .parsed("dimension", dimension.name())
-                .build().send(context.sender());
+        context.plugin().languageManager()
+                .message(LanguageKeys.DIMENSION_DELETE_SUCCESS)
+                .argument("dimension", dimension.name())
+                .send(context.sender());
     }
 }

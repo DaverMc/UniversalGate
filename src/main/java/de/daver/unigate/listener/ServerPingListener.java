@@ -42,7 +42,7 @@ public class ServerPingListener extends PluginEventListener {
         var legacySerializer = LegacyComponentSerializer.legacySection();
 
         languageManager.message(LanguageKeys.SERVER_LISTED_PLAYERS)
-                .getLines(null)
+                .getLines()
                 .stream()
                 .map(legacySerializer::serialize)
                 .map(serialized -> new PaperServerListPingEvent.ListedPlayerInfo(serialized, UUID.randomUUID()))

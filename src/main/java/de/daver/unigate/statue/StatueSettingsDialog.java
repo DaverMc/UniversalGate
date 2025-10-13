@@ -3,6 +3,7 @@ package de.daver.unigate.statue;
 import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.core.lang.LanguageManager;
+import de.daver.unigate.core.lang.neu.LanguagesCache;
 import io.papermc.paper.dialog.Dialog;
 import io.papermc.paper.registry.data.dialog.ActionButton;
 import io.papermc.paper.registry.data.dialog.DialogBase;
@@ -27,8 +28,8 @@ public class StatueSettingsDialog {
                 .type(dialogType));
     }
 
-    private static DialogBase dialogBase(LanguageManager lang, Player player, StatueAttributes attributes) {
-        var dialogTitle = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_TITLE).build().get(player);
+    private static DialogBase dialogBase(LanguagesCache lang, Player player, StatueAttributes attributes) {
+        var dialogTitle = lang.message(LanguageKeys.DIALOG_STATUE_SETTINGS_TITLE).get(player);
         var inputs = List.of(
                 displayNameTextField(lang, player, attributes),
                 smallCheckBox(lang, player, attributes),
@@ -42,8 +43,8 @@ public class StatueSettingsDialog {
                 .build();
     }
 
-    private static DialogInput displayNameTextField(LanguageManager lang, Player player, StatueAttributes attributes) {
-        var displayNameTitle = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_DISPLAY_NAME).build().get(player);
+    private static DialogInput displayNameTextField(LanguagesCache lang, Player player, StatueAttributes attributes) {
+        var displayNameTitle = lang.message(LanguageKeys.DIALOG_STATUE_SETTINGS_DISPLAY_NAME).get(player);
         return DialogInput.text("display_name", displayNameTitle)
                 .initial(attributes.nameString())
                 .width(200)
@@ -51,39 +52,39 @@ public class StatueSettingsDialog {
                 .build();
     }
 
-    private static DialogInput smallCheckBox(LanguageManager lang, Player player, StatueAttributes attributes) {
-        var smallTitle = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_SMALL).build().get(player);
+    private static DialogInput smallCheckBox(LanguagesCache lang, Player player, StatueAttributes attributes) {
+        var smallTitle = lang.message(LanguageKeys.DIALOG_STATUE_SETTINGS_SMALL).get(player);
         return DialogInput.bool("small", smallTitle)
                 .initial(attributes.isSmall()).build();
     }
 
-    private static DialogInput basePlateCheckBox(LanguageManager lang, Player player, StatueAttributes attributes) {
-        var basePlateTitle = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_BASE).build().get(player);
+    private static DialogInput basePlateCheckBox(LanguagesCache lang, Player player, StatueAttributes attributes) {
+        var basePlateTitle = lang.message(LanguageKeys.DIALOG_STATUE_SETTINGS_BASE).get(player);
         return DialogInput.bool("base", basePlateTitle)
                 .initial(attributes.hasBasePlate()).build();
     }
 
-    private static DialogInput visibilityCheckBox(LanguageManager lang, Player player, StatueAttributes attributes) {
-        var visibleTitle = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_VISIBLE).build().get(player);
+    private static DialogInput visibilityCheckBox(LanguagesCache lang, Player player, StatueAttributes attributes) {
+        var visibleTitle = lang.message(LanguageKeys.DIALOG_STATUE_SETTINGS_VISIBLE).get(player);
         return DialogInput.bool("visible", visibleTitle)
                 .initial(attributes.isVisible()).build();
     }
 
-    private static DialogInput armsCheckBox(LanguageManager lang, Player player, StatueAttributes attributes) {
-        var armsTitle = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_ARMS).build().get(player);
+    private static DialogInput armsCheckBox(LanguagesCache lang, Player player, StatueAttributes attributes) {
+        var armsTitle = lang.message(LanguageKeys.DIALOG_STATUE_SETTINGS_ARMS).get(player);
         return DialogInput.bool("arms", armsTitle)
                 .initial(attributes.hasArms()).build();
     }
 
-    private static DialogInput glowingCheckBox(LanguageManager lang, Player player, StatueAttributes attributes) {
-        var glowingTitle = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_GLOWING).build().get(player);
+    private static DialogInput glowingCheckBox(LanguagesCache lang, Player player, StatueAttributes attributes) {
+        var glowingTitle = lang.message(LanguageKeys.DIALOG_STATUE_SETTINGS_GLOWING).get(player);
         return DialogInput.bool("glowing", glowingTitle)
                 .initial(attributes.isGlowing()).build();
     }
 
-    private static ActionButton confirmChangesButton(LanguageManager lang, Player player) {
-        var confirmTitle = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_CONFIRM).build().get(player);
-        var confirmHover = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_CONFIRM_HOVER).build().get(player);
+    private static ActionButton confirmChangesButton(LanguagesCache lang, Player player) {
+        var confirmTitle = lang.message(LanguageKeys.DIALOG_STATUE_SETTINGS_CONFIRM).get(player);
+        var confirmHover = lang.message(LanguageKeys.DIALOG_STATUE_SETTINGS_CONFIRM_HOVER).get(player);
         return ActionButton.create(
                 confirmTitle,
                 confirmHover,
@@ -91,9 +92,9 @@ public class StatueSettingsDialog {
                 DialogAction.customClick(Key.key("unigate:statue_settings_confirmed"), null));
     }
 
-    private static ActionButton deleteStatueButton(LanguageManager lang, Player player) {
-        var deleteTitle = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_DELETE).build().get(player);
-        var deletedHover = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_DELETE_HOVER).build().get(player);
+    private static ActionButton deleteStatueButton(LanguagesCache lang, Player player) {
+        var deleteTitle = lang.message(LanguageKeys.DIALOG_STATUE_SETTINGS_DELETE).get(player);
+        var deletedHover = lang.message(LanguageKeys.DIALOG_STATUE_SETTINGS_DELETE_HOVER).get(player);
         return ActionButton.create(
                 deleteTitle,
                 deletedHover,

@@ -36,10 +36,10 @@ public class AllowedRemoveSubCommand extends LiteralNode {
                 throw new IllegalAccessException("Player is not allowed in this dimension");
 
         context.plugin().dimensionCache().disallow(dimension, uuid);
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.DIMENSION_ALLOWED_REMOVE_SUCCESS)
-                .parsed("player", PlayerFetcher.getPlayerName(uuid))
-                .parsed("dimension", dimension.name())
-                .build().send(context.sender());
+        context.plugin().languageManager()
+                .message(LanguageKeys.DIMENSION_ALLOWED_REMOVE_SUCCESS)
+                .argument("player", PlayerFetcher.getPlayerName(uuid))
+                .argument("dimension", dimension.name())
+                .send(context.sender());
     }
 }

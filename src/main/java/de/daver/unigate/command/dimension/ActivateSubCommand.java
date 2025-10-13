@@ -26,9 +26,9 @@ public class ActivateSubCommand extends LiteralNode {
         if(!context.plugin().dimensionCache().activate(name))
             throw new IllegalArgumentException("Dimension not found " + name);
 
-        context.plugin().languageManager().message()
-                .parsed("dimension", name)
-                .key(LanguageKeys.DIMENSION_ACTIVATE)
-                .build().send(context.sender());
+        context.plugin().languageManager()
+                .message(LanguageKeys.DIMENSION_ACTIVATE)
+                .argument("dimension", name)
+                .send(context.sender());
     }
 }

@@ -15,17 +15,17 @@ public class ListSubCommand extends LiteralNode {
 
     public void listCategories(PluginContext context) {
         var categories = context.plugin().categoryCache().getAll();
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.CATEGORY_LIST_HEADER)
-                .parsed("categories", categories.size())
-                .build().send(context.sender());
+        context.plugin().languageManager()
+                .message(LanguageKeys.CATEGORY_LIST_HEADER)
+                .argument("categories", categories.size())
+                .send(context.sender());
 
         if(categories.isEmpty()) return;
 
-        for (var category : categories) context.plugin().languageManager().message()
-                .key(LanguageKeys.CATEGORY_LIST_ENTRY)
-                .parsed("category", category.name())
-                .parsed("name", category.id())
-                .build().send(context.sender());
+        for (var category : categories) context.plugin().languageManager()
+                .message(LanguageKeys.CATEGORY_LIST_ENTRY)
+                .argument("category", category.name())
+                .argument("name", category.id())
+                .send(context.sender());
     }
 }

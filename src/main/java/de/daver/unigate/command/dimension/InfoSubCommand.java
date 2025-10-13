@@ -46,17 +46,17 @@ public class InfoSubCommand extends LiteralNode {
         String categoryPrefix = dimension.category();
         var category = context.plugin().categoryCache().getByPrefix(categoryPrefix);
 
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.DIMENSION_INFO)
-                .parsed("id", dimension.id())
-                .parsed("name", dimension.name())
-                .parsed("category", category.name())
-                .parsed("type", dimension.type().name())
-                .parsed("state", dimension.meta().state().name())
-                .parsed("stoplag", dimension.meta().stopLag() ? "true" : "false")
-                .parsed("created", creationDate)
-                .parsed("creator", creator)
-                .parsed("last_loaded", lastLoaded)
-                .build().send(context.sender());
+        context.plugin().languageManager()
+                .message(LanguageKeys.DIMENSION_INFO)
+                .argument("id", dimension.id())
+                .argument("name", dimension.name())
+                .argument("category", category.name())
+                .argument("type", dimension.type().name())
+                .argument("state", dimension.meta().state().name())
+                .argument("stoplag", dimension.meta().stopLag() ? "true" : "false")
+                .argument("created", creationDate)
+                .argument("creator", creator)
+                .argument("last_loaded", lastLoaded)
+                .send(context.sender());
     }
 }

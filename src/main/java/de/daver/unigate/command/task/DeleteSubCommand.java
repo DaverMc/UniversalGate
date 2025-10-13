@@ -23,10 +23,10 @@ public class DeleteSubCommand extends LiteralNode {
     void sendConfirm(PluginContext context) throws CommandSyntaxException {
         var player = context.senderPlayer();
         var task = context.getArgument("task", Task.class);
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.TASK_DELETE_CONFIRM)
-                .parsed("task", task.id())
-                .build().send(player);
+        context.plugin().languageManager()
+                .message(LanguageKeys.TASK_DELETE_CONFIRM)
+                .argument("task", task.id())
+                .send(player);
     }
 
     void deleteConfirmed(PluginContext context) throws Exception {
@@ -35,9 +35,9 @@ public class DeleteSubCommand extends LiteralNode {
 
         context.plugin().taskCache().delete(task);
 
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.TASK_DELETE_SUCCESS)
-                .parsed("task", task.id())
-                .build().send(player);
+        context.plugin().languageManager()
+                .message(LanguageKeys.TASK_DELETE_SUCCESS)
+                .argument("task", task.id())
+                .send(player);
     }
 }

@@ -27,10 +27,10 @@ public class CreateChangeSubCommand extends LiteralNode {
         Task task = new Task(id, player.getUniqueId(), TaskType.CHANGE, TaskState.OPEN, dimension.id());
 
         context.plugin().taskCache().put(task);
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.TASK_CREATE_CHANGE)
-                .parsed("task", id)
-                .parsed("dimension", dimension.name())
-                .build().send(player);
+        context.plugin().languageManager()
+                .message(LanguageKeys.TASK_CREATE_CHANGE)
+                .argument("task", id)
+                .argument("dimension", dimension.name())
+                .send(player);
     }
 }

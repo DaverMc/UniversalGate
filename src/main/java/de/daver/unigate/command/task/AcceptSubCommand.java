@@ -32,10 +32,10 @@ public class AcceptSubCommand extends LiteralNode {
 
         context.plugin().taskCache().update(task);
 
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.TASK_ACCEPT_SUCCESS)
-                .parsed("task", task.id())
-                .build().send(player);
+        context.plugin().languageManager()
+                .message(LanguageKeys.TASK_ACCEPT_SUCCESS)
+                .argument("task", task.id())
+                .send(player);
 
     }
 }

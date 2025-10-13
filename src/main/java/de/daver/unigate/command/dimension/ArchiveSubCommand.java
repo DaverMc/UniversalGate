@@ -18,9 +18,9 @@ public class ArchiveSubCommand extends LiteralNode {
         var dimension = context.getArgument("dimension", Dimension.class);
 
         context.plugin().dimensionCache().archive(dimension);
-        context.plugin().languageManager().message()
-                .parsed("dimension", dimension.name())
-                .key(LanguageKeys.DIMENSION_ARCHIVE)
-                .build().send(context.sender());
+        context.plugin().languageManager()
+                .message(LanguageKeys.DIMENSION_ARCHIVE)
+                .argument("dimension", dimension.name())
+                .send(context.sender());
     }
 }

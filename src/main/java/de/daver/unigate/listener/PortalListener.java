@@ -13,8 +13,9 @@ public class PortalListener extends PluginEventListener {
 
     @EventHandler
     public void onPortal(PlayerPortalEvent event) {
-        plugin().languageManager().message().key(LanguageKeys.EVENT_PORTAL_DISABLED)
-                        .build().send(event.getPlayer());
+        plugin().languageManager()
+                .message(LanguageKeys.EVENT_PORTAL_DISABLED)
+                .send(event.getPlayer());
         event.setCancelled(true);
     }
 }

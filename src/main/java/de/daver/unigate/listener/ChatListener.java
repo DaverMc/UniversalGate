@@ -14,13 +14,13 @@ public class ChatListener extends PluginEventListener {
 
     @EventHandler
     public void onChat(AsyncChatEvent event) {
-        event.renderer((player, sourceDisplayName, message, viewer) -> plugin().languageManager().message()
-                    .key(LanguageKeys.CHAT_FORMAT)
-                    .parsed("prefix", PlayerFetcher.getPrefix(player))
-                    .parsed("player", player.getName())
-                    .parsed("suffix", PlayerFetcher.getSuffix(player))
-                    .component("message", message)
-                    .build().get(player));
+        event.renderer((player, sourceDisplayName, message, viewer) -> plugin().languageManager()
+                .message(LanguageKeys.CHAT_FORMAT)
+                .argument("prefix", PlayerFetcher.getPrefix(player))
+                .argument("player", player.getName())
+                .argument("suffix", PlayerFetcher.getSuffix(player))
+                .component("message", message)
+                .get(player));
     }
 
 }

@@ -30,11 +30,11 @@ public class ExecutorSetSubCommand extends LiteralNode {
 
         context.plugin().taskCache().update(task);
 
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.TASK_EXECUTOR_SET)
-                .parsed("task", task.id())
-                .parsed("executor", PlayerFetcher.getPlayerName(target))
-                .build().send(player);
+        context.plugin().languageManager()
+                .message(LanguageKeys.TASK_EXECUTOR_SET)
+                .argument("task", task.id())
+                .argument("executor", PlayerFetcher.getPlayerName(target))
+                .send(player);
 
     }
 }

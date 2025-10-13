@@ -37,17 +37,17 @@ public class InviteSubCommand extends LiteralNode {
             throw new IllegalStateException("Dimension " + dimensionId + " is not active!");
 
         WorldSwitchListener.INVITES.put(target, dimension.name());
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.DIMENSION_INVITE_SEND)
-                .parsed("target", PlayerFetcher.getPlayerName(target))
-                .parsed("dimension", dimension.name())
-                .build().send(context.sender());
+        context.plugin().languageManager()
+                .message(LanguageKeys.DIMENSION_INVITE_SEND)
+                .argument("target", PlayerFetcher.getPlayerName(target))
+                .argument("dimension", dimension.name())
+                .send(context.sender());
 
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.DIMENSION_INVITE_RECEIVE)
-                .parsed("sender", player.getName())
-                .parsed("dimension", dimension.name())
-                .build().send(targetPlayer);
+        context.plugin().languageManager()
+                .message(LanguageKeys.DIMENSION_INVITE_RECEIVE)
+                .argument("sender", player.getName())
+                .argument("dimension", dimension.name())
+                .send(targetPlayer);
     }
 
 

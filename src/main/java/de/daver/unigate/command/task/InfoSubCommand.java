@@ -21,15 +21,15 @@ public class InfoSubCommand extends LiteralNode {
     void showInfo(PluginContext context) throws CommandSyntaxException {
         var task = context.getArgument("task", Task.class);
         var executor = task.executor() == null ? "" : PlayerFetcher.getPlayerName(task.executor());
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.TASK_INFO)
-                .parsed("name", task.id())
-                .parsed("dimension", task.dimensionId())
-                .parsed("action", task.type().name())
-                .parsed("state", task.state().name())
-                .parsed("creator", PlayerFetcher.getPlayerName(task.creator()))
-                .parsed("executor", executor)
-                .parsed("description", task.description())
-                .build().send(context.senderPlayer());
+        context.plugin().languageManager()
+                .message(LanguageKeys.TASK_INFO)
+                .argument("name", task.id())
+                .argument("dimension", task.dimensionId())
+                .argument("type", task.type().name())
+                .argument("state", task.state().name())
+                .argument("creator", PlayerFetcher.getPlayerName(task.creator()))
+                .argument("executor", executor)
+                .argument("description", task.description())
+                .send(context.senderPlayer());
     }
 }

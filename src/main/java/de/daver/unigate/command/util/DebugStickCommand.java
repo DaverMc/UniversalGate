@@ -21,8 +21,8 @@ public class DebugStickCommand extends LiteralNode {
         ItemStack debugStick = new ItemStack(Material.DEBUG_STICK);
         player.give(debugStick);
 
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.DEBUG_STICK_GIVEN)
-                .build().send(player);
+        context.plugin().languageManager()
+                .message(LanguageKeys.DEBUG_STICK_GIVEN)
+                .send(player);
     }
 }

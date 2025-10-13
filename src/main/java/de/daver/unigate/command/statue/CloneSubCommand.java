@@ -21,15 +21,17 @@ public class CloneSubCommand extends LiteralNode {
         var player = context.senderPlayer();
         var statue = context.plugin().statueInteractListener().get(player);
         if(statue == null) {
-            context.plugin().languageManager().message().key(LanguageKeys.STATUE_NOT_SELECTED)
-                    .build().send(player);
+            context.plugin().languageManager()
+                    .message(LanguageKeys.STATUE_NOT_SELECTED)
+                    .send(player);
             return;
         }
 
         copyStatue(statue, player.getLocation());
 
-        context.plugin().languageManager().message().key(LanguageKeys.STATUE_CLONED)
-                .build().send(player);
+        context.plugin().languageManager()
+                .message(LanguageKeys.STATUE_CLONED)
+                .send(player);
     }
 
     private void copyStatue(Statue statue, Location location) {

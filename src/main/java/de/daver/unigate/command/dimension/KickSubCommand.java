@@ -29,10 +29,10 @@ public class KickSubCommand extends LiteralNode {
 
         var dimension = context.plugin().dimensionCache().getActive(player.getWorld().getName());
         dimension.kick(targetPlayer);
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.DIMENSION_KICK_SUCCESS)
-                .parsed("target", PlayerFetcher.getPlayerName(target))
-                .parsed("dimension", dimension.name())
-                .build().send(context.sender());
+        context.plugin().languageManager()
+                .message(LanguageKeys.DIMENSION_KICK_SUCCESS)
+                .argument("target", PlayerFetcher.getPlayerName(target))
+                .argument("dimension", dimension.name())
+                .send(context.sender());
     }
 }

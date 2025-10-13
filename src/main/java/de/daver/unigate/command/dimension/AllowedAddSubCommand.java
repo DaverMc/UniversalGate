@@ -25,10 +25,10 @@ public class AllowedAddSubCommand extends LiteralNode {
         if(dimension.meta().allowedPlayers().contains(uuid))
             throw new IllegalArgumentException("Already contains player " + PlayerFetcher.getPlayerName(uuid));
         context.plugin().dimensionCache().allow(dimension, uuid);
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.DIMENSION_ALLOWED_ADD_SUCCESS)
-                .parsed("player", PlayerFetcher.getPlayerName(uuid))
-                .parsed("dimension", dimension.name())
-                .build().send(context.sender());
+        context.plugin().languageManager()
+                .message(LanguageKeys.DIMENSION_ALLOWED_ADD_SUCCESS)
+                .argument("player", PlayerFetcher.getPlayerName(uuid))
+                .argument("dimension", dimension.name())
+                .send(context.sender());
     }
 }

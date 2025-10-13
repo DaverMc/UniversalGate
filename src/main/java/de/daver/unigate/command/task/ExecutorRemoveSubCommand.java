@@ -29,11 +29,11 @@ public class ExecutorRemoveSubCommand extends LiteralNode {
 
         context.plugin().taskCache().update(task);
 
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.TASK_EXECUTOR_REMOVE)
-                .parsed("task", task.id())
-                .parsed("executor", PlayerFetcher.getPlayerName(executor))
-                .build().send(player);
+        context.plugin().languageManager()
+                .message(LanguageKeys.TASK_EXECUTOR_REMOVE)
+                .argument("task", task.id())
+                .argument("executor", PlayerFetcher.getPlayerName(executor))
+                .send(player);
 
     }
 }

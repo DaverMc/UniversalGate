@@ -17,9 +17,9 @@ public class StatueInventoryGui implements InventoryHolder {
 
     public StatueInventoryGui(UniversalGatePlugin plugin, Player player, Statue statue) {
         this.plugin = plugin;
-        var title = plugin.languageManager().message()
-                .key(LanguageKeys.GUI_STATUE_INVENTORY)
-                .build().get(player);
+        var title = plugin.languageManager()
+                .message(LanguageKeys.GUI_STATUE_INVENTORY)
+                .get(player);
 
         this.inv = Bukkit.createInventory(this, 2 * 9, title);
         fillItems(statue);

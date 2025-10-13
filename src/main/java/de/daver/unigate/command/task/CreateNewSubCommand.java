@@ -36,10 +36,10 @@ public class CreateNewSubCommand extends LiteralNode {
         Task task = new Task(id, player.getUniqueId(), TaskType.CREATE, TaskState.OPEN, dimension.id());
         context.plugin().taskCache().put(task);
 
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.TASK_CREATE_NEW)
-                .parsed("task", id)
-                .parsed("dimension", dimension.name())
-                .build().send(player);
+        context.plugin().languageManager()
+                .message(LanguageKeys.TASK_CREATE_NEW)
+                .argument("task", id)
+                .argument("dimension", dimension.name())
+                .send(player);
     }
 }

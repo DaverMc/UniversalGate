@@ -27,10 +27,10 @@ public class PoseLoadSubCommand extends LiteralNode {
         var name = path.getFileName().toString().replace(".pose", "");
 
         statue.loadFromFile(path);
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.STATUE_POSE_LOAD_SUCCESS)
-                .parsed("pose", name)
-                .build().send(context.sender());
+        context.plugin().languageManager()
+                .message(LanguageKeys.STATUE_POSE_LOAD_SUCCESS)
+                .argument("pose", name)
+                .send(context.sender());
     }
 
     Stream<String> listFileNames(PluginContext context) {

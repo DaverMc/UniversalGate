@@ -26,10 +26,10 @@ public class DescriptionSubCommand extends LiteralNode {
 
         context.plugin().taskCache().update(task);
 
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.TASK_DESCRIPTION_SET)
-                .parsed("task", task.id())
-                .parsed("description", description)
-                .build().send(player);
+        context.plugin().languageManager()
+                .message(LanguageKeys.TASK_DESCRIPTION_SET)
+                .argument("task", task.id())
+                .argument("description", description)
+                .send(player);
     }
 }

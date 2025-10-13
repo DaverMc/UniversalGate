@@ -36,10 +36,10 @@ public class PositionItemListener extends StatuePoseEditorListener {
             default -> "";
         };
 
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.STATUE_TOOLS_CHANGE_AXIS)
-                .parsed("axis", axis)
-                .build().send(context.player());
+        context.plugin().languageManager()
+                .message(LanguageKeys.STATUE_TOOLS_CHANGE_AXIS)
+                .argument("axis", axis)
+                .send(context.player());
 
         var key = switch (mode) {
             case AXIS_X -> LanguageKeys.ITEM_STATUE_EDITOR_LORE_X;
@@ -49,9 +49,7 @@ public class PositionItemListener extends StatuePoseEditorListener {
             default -> throw new IllegalStateException("Unexpected value: " + mode);
         };
 
-        item.lore(context.plugin().languageManager().message()
-                .key(key)
-                .build().lines(context.player()));
+        item.lore(context.plugin().languageManager().message(key).getLines(context.player()));
     }
 
     private void moveYaw(Statue statue, int amount) {

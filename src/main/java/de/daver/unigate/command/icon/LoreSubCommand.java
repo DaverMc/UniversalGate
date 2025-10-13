@@ -49,9 +49,9 @@ public class LoreSubCommand extends LiteralNode {
 
         itemWrapper.lore(index, lineComponent);
 
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.COMMAND_ITEM_LORE)
-                .build().send(player);
+        context.plugin().languageManager()
+                .message(LanguageKeys.COMMAND_ITEM_LORE)
+                .send(player);
     }
 
     private void deleteLoreLine(PluginContext context) throws CommandSyntaxException {
@@ -62,8 +62,8 @@ public class LoreSubCommand extends LiteralNode {
         var index = context.getArgument("index", Integer.class);
         itemWrapper.lore(index, null);
 
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.COMMAND_ITEM_LORE)
-                .build().send(player);
+        context.plugin().languageManager()
+                .message(LanguageKeys.COMMAND_ITEM_LORE)
+                .send(player);
     }
 }

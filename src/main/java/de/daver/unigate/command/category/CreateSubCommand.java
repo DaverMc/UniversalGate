@@ -32,9 +32,9 @@ class CreateSubCommand extends LiteralNode {
         if(category != null) throw new IllegalArgumentException("Category already exists " + name);
         category = new Category(UUID.randomUUID(), name, prefix);
         plugin.categoryCache().put(category);
-        plugin.languageManager().message()
-                .key(LanguageKeys.CATEGORY_CREATE_SUCCESS)
-                .parsed("category", category.name())
-                .build().send(context.sender());
+        plugin.languageManager()
+                .message(LanguageKeys.CATEGORY_CREATE_SUCCESS)
+                .argument("category", category.name())
+                .send(context.sender());
     }
 }
