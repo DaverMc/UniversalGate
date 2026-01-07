@@ -1,0 +1,11 @@
+[versions]
+paper = "1.21.1-R0.1-SNAPSHOT"
+shadow = "8.1.1"
+paper-yml = "0.8.0"
+
+[plugins]
+shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
+paper-yml = { id = "de.eldoria.plugin-yml.paper", version.ref = "paper-yml" }
+
+[libraries]
+paper-api = { group = "io.papermc.paper", name = "paper-api", version.ref = "paper" }
