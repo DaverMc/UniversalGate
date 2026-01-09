@@ -1,3 +1,5 @@
+import org.gradle.api.internal.file.copy.CopyAction
+
 plugins {
     kotlin("jvm") version "1.9.22"
     alias(libs.plugins.shadow)
@@ -18,12 +20,19 @@ dependencies {
     compileOnly(libs.paper.api)
     implementation(libs.hikariCP)
 
-
-
     implementation(kotlin("stdlib"))
 }
 
 paper {
     apiVersion = "1.21"
     main = "de.daver.unigate.UniversalGatePlugin"
+}
+
+tasks.register<Copy>("copyJar") {
+    dependsOn(tasks.shadowJar)
+
+    from(layout.buildDirectory.dir("libs"))
+
+    into(layout.projectDirectory.dir("debug_server/plugins"))
+    include("*-all.jar")
 }

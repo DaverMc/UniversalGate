@@ -21,6 +21,7 @@ public class DeleteSubCommand extends LiteralNode {
     public void deleteCategory(PluginContext context) throws CommandSyntaxException {
         var category = context.getArgument("category", Category.class);
         try {
+            System.out.println(category);
             CategoryCache.delete(category);
             context.sender().sendMessage("Deleted category " + category.id());
         } catch (SQLException exception) {

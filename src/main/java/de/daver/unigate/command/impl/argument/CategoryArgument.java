@@ -15,6 +15,7 @@ public class CategoryArgument extends ArgumentNode<Category> {
         super(name, new Type());
     }
 
+
     public static class Type extends StringArgumentType<Category> {
 
         protected Type() {
@@ -24,7 +25,7 @@ public class CategoryArgument extends ArgumentNode<Category> {
         @Override
         protected Category deserialize(String value) throws CommandSyntaxException {
             try {
-                if (CategoryCache.exists(value)) throw CommandExceptions.VALUE_NOT_EXISTING.create(value);
+                if (!CategoryCache.exists(value)) throw CommandExceptions.VALUE_NOT_EXISTING.create(value);
                 return CategoryCache.get(value);
             } catch (SQLException exception) {
                 throw CommandExceptions.DATABASE_EXCEPTION.create();

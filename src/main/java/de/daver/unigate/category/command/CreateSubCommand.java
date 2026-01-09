@@ -28,7 +28,7 @@ class CreateSubCommand extends LiteralNode {
         try {
             if (CategoryCache.exists(name)) throw CommandExceptions.VALUE_EXISTING.create(name);
             CategoryCache.put(new Category(name));
-            context.sender().sendMessage("Created category " + name);
+            context.sender().sendMessage("Created category: " + name);
         } catch (SQLException exception) {
             LOGGER.error("Failed to create category", exception);
             throw CommandExceptions.DATABASE_EXCEPTION.create();
