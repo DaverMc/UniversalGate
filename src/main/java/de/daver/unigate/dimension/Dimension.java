@@ -2,30 +2,42 @@ package de.daver.unigate.dimension;
 
 import de.daver.unigate.Permissions;
 import de.daver.unigate.category.Category;
-import de.daver.unigate.dimension.level.LevelData;
+import de.daver.unigate.dimension.gen.LevelData;
 import de.daver.unigate.util.FileUtils;
+import net.querz.nbt.io.NBTUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.SQLException;
+import java.util.Random;
 import java.util.UUID;
 
-public record Dimension(String id, DimensionType type, DimensionStats stats, DimensionMeta meta) {
+public record Dimension(String id, DimensionType type, DimensionStats stats, DimensionMeta meta, long seed) {
 
     private static final String SEPARATOR = "-";
 
     public static Dimension create(Category category, String theme, DimensionType type, UUID creator) throws SQLException, IOException {
         var id = buildId(category, theme);
         var stats = new DimensionStats(creator);
-        var dimension = new Dimension(id, type, stats, new DimensionMeta());
-        LevelData.createLevelDataFile(dimension.id, type);
+        var dimension = new Dimension(id, type, stats, new DimensionMeta(), new Random().nextLong());
+        LevelData.create(dimension);
+        createLevelDatFile(dimension);
         Bukkit.createWorld(new WorldCreator(dimension.id));
-        DimensionCache.put(dimension);
+        DimensionCache.insert(dimension);
         return dimension;
+    }
+
+    private static void createLevelDatFile(Dimension dimension) throws IOException {
+        File worldFolder = new File(Bukkit.getWorldContainer(), dimension.id());
+        Files.createDirectories(worldFolder.toPath());
+        var dimensionTag = LevelData.create(dimension);
+        File levelDatFile =  new File(worldFolder, "level.dat");
+        NBTUtil.write(dimensionTag, levelDatFile, true);
     }
 
     public static String buildId(Category category, String theme) {

@@ -21,7 +21,7 @@ repositories {
 dependencies {
     compileOnly(libs.paper.api)
     compileOnly(libs.luckPerms)
-    compileOnly(libs.nbt)
+    implementation(libs.nbt)
     implementation(libs.hikariCP)
 
 }

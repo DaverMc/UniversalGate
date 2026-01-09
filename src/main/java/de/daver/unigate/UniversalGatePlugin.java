@@ -12,11 +12,16 @@ import de.daver.unigate.lang.LanguageManagerImpl;
 import de.daver.unigate.lang.Message;
 import de.daver.unigate.listener.ChatListener;
 import de.daver.unigate.listener.JoinListener;
+import de.daver.unigate.listener.StopLagListener;
 import de.daver.unigate.listener.WorldChangeListener;
 import de.daver.unigate.sql.SQLExecutor;
 import de.daver.unigate.util.PlayerFetcher;
 import de.daver.unigate.util.TabList;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.event.node.NodeAddEvent;
+import net.luckperms.api.node.types.InheritanceNode;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.intellij.lang.annotations.Language;
 import org.slf4j.Logger;
@@ -74,6 +79,7 @@ public class UniversalGatePlugin extends JavaPlugin {
         manager.registerEvents(new WorldChangeListener(), this);
         manager.registerEvents(new JoinListener(), this);
         manager.registerEvents(new ChatListener(), this);
+        manager.registerEvents(new StopLagListener(), this);
     }
 
     private void initializeSQL() {
@@ -125,6 +131,18 @@ public class UniversalGatePlugin extends JavaPlugin {
                 .parsed("prefix", PlayerFetcher.getPrefix(user))
                 .parsed("suffix", PlayerFetcher.getSuffix(user))
                 .build().get(user));
+        onLuckPermsGroupChange();
+    }
+
+    public static void onLuckPermsGroupChange() {
+        var eventBus = LuckPermsProvider.get().getEventBus();
+        eventBus.subscribe(NodeAddEvent.class, event -> {
+            if(!event.isUser()) return;
+            var node = event.getNode();
+            if(!(node instanceof InheritanceNode)) return;
+            Bukkit.getOnlinePlayers().forEach(UniversalGatePlugin.TAB_LIST::update);
+        });
+
     }
 
     public static SQLExecutor getSQLExecutor() {

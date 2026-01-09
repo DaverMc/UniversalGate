@@ -47,10 +47,10 @@ class CreateSubCommand extends LiteralNode {
     private void createDimension(Category category, String theme, DimensionType type, PluginContext context) throws CommandSyntaxException {
         try {
             var id = Dimension.buildId(category, theme);
-            if(DimensionCache.get(id) != null) throw CommandExceptions.VALUE_EXISTING.create(id);
+            if(DimensionCache.select(id) != null) throw CommandExceptions.VALUE_EXISTING.create(id);
             Dimension dimension = Dimension.create(category, theme, type, context.executor().getUniqueId());
             Message.builder().key(LanguageKeys.DIMENSION_CREATE_SUCCESS)
-                    .parsed("id",dimension.id())
+                    .parsed("dimension",dimension.id())
                     .parsed("type", dimension.type())
                     .build().send(context.sender());
 

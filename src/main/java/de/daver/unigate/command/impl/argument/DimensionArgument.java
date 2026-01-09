@@ -1,11 +1,7 @@
 package de.daver.unigate.command.impl.argument;
 
-import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import de.daver.unigate.category.Category;
-import de.daver.unigate.category.CategoryCache;
 import de.daver.unigate.command.ArgumentNode;
-import de.daver.unigate.command.ArgumentSerializer;
 import de.daver.unigate.command.CommandExceptions;
 import de.daver.unigate.command.SuggestionProvider;
 import de.daver.unigate.command.argument.StringArgumentType;
@@ -22,13 +18,7 @@ public class DimensionArgument extends ArgumentNode<Dimension> {
     }
 
     private SuggestionProvider<Dimension> suggestions() {
-        return context -> {
-            try {
-                return DimensionCache.getAll().stream();
-            } catch (SQLException exception) {
-                throw CommandExceptions.DATABASE_EXCEPTION.create();
-            }
-        };
+        return context -> DimensionCache.getActive().stream();
     }
 
     public static class Type extends StringArgumentType<Dimension> {
@@ -40,7 +30,7 @@ public class DimensionArgument extends ArgumentNode<Dimension> {
         @Override
         protected Dimension deserialize(String value) throws CommandSyntaxException {
             try {
-                var dimension = DimensionCache.get(value);
+                var dimension = DimensionCache.select(value);
                 if(dimension != null) return dimension;
                 throw CommandExceptions.VALUE_NOT_EXISTING.create(value);
             } catch (SQLException exception) {

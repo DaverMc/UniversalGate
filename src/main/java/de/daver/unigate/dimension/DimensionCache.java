@@ -16,9 +16,15 @@ public class DimensionCache {
     public static void initialize() throws SQLException {
         UniversalGatePlugin.getSQLExecutor().execute(Queries.CREATE_DIMENSIONS_TABLE);
         UniversalGatePlugin.getSQLExecutor().execute(Queries.CREATE_ALLOWED_TABLE);
+
     }
 
-    public static void put(Dimension dimension) throws SQLException {
+    private static void loadActive() throws SQLException {
+        var dimensions = UniversalGatePlugin.getSQLExecutor().query(Queries.SELECT_ACTIVE, ResultTransformer.asList(Queries.DIMENSION_TRANSFORMER));
+        dimensions.forEach(dimension -> CACHE.put(dimension.id(), dimension));
+    }
+
+    public static void insert(Dimension dimension) throws SQLException {
         UniversalGatePlugin.getSQLExecutor().execute(Queries.INSERT_DIMENSION,
                 dimension.id(),
                 dimension.type(),
@@ -38,20 +44,28 @@ public class DimensionCache {
         CACHE.remove(dimension.id());
     }
 
-    public static Dimension get(String id) throws SQLException {
-        Dimension dim = CACHE.get(id);
-        if(dim != null) return dim;
-        dim = UniversalGatePlugin.getSQLExecutor().query(Queries.SELECT_DIMENSION, Queries.DIMENSION_TRANSFORMER, id);
-        if(dim == null) return null;
-        CACHE.put(id, dim);
+    public static Dimension select(String id) throws SQLException {
+        var dimension = getActive(id);
+        if(dimension != null) return dimension;
+        dimension = UniversalGatePlugin.getSQLExecutor().query(Queries.SELECT_DIMENSION, Queries.DIMENSION_TRANSFORMER, id);
+        if(dimension == null) return null;
+        CACHE.put(id, dimension);
         var allowedUsers = UniversalGatePlugin.getSQLExecutor().query(Queries.SELECT_ALLOWED,
                 ResultTransformer.asSet(set -> UUID.fromString(set.getString("player"))), id);
-        dim.meta().allowedPlayers().addAll(allowedUsers);
-        return dim;
+        dimension.meta().allowedPlayers().addAll(allowedUsers);
+        return dimension;
+    }
+
+    public static Dimension getActive(String id) {
+        return CACHE.get(id);
     }
 
     public static List<Dimension> getAll() throws SQLException {
         return UniversalGatePlugin.getSQLExecutor().query(Queries.SELECT_ALL, ResultTransformer.asList(Queries.DIMENSION_TRANSFORMER));
+    }
+
+    public static Collection<Dimension> getActive() {
+        return CACHE.values();
     }
 
     public static void allow(Dimension dimension, UUID player) throws SQLException {
@@ -67,6 +81,8 @@ public class DimensionCache {
     private interface Queries {
 
         SQLStatement SELECT_ALL = new SQLStatement("SELECT * FROM dimensions");
+
+        SQLStatement SELECT_ACTIVE = new SQLStatement("SELECT * FROM dimensions WHERE state = 'ACTIVE'");
 
         SQLStatement CREATE_DIMENSIONS_TABLE = new SQLStatement("""
             CREATE TABLE IF NOT EXISTS dimensions (
@@ -103,7 +119,7 @@ public class DimensionCache {
             DimensionStats stats = new DimensionStats(UUID.fromString(uuidS), creationTime);
 
             DimensionMeta meta = new DimensionMeta(state, stopLagI == 1, lastLoaded);
-            return new Dimension(id, type, stats, meta);
+            return new Dimension(id, type, stats, meta, new Random().nextLong());
        };
 
         SQLStatement INSERT_DIMENSION = new SQLStatement("""
