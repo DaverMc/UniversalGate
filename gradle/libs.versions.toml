@@ -3,6 +3,8 @@ paper = "1.21.11-R0.1-SNAPSHOT"
 shadow = "8.1.1"
 paper-yml = "0.8.0"
 hikari  = "7.0.2"
+nbt = "6.1"
+luckperms = "5.5"
 
 [plugins]
 shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
@@ -11,3 +13,5 @@ paper-yml = { id = "de.eldoria.plugin-yml.paper", version.ref = "paper-yml" }
 [libraries]
 paper-api = { group = "io.papermc.paper", name = "paper-api", version.ref = "paper" }
 hikariCP = {group = "com.zaxxer", name = "HikariCP", version.ref = "hikari"}
+nbt = {group = "com.github.Querz", name = "NBT", version.ref = "nbt"}
+luckPerms = {group = "net.luckperms", name = "api", version.ref = "luckperms"}

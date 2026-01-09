@@ -1,12 +1,14 @@
 package de.daver.unigate.command.impl.dimension;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.command.CommandExceptions;
 import de.daver.unigate.command.LiteralNode;
 import de.daver.unigate.command.PluginContext;
 import de.daver.unigate.command.argument.ConfirmArgument;
 import de.daver.unigate.command.impl.argument.DimensionArgument;
 import de.daver.unigate.dimension.Dimension;
+import de.daver.unigate.lang.Message;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -22,14 +24,19 @@ public class DeleteSubCommand extends LiteralNode {
     }
 
 
-    private void sendConfirmMessage(PluginContext wrapper) {
-        wrapper.sender().sendMessage("Please use /dimension delete [id] confirm");
+    private void sendConfirmMessage(PluginContext context) {
+        Message.builder().key(LanguageKeys.DIMENSION_DELETE_CONFIRM)
+                .parsed("dimension", context.getArgument("dimension", Dimension.class).id())
+                .build().send(context.sender());
     }
 
     private void deleteDimension(PluginContext context) throws CommandSyntaxException {
         Dimension dimension = context.getArgument("dimension", Dimension.class);
         try {
             dimension.delete();
+            Message.builder().key(LanguageKeys.DIMENSION_DELETE_SUCCESS)
+                    .parsed("dimension", dimension.id())
+                    .build().send(context.sender());
         } catch (IOException e) {
             throw CommandExceptions.FILE_EXCEPTION.create();
         } catch (SQLException e) {

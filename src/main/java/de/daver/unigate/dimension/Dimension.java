@@ -1,10 +1,14 @@
 package de.daver.unigate.dimension;
 
+import de.daver.unigate.Permissions;
 import de.daver.unigate.category.Category;
 import de.daver.unigate.dimension.level.LevelData;
 import de.daver.unigate.util.FileUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,11 +22,15 @@ public record Dimension(String id, DimensionType type, DimensionStats stats, Dim
         var id = buildId(category, theme);
         var stats = new DimensionStats(creator);
         var dimension = new Dimension(id, type, stats, new DimensionMeta());
-        if(DimensionCache.isExisting(category, theme)) throw new IllegalArgumentException();
         LevelData.createLevelDataFile(dimension.id, type);
         Bukkit.createWorld(new WorldCreator(dimension.id));
         DimensionCache.put(dimension);
         return dimension;
+    }
+
+    public static String buildId(Category category, String theme) {
+        if(!theme.matches("[a-zA-Z0-9_]+")) throw new IllegalArgumentException("Theme contains illegal characters! Please only use a-Z, 0-9, _");
+        return category.id() + SEPARATOR + theme;
     }
 
     public void delete() throws SQLException, IOException {
@@ -31,9 +39,32 @@ public record Dimension(String id, DimensionType type, DimensionStats stats, Dim
         DimensionCache.delete(this);
     }
 
-    public static String buildId(Category category, String theme) {
-        if(!theme.matches("[a-zA-Z0-9_]+")) throw new IllegalArgumentException("Theme contains illegal characters! Please only use a-Z, 0-9, _");
-        return category.id() + SEPARATOR + theme;
+    public void load() {
+        if(meta.state() != DimensionState.ACTIVE) return;
+        Bukkit.createWorld(new WorldCreator(id));
+        meta.state(DimensionState.LOADED);
     }
 
+    public boolean enter(Player player) {
+        if(meta.state() == DimensionState.ARCHIVED) return false;
+        if(meta.state() == DimensionState.ACTIVE) load();
+        if(!canEnter(player)) return false;
+        player.teleport(Bukkit.getWorld(id).getSpawnLocation());
+        return true;
+    }
+
+
+    public boolean canEnter(@NotNull Player player) {
+        if(player.hasPermission(Permissions.ENTER_ALL)) return true;
+        if(player.hasPermission(Permissions.ENTER_CATEGORY + category())) return true;
+        return meta.allowedPlayers().contains(player.getUniqueId());
+    }
+
+    public String category() {
+        return id.split(SEPARATOR)[0];
+    }
+
+    public String name() {
+        return id.split(SEPARATOR)[1];
+    }
 }

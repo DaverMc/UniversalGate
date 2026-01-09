@@ -1,3 +1,4 @@
+import net.minecrell.pluginyml.paper.PaperPluginDescription
 import org.gradle.api.internal.file.copy.CopyAction
 
 plugins {
@@ -14,18 +15,27 @@ repositories {
     maven("https://repo.papermc.io/repository/maven-public/") {
         name = "paper"
     }
+    maven("https://jitpack.io/")
 }
 
 dependencies {
     compileOnly(libs.paper.api)
+    compileOnly(libs.luckPerms)
+    compileOnly(libs.nbt)
     implementation(libs.hikariCP)
 
-    implementation(kotlin("stdlib"))
 }
 
 paper {
     apiVersion = "1.21"
     main = "de.daver.unigate.UniversalGatePlugin"
+
+    serverDependencies {
+        register("LuckPerms") {
+            required = true
+            load = PaperPluginDescription.RelativeLoadOrder.BEFORE
+        }
+    }
 }
 
 tasks.register<Copy>("copyJar") {

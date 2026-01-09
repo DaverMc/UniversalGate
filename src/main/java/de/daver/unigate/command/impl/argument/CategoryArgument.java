@@ -3,6 +3,7 @@ package de.daver.unigate.command.impl.argument;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.command.ArgumentNode;
 import de.daver.unigate.command.CommandExceptions;
+import de.daver.unigate.command.SuggestionProvider;
 import de.daver.unigate.command.argument.StringArgumentType;
 import de.daver.unigate.category.Category;
 import de.daver.unigate.category.CategoryCache;
@@ -13,8 +14,18 @@ public class CategoryArgument extends ArgumentNode<Category> {
 
     public CategoryArgument(String name) {
         super(name, new Type());
+        suggestions(suggestions());
     }
 
+    private SuggestionProvider<Category> suggestions() {
+        return context -> {
+            try {
+                return CategoryCache.getAll().stream();
+            } catch (SQLException exception) {
+                throw CommandExceptions.DATABASE_EXCEPTION.create();
+            }
+        };
+    }
 
     public static class Type extends StringArgumentType<Category> {
 
@@ -25,8 +36,9 @@ public class CategoryArgument extends ArgumentNode<Category> {
         @Override
         protected Category deserialize(String value) throws CommandSyntaxException {
             try {
-                if (!CategoryCache.exists(value)) throw CommandExceptions.VALUE_NOT_EXISTING.create(value);
-                return CategoryCache.get(value);
+                var category = CategoryCache.get(value);
+                if (category != null) return category;
+                throw CommandExceptions.VALUE_NOT_EXISTING.create(value);
             } catch (SQLException exception) {
                 throw CommandExceptions.DATABASE_EXCEPTION.create();
             }

@@ -1,0 +1,7 @@
+#
+#Fri Jan 09 21:50:46 CET 2026
+chat.prefix=<b><gradient:#00ffff:#ff55ff>UniversalGate</gradient></b> <dark_gray>➤ </dark_gray><gray>
+dimension.command.help=<link:chat.prefix>These subcommands are available:<br>- create [category] [theme] {generator}<br>- delete [dimension] confirm <br>- list <br>- info {dimension} <br>- import [folder_name] [category] [name] {generator} {seed} <br>- export [dimension] [version_tag] <br>- stoplag {dimension} <br>- allowlist add [player] <br>- allowlist remove [player] <br>- teleport [dimension] <br>- invite [player] <br>- kick [player] <br>
+dimension.create.success=<lang:prefix>Successfully created a new Dimension (<dimension>) with type <type>
+dimension.delete.confirm=<lang:prefix>You need to <click:run_command:'/dimension delete <dimension> confirm'><green>confirm</click> that you want to delete <dimension>
+dimension.delete.success=<lang:prefix>Successfully deleted Dimension (<dimension>)

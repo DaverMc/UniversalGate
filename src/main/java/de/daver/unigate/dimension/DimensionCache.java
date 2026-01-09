@@ -1,14 +1,12 @@
 package de.daver.unigate.dimension;
 
 import de.daver.unigate.UniversalGatePlugin;
-import de.daver.unigate.category.Category;
 import de.daver.unigate.sql.ResultTransformer;
 import de.daver.unigate.sql.SQLDataType;
 import de.daver.unigate.sql.SQLStatement;
 
 import java.sql.SQLException;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DimensionCache {
@@ -17,11 +15,7 @@ public class DimensionCache {
 
     public static void initialize() throws SQLException {
         UniversalGatePlugin.getSQLExecutor().execute(Queries.CREATE_DIMENSIONS_TABLE);
-    }
-
-    public static boolean isExisting(Category category, String theme) throws SQLException {
-        String dimensionId = Dimension.buildId(category, theme);
-        return get(dimensionId) != null;
+        UniversalGatePlugin.getSQLExecutor().execute(Queries.CREATE_ALLOWED_TABLE);
     }
 
     public static void put(Dimension dimension) throws SQLException {
@@ -39,8 +33,7 @@ public class DimensionCache {
 
     public static void delete(Dimension dimension) throws SQLException {
         UniversalGatePlugin.getSQLExecutor().execute(Queries.DELETE_DIMENSION, dimension.id());
-
-        //Alle weiteren abhängigkeiten auch löschen
+        UniversalGatePlugin.getSQLExecutor().execute(Queries.DELETE_DIMENSION_ALLOWED, dimension.id());
 
         CACHE.remove(dimension.id());
     }
@@ -49,11 +42,32 @@ public class DimensionCache {
         Dimension dim = CACHE.get(id);
         if(dim != null) return dim;
         dim = UniversalGatePlugin.getSQLExecutor().query(Queries.SELECT_DIMENSION, Queries.DIMENSION_TRANSFORMER, id);
-        if(dim != null) CACHE.put(id, dim);
+        if(dim == null) return null;
+        CACHE.put(id, dim);
+        var allowedUsers = UniversalGatePlugin.getSQLExecutor().query(Queries.SELECT_ALLOWED,
+                ResultTransformer.asSet(set -> UUID.fromString(set.getString("player"))), id);
+        dim.meta().allowedPlayers().addAll(allowedUsers);
         return dim;
     }
 
+    public static List<Dimension> getAll() throws SQLException {
+        return UniversalGatePlugin.getSQLExecutor().query(Queries.SELECT_ALL, ResultTransformer.asList(Queries.DIMENSION_TRANSFORMER));
+    }
+
+    public static void allow(Dimension dimension, UUID player) throws SQLException {
+        UniversalGatePlugin.getSQLExecutor().execute(Queries.INSERT_ALLOWED, dimension.id(), player.toString());
+        dimension.meta().allowedPlayers().add(player);
+    }
+
+    public static void disallow(Dimension dimension, UUID player) throws SQLException {
+        UniversalGatePlugin.getSQLExecutor().execute(Queries.DELETE_ALLOWED, dimension.id(), player.toString());
+        dimension.meta().allowedPlayers().remove(player);
+    }
+
     private interface Queries {
+
+        SQLStatement SELECT_ALL = new SQLStatement("SELECT * FROM dimensions");
+
         SQLStatement CREATE_DIMENSIONS_TABLE = new SQLStatement("""
             CREATE TABLE IF NOT EXISTS dimensions (
             id TEXT PRIMARY KEY,
@@ -70,13 +84,24 @@ public class DimensionCache {
 
         ResultTransformer<Dimension> DIMENSION_TRANSFORMER = set -> {
             String id = set.getString("id");
-            DimensionType type = DimensionType.valueOf(set.getString("type"));
+            if(id == null) return null;
+
+            var typeString = set.getString("type");
+            if(typeString == null) return null;
+            DimensionType type = DimensionType.valueOf(typeString);
+
             long creationTime = set.getLong("creation_time");
+
             String uuidS = set.getString("creator");
+
             int stopLagI = set.getInt("stop_lag");
+
             DimensionState state = DimensionState.valueOf(set.getString("state"));
+
             long lastLoaded = set.getLong("last_loaded");
+
             DimensionStats stats = new DimensionStats(UUID.fromString(uuidS), creationTime);
+
             DimensionMeta meta = new DimensionMeta(state, stopLagI == 1, lastLoaded);
             return new Dimension(id, type, stats, meta);
        };
@@ -101,5 +126,25 @@ public class DimensionCache {
 
         SQLStatement DELETE_DIMENSION = new SQLStatement("DELETE FROM dimensions WHERE id = ?")
                 .addStringArgument();
+
+        SQLStatement INSERT_ALLOWED = new SQLStatement("""
+            INSERT INTO allowed_dimensions (dimension, player) VALUES (?, ?)
+            ON CONFLICT(dimension, category) DO NOTHING
+        """).addStringArgument()
+                .addStringArgument();
+
+        SQLStatement DELETE_ALLOWED = new SQLStatement("DELETE FROM allowed_dimensions WHERE dimension = ? AND player = ?")
+                .addStringArgument()
+                .addStringArgument();
+
+        SQLStatement DELETE_DIMENSION_ALLOWED = new SQLStatement("DELETE FROM allowed_dimensions WHERE dimension = ?")
+                .addStringArgument();
+
+        SQLStatement CREATE_ALLOWED_TABLE = new SQLStatement("""
+            CREATE TABLE IF NOT EXISTS allowed_dimensions (dimension TEXT, player TEXT, PRIMARY KEY(dimension, player))
+        """);
+
+        SQLStatement SELECT_ALLOWED = new SQLStatement("SELECT * FROM allowed_dimensions WHERE dimension = ?");
     }
+
 }

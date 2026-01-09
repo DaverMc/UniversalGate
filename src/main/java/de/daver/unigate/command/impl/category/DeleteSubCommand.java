@@ -1,12 +1,14 @@
-package de.daver.unigate.category.command;
+package de.daver.unigate.command.impl.category;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.category.Category;
 import de.daver.unigate.category.CategoryCache;
 import de.daver.unigate.command.CommandExceptions;
 import de.daver.unigate.command.LiteralNode;
 import de.daver.unigate.command.PluginContext;
 import de.daver.unigate.command.impl.argument.CategoryArgument;
+import de.daver.unigate.lang.Message;
 
 import java.sql.SQLException;
 
@@ -21,9 +23,10 @@ public class DeleteSubCommand extends LiteralNode {
     public void deleteCategory(PluginContext context) throws CommandSyntaxException {
         var category = context.getArgument("category", Category.class);
         try {
-            System.out.println(category);
             CategoryCache.delete(category);
-            context.sender().sendMessage("Deleted category " + category.id());
+            Message.builder().key(LanguageKeys.CATEGORY_DELETE_SUCCESS)
+                    .parsed("category", category.id())
+                    .build().send(context.sender());
         } catch (SQLException exception) {
             throw CommandExceptions.DATABASE_EXCEPTION.create();
         }

@@ -1,6 +1,7 @@
 package de.daver.unigate.command.impl.dimension;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.command.LiteralNode;
 import de.daver.unigate.command.CommandExceptions;
 import de.daver.unigate.command.PluginContext;
@@ -8,8 +9,10 @@ import de.daver.unigate.command.argument.EnumArgument;
 import de.daver.unigate.command.argument.WordArgument;
 import de.daver.unigate.command.impl.argument.CategoryArgument;
 import de.daver.unigate.dimension.Dimension;
+import de.daver.unigate.dimension.DimensionCache;
 import de.daver.unigate.dimension.DimensionType;
 import de.daver.unigate.category.Category;
+import de.daver.unigate.lang.Message;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -26,7 +29,6 @@ class CreateSubCommand extends LiteralNode {
 
         var typeArg = themeArg.then(new EnumArgument<>("type", DimensionType.class));
         typeArg.executor(this::createCustomDimension);
-
     }
 
     private void createDimension(PluginContext context) throws CommandSyntaxException {
@@ -44,8 +46,14 @@ class CreateSubCommand extends LiteralNode {
 
     private void createDimension(Category category, String theme, DimensionType type, PluginContext context) throws CommandSyntaxException {
         try {
+            var id = Dimension.buildId(category, theme);
+            if(DimensionCache.get(id) != null) throw CommandExceptions.VALUE_EXISTING.create(id);
             Dimension dimension = Dimension.create(category, theme, type, context.executor().getUniqueId());
-            context.sender().sendMessage("Created dimension " + dimension.id());
+            Message.builder().key(LanguageKeys.DIMENSION_CREATE_SUCCESS)
+                    .parsed("id",dimension.id())
+                    .parsed("type", dimension.type())
+                    .build().send(context.sender());
+
         } catch (SQLException e) {
             throw CommandExceptions.DATABASE_EXCEPTION.create();
         } catch (IOException e) {

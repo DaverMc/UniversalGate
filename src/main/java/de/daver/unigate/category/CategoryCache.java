@@ -21,14 +21,10 @@ public class CategoryCache {
         UniversalGatePlugin.getSQLExecutor().execute(Queries.CREATE_CATEGORIES_TABLE);
     }
 
-    public static boolean exists(String id) throws SQLException {
-        return get(id) != null;
-    }
-
     public static Category get(String id) throws SQLException {
         var category = CACHE.get(id);
         if(category != null) return category;
-        category = UniversalGatePlugin.getSQLExecutor().query(Queries.SELECT_CATEGORY, Queries.TRANSFORMER);
+        category = UniversalGatePlugin.getSQLExecutor().query(Queries.SELECT_CATEGORY, Queries.TRANSFORMER, id);
         return category;
     }
 

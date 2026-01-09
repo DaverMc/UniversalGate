@@ -2,14 +2,19 @@ package de.daver.unigate.dimension;
 
 import java.sql.Time;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 public class DimensionMeta {
 
+    private final Set<UUID> allowedPlayers;
     private DimensionState state;
     private boolean stopLag;
     private long lastLoaded;
 
     public DimensionMeta(DimensionState state, boolean stoplag, long lastLoaded) {
+        this.allowedPlayers = new HashSet<>();
         this.state = state;
         this.stopLag = stoplag;
         this.lastLoaded = lastLoaded;
@@ -35,6 +40,9 @@ public class DimensionMeta {
         return this.lastLoaded;
     }
 
+    public Set<UUID> allowedPlayers() {
+        return allowedPlayers;
+    }
 
 
 }
