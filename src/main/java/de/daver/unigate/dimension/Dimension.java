@@ -1,6 +1,6 @@
 package de.daver.unigate.dimension;
 
-import de.daver.unigate.dimension.category.Category;
+import de.daver.unigate.category.Category;
 import de.daver.unigate.dimension.level.LevelData;
 import de.daver.unigate.util.FileUtils;
 import org.bukkit.Bukkit;

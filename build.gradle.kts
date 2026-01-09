@@ -16,5 +16,14 @@ repositories {
 
 dependencies {
     compileOnly(libs.paper.api)
+    implementation(libs.hikariCP)
+
+
+
     implementation(kotlin("stdlib"))
+}
+
+paper {
+    apiVersion = "1.21"
+    main = "de.daver.unigate.UniversalGatePlugin"
 }

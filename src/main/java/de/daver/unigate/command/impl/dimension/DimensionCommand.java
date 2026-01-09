@@ -1,18 +1,18 @@
 package de.daver.unigate.command.impl.dimension;
 
-import de.daver.unigate.command.ContextWrapper;
 import de.daver.unigate.command.LiteralNode;
+import de.daver.unigate.command.PluginContext;
 
 public class DimensionCommand extends LiteralNode {
 
     public DimensionCommand() {
         super("dimension");
-        runsCommand(this::showSubCommands);
+        executor(this::showSubCommands);
 
         then(new CreateSubCommand());
     }
 
-    public void showSubCommands(ContextWrapper context) {
+    public void showSubCommands(PluginContext context) {
         var sender = context.sender();
         sender.sendMessage("These subcommands are available:");
         sender.sendMessage("- create [category] [theme] {generator}");

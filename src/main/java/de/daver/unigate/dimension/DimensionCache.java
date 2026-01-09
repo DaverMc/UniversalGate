@@ -1,9 +1,9 @@
 package de.daver.unigate.dimension;
 
-import de.daver.unigate.dimension.category.Category;
+import de.daver.unigate.UniversalGatePlugin;
+import de.daver.unigate.category.Category;
 import de.daver.unigate.sql.ResultTransformer;
 import de.daver.unigate.sql.SQLDataType;
-import de.daver.unigate.sql.SQLExecutor;
 import de.daver.unigate.sql.SQLStatement;
 
 import java.sql.SQLException;
@@ -16,7 +16,7 @@ public class DimensionCache {
     private static final Map<String, Dimension> CACHE = new ConcurrentHashMap<>();
 
     public static void initialize() throws SQLException {
-        SQLExecutor.execute(Queries.CREATE_DIMENSIONS_TABLE);
+        UniversalGatePlugin.getSQLExecutor().execute(Queries.CREATE_DIMENSIONS_TABLE);
     }
 
     public static boolean isExisting(Category category, String theme) throws SQLException {
@@ -25,7 +25,7 @@ public class DimensionCache {
     }
 
     public static void put(Dimension dimension) throws SQLException {
-        SQLExecutor.execute(Queries.INSERT_DIMENSION,
+        UniversalGatePlugin.getSQLExecutor().execute(Queries.INSERT_DIMENSION,
                 dimension.id(),
                 dimension.type(),
                 dimension.stats().creationTime(),
@@ -38,7 +38,7 @@ public class DimensionCache {
     }
 
     public static void delete(Dimension dimension) throws SQLException {
-        SQLExecutor.execute(Queries.DELETE_DIMENSION, dimension.id());
+        UniversalGatePlugin.getSQLExecutor().execute(Queries.DELETE_DIMENSION, dimension.id());
 
         //Alle weiteren abhängigkeiten auch löschen
 
@@ -48,7 +48,7 @@ public class DimensionCache {
     public static Dimension get(String id) throws SQLException {
         Dimension dim = CACHE.get(id);
         if(dim != null) return dim;
-        dim = SQLExecutor.query(Queries.SELECT_DIMENSION, Queries.DIMENSION_TRANSFORMER, id);
+        dim = UniversalGatePlugin.getSQLExecutor().query(Queries.SELECT_DIMENSION, Queries.DIMENSION_TRANSFORMER, id);
         if(dim != null) CACHE.put(id, dim);
         return dim;
     }
