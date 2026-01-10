@@ -1,5 +1,5 @@
 import net.minecrell.pluginyml.paper.PaperPluginDescription
-import org.gradle.api.internal.file.copy.CopyAction
+
 
 plugins {
     kotlin("jvm") version "1.9.22"

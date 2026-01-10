@@ -8,12 +8,11 @@ import de.daver.unigate.command.impl.dimension.DimensionCommand;
 import de.daver.unigate.command.impl.lang.LanguageCommand;
 import de.daver.unigate.dimension.DimensionCache;
 import de.daver.unigate.lang.LanguageManager;
-import de.daver.unigate.lang.LanguageManagerImpl;
 import de.daver.unigate.lang.Message;
 import de.daver.unigate.listener.ChatListener;
 import de.daver.unigate.listener.JoinListener;
 import de.daver.unigate.listener.StopLagListener;
-import de.daver.unigate.listener.WorldChangeListener;
+import de.daver.unigate.listener.WorldSwitchListener;
 import de.daver.unigate.sql.SQLExecutor;
 import de.daver.unigate.util.PlayerFetcher;
 import de.daver.unigate.util.TabList;
@@ -23,9 +22,7 @@ import net.luckperms.api.event.node.NodeAddEvent;
 import net.luckperms.api.node.types.InheritanceNode;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.intellij.lang.annotations.Language;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,11 +31,13 @@ import java.util.Locale;
 
 public class UniversalGatePlugin extends JavaPlugin {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(UniversalGatePlugin.class);
+    private static UniversalGatePlugin instance;
 
-    public static final LanguageManager LANGUAGE_MANAGER = new LanguageManagerImpl();
-    public static final TabList TAB_LIST = new TabList();
-    private static SQLExecutor sqlExecutor;
+    private TabList tabList;
+    private LanguageManager languageManager;
+    private CategoryCache categoryCache;
+    private DimensionCache dimensionCache;
+    private SQLExecutor sqlExecutor;
 
     @Override
     public void onDisable() {
@@ -47,6 +46,7 @@ public class UniversalGatePlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        instance = this;
         loadLanguages();
         initializeSQL();
         registerCommands();
@@ -55,11 +55,9 @@ public class UniversalGatePlugin extends JavaPlugin {
     }
 
     private void loadLanguages() {
-        LANGUAGE_MANAGER.setLanguageDirectory(new File(getDataFolder(), "lang"));
-        LANGUAGE_MANAGER.setDefaultLanguage(Locale.ENGLISH);
-        LANGUAGE_MANAGER.addKeyEnum(LanguageKeys.class);
+        languageManager = new LanguageManager(LanguageKeys.class, Locale.ENGLISH, getDataPath().resolve("lang"));
         try {
-            LANGUAGE_MANAGER.load(LANGUAGE_MANAGER.getDefaultLanguage());
+            languageManager.load(languageManager.getDefaultLanguage());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -75,11 +73,10 @@ public class UniversalGatePlugin extends JavaPlugin {
     }
 
     private void registerListeners() {
-        var manager = getServer().getPluginManager();
-        manager.registerEvents(new WorldChangeListener(), this);
-        manager.registerEvents(new JoinListener(), this);
-        manager.registerEvents(new ChatListener(), this);
-        manager.registerEvents(new StopLagListener(), this);
+        new WorldSwitchListener(this).register();
+        new JoinListener(this).register();
+        new ChatListener(this).register();
+        new StopLagListener(this).register();
     }
 
     private void initializeSQL() {
@@ -88,8 +85,10 @@ public class UniversalGatePlugin extends JavaPlugin {
         sqlExecutor = new SQLExecutor(dataSource);
 
         try {
-            CategoryCache.initialize();
-            DimensionCache.initialize();
+            categoryCache = new CategoryCache(this);
+            categoryCache.initialize();
+            dimensionCache = new DimensionCache(this);
+            dimensionCache.initialize();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -106,7 +105,7 @@ public class UniversalGatePlugin extends JavaPlugin {
     private File createDatabaseFile() {
         var file = new File(getDataFolder(), "database.db");
         var parent = file.getParentFile();
-        if(!parent.exists()&& parent.mkdirs()) LOGGER.debug("Created database directory: {}", parent.getAbsolutePath());
+        if(!parent.exists()&& parent.mkdirs()) logger().debug("Created database directory: {}", parent.getAbsolutePath());
         return file;
     }
 
@@ -118,14 +117,15 @@ public class UniversalGatePlugin extends JavaPlugin {
     }
 
     private void setUpTabList() {
-        TAB_LIST.setFooterGetter(user -> Message.builder()
+        tabList = new TabList(this);
+        tabList.setFooterGetter((plugin, user) -> plugin.languageManager().message()
                 .key(LanguageKeys.TAB_LIST_FOOTER)
                 .parsed("players", getServer().getOnlinePlayers().size())
                 .build().get(user));
-        TAB_LIST.setHeaderGetter(user -> Message.builder()
+        tabList.setHeaderGetter((plugin, user) -> plugin.languageManager().message()
                 .key(LanguageKeys.TAB_LIST_HEADER)
                 .build().get(user));
-        TAB_LIST.setNameGetter(user -> Message.builder()
+        tabList.setNameGetter((plugin, user) -> plugin.languageManager().message()
                 .key(LanguageKeys.TAB_LIST_NAME)
                 .parsed("player", user.getName())
                 .parsed("prefix", PlayerFetcher.getPrefix(user))
@@ -134,18 +134,43 @@ public class UniversalGatePlugin extends JavaPlugin {
         onLuckPermsGroupChange();
     }
 
-    public static void onLuckPermsGroupChange() {
+    private void onLuckPermsGroupChange() {
         var eventBus = LuckPermsProvider.get().getEventBus();
         eventBus.subscribe(NodeAddEvent.class, event -> {
             if(!event.isUser()) return;
             var node = event.getNode();
             if(!(node instanceof InheritanceNode)) return;
-            Bukkit.getOnlinePlayers().forEach(UniversalGatePlugin.TAB_LIST::update);
+            Bukkit.getOnlinePlayers().forEach(tabList::update);
         });
 
     }
 
-    public static SQLExecutor getSQLExecutor() {
+    public SQLExecutor sqlExecutor() {
         return sqlExecutor;
+    }
+
+    public Logger logger() {
+        return getSLF4JLogger();
+    }
+
+    public LanguageManager languageManager() {
+        return languageManager;
+    }
+
+    public TabList tabList() {
+        return tabList;
+    }
+
+    public CategoryCache categoryCache() {
+        return categoryCache;
+    }
+
+    public DimensionCache dimensionCache() {
+        return dimensionCache;
+    }
+
+
+    public static UniversalGatePlugin getInstance() {
+        return instance;
     }
 }

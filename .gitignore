@@ -43,3 +43,4 @@ bin/
 .DS_Store
 
 /debug_server
+!/debug_server/plugins/UniversalGate/lang

@@ -34,8 +34,9 @@ public class AllowedRemoveSubCommand extends LiteralNode {
         try {
             UUID uuid = context.getArgument("user", UUID.class);
             Dimension dimension = context.getArgument("dimension", Dimension.class);
-            DimensionCache.disallow(dimension, uuid);
-            Message.builder().key(LanguageKeys.DIMENSION_ALLOWED_REMOVE_SUCCESS)
+            context.plugin().dimensionCache().disallow(dimension, uuid);
+            context.plugin().languageManager().message()
+                    .key(LanguageKeys.DIMENSION_ALLOWED_REMOVE_SUCCESS)
                     .parsed("player", uuid)
                     .parsed("dimension", dimension.name())
                     .build().send(context.sender());

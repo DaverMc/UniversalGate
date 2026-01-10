@@ -1,12 +1,12 @@
 package de.daver.unigate.command.impl.argument;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.command.ArgumentNode;
 import de.daver.unigate.command.CommandExceptions;
 import de.daver.unigate.command.SuggestionProvider;
 import de.daver.unigate.command.argument.StringArgumentType;
 import de.daver.unigate.dimension.Dimension;
-import de.daver.unigate.dimension.DimensionCache;
 
 import java.sql.SQLException;
 
@@ -18,7 +18,7 @@ public class DimensionArgument extends ArgumentNode<Dimension> {
     }
 
     private SuggestionProvider<Dimension> suggestions() {
-        return context -> DimensionCache.getActive().stream();
+        return context -> context.plugin().dimensionCache().getActive().stream();
     }
 
     public static class Type extends StringArgumentType<Dimension> {
@@ -30,7 +30,7 @@ public class DimensionArgument extends ArgumentNode<Dimension> {
         @Override
         protected Dimension deserialize(String value) throws CommandSyntaxException {
             try {
-                var dimension = DimensionCache.select(value);
+                var dimension = UniversalGatePlugin.getInstance().dimensionCache().select(value);
                 if(dimension != null) return dimension;
                 throw CommandExceptions.VALUE_NOT_EXISTING.create(value);
             } catch (SQLException exception) {

@@ -19,12 +19,13 @@ public class ReloadSubCommand extends LiteralNode {
     }
 
     public void reload(PluginContext context) throws CommandSyntaxException {
+        var plugin = context.plugin();
         try {
-            UniversalGatePlugin.LANGUAGE_MANAGER.load(Locale.ENGLISH);
-            Message.builder().key(LanguageKeys.LANGUAGE_RELOAD)
+            plugin.languageManager().load(Locale.ENGLISH);
+            plugin.languageManager().message().key(LanguageKeys.LANGUAGE_RELOAD)
                     .build().send(context.sender());
         } catch (IOException e) {
-            UniversalGatePlugin.LOGGER.error("Failed to reload language file", e);
+            plugin.logger().error("Failed to reload language file", e);
             throw CommandExceptions.FILE_EXCEPTION.create();
         }
     }

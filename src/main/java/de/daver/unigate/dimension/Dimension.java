@@ -1,6 +1,7 @@
 package de.daver.unigate.dimension;
 
 import de.daver.unigate.Permissions;
+import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.category.Category;
 import de.daver.unigate.dimension.gen.LevelData;
 import de.daver.unigate.util.FileUtils;
@@ -21,14 +22,13 @@ public record Dimension(String id, DimensionType type, DimensionStats stats, Dim
 
     private static final String SEPARATOR = "-";
 
-    public static Dimension create(Category category, String theme, DimensionType type, UUID creator) throws SQLException, IOException {
+    public static Dimension create(Category category, String theme, DimensionType type, UUID creator) throws IOException {
         var id = buildId(category, theme);
         var stats = new DimensionStats(creator);
         var dimension = new Dimension(id, type, stats, new DimensionMeta(), new Random().nextLong());
         LevelData.create(dimension);
         createLevelDatFile(dimension);
         Bukkit.createWorld(new WorldCreator(dimension.id));
-        DimensionCache.insert(dimension);
         return dimension;
     }
 
@@ -45,10 +45,9 @@ public record Dimension(String id, DimensionType type, DimensionStats stats, Dim
         return category.id() + SEPARATOR + theme;
     }
 
-    public void delete() throws SQLException, IOException {
+    public void delete() throws IOException {
         Bukkit.unloadWorld(id, false);
         FileUtils.deleteDir(Bukkit.getWorldContainer().toPath().resolve(id));
-        DimensionCache.delete(this);
     }
 
     public void load() {

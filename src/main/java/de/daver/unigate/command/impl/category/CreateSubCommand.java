@@ -2,6 +2,7 @@ package de.daver.unigate.command.impl.category;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.category.Category;
 import de.daver.unigate.category.CategoryCache;
 import de.daver.unigate.command.CommandExceptions;
@@ -27,10 +28,12 @@ class CreateSubCommand extends LiteralNode {
     public void createCategory(PluginContext context) throws CommandSyntaxException {
         String name = context.getArgument("name", String.class);
         try {
-            var category = CategoryCache.get(name.toLowerCase());
+            var plugin = context.plugin();
+            var category = plugin.categoryCache().get(name.toLowerCase());
             if(category != null) throw CommandExceptions.VALUE_EXISTING.create(name);
-            CategoryCache.put(new Category(name));
-            Message.builder().key(LanguageKeys.CATEGORY_CREATE_SUCCESS)
+            plugin.categoryCache().put(new Category(name));
+            plugin.languageManager().message()
+                    .key(LanguageKeys.CATEGORY_CREATE_SUCCESS)
                     .parsed("category", category.id())
                     .build().send(context.sender());
         } catch (SQLException exception) {

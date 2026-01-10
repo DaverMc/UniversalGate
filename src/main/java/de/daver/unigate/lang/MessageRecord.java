@@ -6,11 +6,16 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 
 import java.util.Locale;
 
-public record MessageRecord(String path, TagResolver tagResolver) implements Message {
+public record MessageRecord(String path, TagResolver tagResolver, LanguageManager languageManager) implements Message {
+
+    @Override
+    public Locale defaultLocale() {
+        return languageManager().getDefaultLanguage();
+    }
 
     public Component get(Locale locale) {
         Locale l = locale;
-        if(l == null) l = UniversalGatePlugin.LANGUAGE_MANAGER.getDefaultLanguage();
-        return UniversalGatePlugin.LANGUAGE_MANAGER.getMessage(l, path, tagResolver);
+        if(l == null) l = languageManager().getDefaultLanguage();
+        return languageManager().getMessage(l, path, tagResolver);
     }
 }

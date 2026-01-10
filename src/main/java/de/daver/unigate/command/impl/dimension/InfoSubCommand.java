@@ -24,13 +24,14 @@ public class InfoSubCommand extends LiteralNode {
     }
 
     void showLocalInfo(PluginContext context) throws CommandSyntaxException {
-        var dimension = DimensionCache.getActive(context.senderPlayer().getWorld().getName());
+        var dimension = context.plugin().dimensionCache().getActive(context.senderPlayer().getWorld().getName());
         if(dimension == null) return;
         showDimensionInfo(context, dimension);
     }
 
     void showDimensionInfo(PluginContext context, Dimension dimension) {
-        Message.builder().key(LanguageKeys.DIMENSION_INFO)
+        context.plugin().languageManager().message()
+                .key(LanguageKeys.DIMENSION_INFO)
                 .parsed("id", dimension.id())
                 .parsed("name", dimension.name())
                 .parsed("category", dimension.category())

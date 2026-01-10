@@ -17,10 +17,12 @@ class TeleportSubCommand extends LiteralNode {
     }
     void teleport(PluginContext context) throws CommandSyntaxException {
         Dimension dimension = context.getArgument("dimension", Dimension.class);
-        if(dimension.enter(context.senderPlayer())) Message.builder().key(LanguageKeys.DIMENSION_ENTER_SUCCESS)
+        if(dimension.enter(context.senderPlayer())) context.plugin().languageManager().message()
+                .key(LanguageKeys.DIMENSION_ENTER_SUCCESS)
                 .parsed("dimension", dimension.name())
                 .build().send(context.sender());
-        else Message.builder().key(LanguageKeys.DIMENSION_ENTER_FAILED)
+        else context.plugin().languageManager().message()
+                .key(LanguageKeys.DIMENSION_ENTER_FAILED)
                 .parsed("dimension", dimension.name())
                 .build().send(context.sender());
 

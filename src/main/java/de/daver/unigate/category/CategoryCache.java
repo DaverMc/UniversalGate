@@ -2,44 +2,46 @@ package de.daver.unigate.category;
 
 import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.sql.ResultTransformer;
-import de.daver.unigate.sql.SQLExecutor;
 import de.daver.unigate.sql.SQLStatement;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CategoryCache {
 
-    private static final Map<String, Category> CACHE = new ConcurrentHashMap<>();
+    private final Map<String, Category> cache;
+    private final UniversalGatePlugin plugin;
 
-    public static void initialize() throws SQLException {
-        UniversalGatePlugin.getSQLExecutor().execute(Queries.CREATE_CATEGORIES_TABLE);
+    public CategoryCache(UniversalGatePlugin plugin) {
+        this.plugin = plugin;
+        this.cache = new ConcurrentHashMap<>();
     }
 
-    public static Category get(String id) throws SQLException {
-        var category = CACHE.get(id);
+    public void initialize() throws SQLException {
+        plugin.sqlExecutor().execute(Queries.CREATE_CATEGORIES_TABLE);
+    }
+
+    public Category get(String id) throws SQLException {
+        var category = cache.get(id);
         if(category != null) return category;
-        category = UniversalGatePlugin.getSQLExecutor().query(Queries.SELECT_CATEGORY, Queries.TRANSFORMER, id);
+        category = plugin.sqlExecutor().query(Queries.SELECT_CATEGORY, Queries.TRANSFORMER, id);
         return category;
     }
 
-    public static void put(Category category) throws SQLException {
-        UniversalGatePlugin.getSQLExecutor().execute(Queries.INSERT_CATEGORY, category.id(), category.name());
-        CACHE.put(category.id(), category);
+    public void put(Category category) throws SQLException {
+        plugin.sqlExecutor().execute(Queries.INSERT_CATEGORY, category.id(), category.name());
+        cache.put(category.id(), category);
     }
 
-    public static void delete(Category category) throws SQLException {
-        UniversalGatePlugin.getSQLExecutor().execute(Queries.DELETE_CATEGORY, category.id());
-        CACHE.remove(category.id());
+    public void delete(Category category) throws SQLException {
+        plugin.sqlExecutor().execute(Queries.DELETE_CATEGORY, category.id());
+        cache.remove(category.id());
     }
 
-    public static List<Category> getAll() throws SQLException {
-        return UniversalGatePlugin.getSQLExecutor().query(Queries.SELECT_ALL, ResultTransformer.asList(Queries.TRANSFORMER));
+    public List<Category> getAll() throws SQLException {
+        return plugin.sqlExecutor().query(Queries.SELECT_ALL, ResultTransformer.asList(Queries.TRANSFORMER));
     }
 
     private interface Queries {

@@ -1,17 +1,21 @@
 package de.daver.unigate.listener;
 
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.lang.Message;
 import de.daver.unigate.util.PlayerFetcher;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 
-public class ChatListener implements Listener {
+public class ChatListener extends PluginEventListener {
+
+    public ChatListener(UniversalGatePlugin plugin) {
+        super(plugin);
+    }
 
     @EventHandler
     public void onChat(AsyncChatEvent event) {
-        event.renderer((player, sourceDisplayName, message, viewer) -> Message.builder()
+        event.renderer((player, sourceDisplayName, message, viewer) -> plugin().languageManager().message()
                     .key(LanguageKeys.CHAT_FORMAT)
                     .parsed("prefix", PlayerFetcher.getPrefix(player))
                     .parsed("player", player.getName())

@@ -5,10 +5,12 @@ paper-yml = "0.8.0"
 hikari  = "7.0.2"
 nbt = "6.1"
 luckperms = "5.5"
+run-paper = "3.0.2"
 
 [plugins]
 shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
 paper-yml = { id = "de.eldoria.plugin-yml.paper", version.ref = "paper-yml" }
+run_server = { id = "xyz.jpenilla.run-paper", version.ref = "run-paper"}
 
 [libraries]
 paper-api = { group = "io.papermc.paper", name = "paper-api", version.ref = "paper" }

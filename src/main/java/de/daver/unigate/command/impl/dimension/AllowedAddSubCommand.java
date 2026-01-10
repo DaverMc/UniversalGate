@@ -2,6 +2,7 @@ package de.daver.unigate.command.impl.dimension;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.command.CommandExceptions;
 import de.daver.unigate.command.LiteralNode;
 import de.daver.unigate.command.PluginContext;
@@ -26,8 +27,9 @@ public class AllowedAddSubCommand extends LiteralNode {
         try {
             UUID uuid = context.getArgument("user", UUID.class);
             Dimension dimension = context.getArgument("dimension", Dimension.class);
-            DimensionCache.allow(dimension, uuid);
-            Message.builder().key(LanguageKeys.DIMENSION_ALLOWED_ADD_SUCCESS)
+            context.plugin().dimensionCache().allow(dimension, uuid);
+            context.plugin().languageManager().message()
+                    .key(LanguageKeys.DIMENSION_ALLOWED_ADD_SUCCESS)
                     .parsed("player", PlayerFetcher.getPlayerName(uuid))
                     .parsed("dimension", dimension.name())
                     .build().send(context.sender());

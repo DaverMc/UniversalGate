@@ -9,9 +9,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-//LATER Implement Plugin Instance to this reord
-
-public record PluginContext(CommandContext<CommandSourceStack> brigadier) {
+public record PluginContext(UniversalGatePlugin plugin, CommandContext<CommandSourceStack> brigadier) {
 
     public <T> T getArgument(String name, Class<T> type) {
         return brigadier.getArgument(name, type);
@@ -36,7 +34,7 @@ public record PluginContext(CommandContext<CommandSourceStack> brigadier) {
     }
 
     public static PluginContext wrap(CommandContext<CommandSourceStack> brigadier) {
-        return new PluginContext(brigadier);
+        return new PluginContext(UniversalGatePlugin.getInstance(), brigadier);
 
     }
 

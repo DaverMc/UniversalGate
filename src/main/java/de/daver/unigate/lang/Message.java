@@ -12,24 +12,17 @@ import java.util.Locale;
 
 public interface Message {
 
-    Component get(Locale locale);
+    Locale defaultLocale();
 
-    default Component get() {
-        return get(UniversalGatePlugin.LANGUAGE_MANAGER.getDefaultLanguage());
-    }
+    Component get(Locale locale);
 
     default Component get(CommandSender sender) {
         if(sender instanceof Player player) return get(player.locale());
-        return get(UniversalGatePlugin.LANGUAGE_MANAGER.getDefaultLanguage());
+        return get(defaultLocale());
     }
 
     default void send(CommandSender sender) {
         sender.sendMessage(get(sender));
-    }
-
-
-    static Builder builder() {
-        return new RecordMessageBuilder();
     }
 
     sealed interface Builder permits RecordMessageBuilder {

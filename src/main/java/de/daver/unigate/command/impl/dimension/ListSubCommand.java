@@ -19,13 +19,15 @@ public class ListSubCommand extends LiteralNode {
 
     public void listDimensions(PluginContext context) throws CommandSyntaxException {
         try {
-            var dimensions = DimensionCache.getAll();
-            Message.builder().key(LanguageKeys.DIMENSION_LIST_HEADER)
+            var dimensions = context.plugin().dimensionCache().getAll();
+            context.plugin().languageManager().message()
+                    .key(LanguageKeys.DIMENSION_LIST_HEADER)
                     .parsed("dimensions", dimensions.size())
                     .build().send(context.sender());
             if(dimensions.isEmpty()) return;
             for (var dimension : dimensions) {
-                Message.builder().key(LanguageKeys.DIMENSION_LIST_ENTRY)
+                context.plugin().languageManager().message()
+                        .key(LanguageKeys.DIMENSION_LIST_ENTRY)
                         .parsed("dimension", dimension.id())
                         .build().send(context.sender());
             }

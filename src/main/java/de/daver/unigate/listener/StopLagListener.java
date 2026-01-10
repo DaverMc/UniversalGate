@@ -1,5 +1,6 @@
 package de.daver.unigate.listener;
 
+import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.dimension.DimensionCache;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
@@ -13,7 +14,11 @@ import org.bukkit.event.block.BlockGrowEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 
 
-public class StopLagListener implements Listener {
+public class StopLagListener extends PluginEventListener {
+
+    public StopLagListener(UniversalGatePlugin plugin) {
+        super(plugin);
+    }
 
     @EventHandler
     public void onBlockSpread(BlockSpreadEvent event) {
@@ -51,6 +56,6 @@ public class StopLagListener implements Listener {
     }
 
     private void cancel(Cancellable event, String id) {
-        var dimension = DimensionCache.getActive(id);
+        var dimension = plugin().dimensionCache().getActive(id);
         if(dimension != null && dimension.meta().stopLag()) event.setCancelled(true);
     }}

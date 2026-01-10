@@ -19,7 +19,8 @@ public class DimensionCommand extends LiteralNode {
     }
 
     public void showSubCommands(PluginContext context) {
-        Message.builder().key(LanguageKeys.DIMENSION_COMMAND_HELP)
+        context.plugin().languageManager().message()
+                .key(LanguageKeys.DIMENSION_COMMAND_HELP)
                 .build().send(context.sender());
     }
 

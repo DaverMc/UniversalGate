@@ -1,19 +1,22 @@
 package de.daver.unigate.listener;
 
+import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.dimension.Dimension;
-import de.daver.unigate.dimension.DimensionCache;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 import java.sql.SQLException;
 
-public class WorldChangeListener implements Listener {
+public class WorldSwitchListener extends PluginEventListener {
+
+    public WorldSwitchListener(UniversalGatePlugin plugin) {
+        super(plugin);
+    }
 
     @EventHandler
-    public void onWorldChange(PlayerTeleportEvent event) {
+    public void onWorldSwitch(PlayerTeleportEvent event) {
         try {
-            Dimension toDimension = DimensionCache.select(event.getTo().getWorld().getName());
+            Dimension toDimension = plugin().dimensionCache().select(event.getTo().getWorld().getName());
             if(toDimension == null) return;
             if(toDimension.canEnter(event.getPlayer())) return;
             event.setCancelled(true);

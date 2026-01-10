@@ -2,6 +2,7 @@ package de.daver.unigate.command.impl.dimension;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.command.CommandExceptions;
 import de.daver.unigate.command.LiteralNode;
 import de.daver.unigate.command.PluginContext;
@@ -25,7 +26,8 @@ public class DeleteSubCommand extends LiteralNode {
 
 
     private void sendConfirmMessage(PluginContext context) {
-        Message.builder().key(LanguageKeys.DIMENSION_DELETE_CONFIRM)
+        context.plugin().languageManager().message()
+                .key(LanguageKeys.DIMENSION_DELETE_CONFIRM)
                 .parsed("dimension", context.getArgument("dimension", Dimension.class).id())
                 .build().send(context.sender());
     }
@@ -34,7 +36,9 @@ public class DeleteSubCommand extends LiteralNode {
         Dimension dimension = context.getArgument("dimension", Dimension.class);
         try {
             dimension.delete();
-            Message.builder().key(LanguageKeys.DIMENSION_DELETE_SUCCESS)
+            UniversalGatePlugin.getInstance().dimensionCache().delete(dimension);
+            context.plugin().languageManager().message()
+                    .key(LanguageKeys.DIMENSION_DELETE_SUCCESS)
                     .parsed("dimension", dimension.id())
                     .build().send(context.sender());
         } catch (IOException e) {

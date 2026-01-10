@@ -1,6 +1,7 @@
 package de.daver.unigate.command.impl.argument;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.command.ArgumentNode;
 import de.daver.unigate.command.CommandExceptions;
 import de.daver.unigate.command.SuggestionProvider;
@@ -20,7 +21,7 @@ public class CategoryArgument extends ArgumentNode<Category> {
     private SuggestionProvider<Category> suggestions() {
         return context -> {
             try {
-                return CategoryCache.getAll().stream();
+                return context.plugin().categoryCache().getAll().stream();
             } catch (SQLException exception) {
                 throw CommandExceptions.DATABASE_EXCEPTION.create();
             }
@@ -36,7 +37,7 @@ public class CategoryArgument extends ArgumentNode<Category> {
         @Override
         protected Category deserialize(String value) throws CommandSyntaxException {
             try {
-                var category = CategoryCache.get(value);
+                var category = UniversalGatePlugin.getInstance().categoryCache().get(value);
                 if (category != null) return category;
                 throw CommandExceptions.VALUE_NOT_EXISTING.create(value);
             } catch (SQLException exception) {

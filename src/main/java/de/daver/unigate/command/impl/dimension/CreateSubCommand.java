@@ -2,6 +2,7 @@ package de.daver.unigate.command.impl.dimension;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.command.LiteralNode;
 import de.daver.unigate.command.CommandExceptions;
 import de.daver.unigate.command.PluginContext;
@@ -47,9 +48,11 @@ class CreateSubCommand extends LiteralNode {
     private void createDimension(Category category, String theme, DimensionType type, PluginContext context) throws CommandSyntaxException {
         try {
             var id = Dimension.buildId(category, theme);
-            if(DimensionCache.select(id) != null) throw CommandExceptions.VALUE_EXISTING.create(id);
+            if(context.plugin().dimensionCache().select(id) != null) throw CommandExceptions.VALUE_EXISTING.create(id);
             Dimension dimension = Dimension.create(category, theme, type, context.executor().getUniqueId());
-            Message.builder().key(LanguageKeys.DIMENSION_CREATE_SUCCESS)
+            UniversalGatePlugin.getInstance().dimensionCache().insert(dimension);
+            context.plugin().languageManager().message()
+                    .key(LanguageKeys.DIMENSION_CREATE_SUCCESS)
                     .parsed("dimension",dimension.id())
                     .parsed("type", dimension.type())
                     .build().send(context.sender());

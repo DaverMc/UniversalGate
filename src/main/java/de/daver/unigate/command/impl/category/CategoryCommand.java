@@ -16,7 +16,8 @@ public class CategoryCommand extends LiteralNode {
     }
 
     private void showSubCommands(PluginContext context) {
-        Message.builder().key(LanguageKeys.CATEGORY_COMMAND_HELP)
+        context.plugin().languageManager().message()
+                .key(LanguageKeys.CATEGORY_COMMAND_HELP)
                 .build().send(context.sender());
     }
 }
