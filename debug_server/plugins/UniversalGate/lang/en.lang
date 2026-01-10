@@ -1,5 +1,5 @@
 #
-#Sat Jan 10 14:56:03 CET 2026
+#Sat Jan 10 17:27:34 CET 2026
 category.command.help=<link\:chat.prefix>You can use these subcommands\:<br>- create <name><br>- delete <category><br>- list
 category.create.success=<link\:chat.prefix>Successfully created <green><category></green>
 category.delete.success=<link\:chat.prefix>Successfully deleted <green><category></green>
@@ -17,7 +17,13 @@ dimension.delete.confirm=<link\:chat.prefix>You need to <click\:run_command\:'/d
 dimension.delete.success=<link\:chat.prefix>Successfully deleted Dimension (<aqua><dimension></aqua>)
 dimension.enter.failed=<link\:chat.prefix> <red>You are not allowed to enter <light_purple><dimension></light_purple>
 dimension.enter.success=<link\:chat.prefix> You are now in <green><dimension></green>
+dimension.export.success=new\:dimension.export.success[<dimension>]
+dimension.import.success=new\:dimension.import.success[<dimension>]
 dimension.info=<link\:chat.prefix> Information about <id>\:<br>-Name\: <name><br>-Category\: <category><br>-Type\: <type><br>-State\: <state><br>-Stoplag\: <stoplag>
+dimension.invite.accept=<link:chat.prefix> You have accept the invite to visit <light_purple><dimension></light_purple>
+dimension.invite.receive=<link:chat.prefix> You have received an invitation from <aqua><sender></aqua> to visit <light_purple><dimension></light_purple> click to <click:run_command:'/dimension invite accept'><green>accept</green></click>
+dimension.invite.send=<link:chat.prefix> You have send an invitation to <aqua><target></aqua> to join you on <light_purple><dimension></light_purple>
+dimension.kick.success=<link:chat.prefix> You have kicked <aqua><target></aqua> from <light_purple><dimension></light_purple>
 dimension.list.entry=- <dimension>
 dimension.list.header=<link\:chat.prefix> Found <dimensions> dimensions\:
 event.join=<link\:chat.prefix>Welcome <player> to UniversalGate\!

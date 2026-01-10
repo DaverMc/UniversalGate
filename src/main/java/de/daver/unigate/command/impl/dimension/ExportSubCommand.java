@@ -1,6 +1,7 @@
 package de.daver.unigate.command.impl.dimension;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.command.CommandExceptions;
 import de.daver.unigate.command.LiteralNode;
 import de.daver.unigate.command.PluginContext;
@@ -9,9 +10,7 @@ import de.daver.unigate.command.impl.argument.DimensionArgument;
 import de.daver.unigate.dimension.Dimension;
 import de.daver.unigate.util.FileUtils;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 
 public class ExportSubCommand extends LiteralNode {
 
@@ -28,9 +27,10 @@ public class ExportSubCommand extends LiteralNode {
 
         dimension.unload(true);
 
-        File worldContainer = context.plugin().getServer().getWorldContainer();
-        Path source = worldContainer.toPath().resolve(dimension.id());
-        Path target = worldContainer.getParentFile().toPath().resolve("dim_exports").resolve(dimension.id() + "_" + tag + ".tar.gz");
+        var worldContainer = context.plugin().getServer().getWorldContainer().toPath();
+        var dataFolder = context.plugin().getDataFolder().toPath();
+        var source = worldContainer.resolve(dimension.id());
+        var target = dataFolder.resolve("dim_exports").resolve(dimension.id() + "_" + tag + ".tar.gz");
 
         try {
             FileUtils.compressDirectory(source, target);
@@ -38,5 +38,11 @@ public class ExportSubCommand extends LiteralNode {
             context.plugin().logger().error("Could not export dimension " + dimension.id(), exception);
             throw CommandExceptions.FILE_EXCEPTION.create();
         }
+
+        context.plugin().languageManager().message()
+                .key(LanguageKeys.DIMENSION_EXPORT_SUCCESS)
+                .parsed("dimension", dimension.name())
+                .parsed("tag", tag)
+                .build().send(context.sender());
     }
 }

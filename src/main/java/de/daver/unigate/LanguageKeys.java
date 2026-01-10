@@ -4,6 +4,11 @@ import de.daver.unigate.lang.LanguageKey;
 
 public enum LanguageKeys implements LanguageKey {
 
+    DIMENSION_INVITE_RECEIVE("dimension.invite.receive", "sender", "dimension"),
+    DIMENSION_INVITE_ACCEPT("dimension.invite.accept", "dimension"),
+    DIMENSION_INVITE_SEND("dimension.invite.send", "target", "dimension"),
+    DIMENSION_EXPORT_SUCCESS("dimension.export.success", "dimension"),
+    DIMENSION_IMPORT_SUCCESS("dimension.import.success", "dimension"),
     DIMENSION_ALLOWED_REMOVE_SUCCESS("dimension.allowed.remove.success", "player", "dimension"),
     DIMENSION_ALLOWED_ADD_SUCCESS("dimension.allowed.add.success", "player", "dimension"),
     DIMENSION_ALLOWED_LIST_ENTRY("dimension.allowed.list.entry", "player"),
@@ -28,7 +33,8 @@ public enum LanguageKeys implements LanguageKey {
     DIMENSION_DELETE_SUCCESS("dimension.delete.success", "dimension"),
     DIMENSION_DELETE_CONFIRM("dimension.delete.confirm", "dimension"),
     DIMENSION_COMMAND_HELP("dimension.command.help"),
-    SPEED_SET("speed.set", "speed"),;
+    SPEED_SET("speed.set", "speed"),
+    DIMENSION_KICK_SUCCESS("dimension.kick.success", "target", "dimension");
 
     private final String key;
     private final String[] argNames;

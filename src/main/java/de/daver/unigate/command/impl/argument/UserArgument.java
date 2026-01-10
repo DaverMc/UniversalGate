@@ -30,11 +30,15 @@ public class UserArgument extends ArgumentNode<UUID> {
 
         @Override
         protected UUID deserialize(String value) throws CommandSyntaxException {
+            var player = Bukkit.getPlayer(value);
+            if(player != null) return player.getUniqueId();
             return PlayerFetcher.getPlayerUUID(value);
         }
 
         @Override
         public String serialize(UUID value) {
+            var player = Bukkit.getPlayer(value);
+            if(player != null) return player.getName();
             return PlayerFetcher.getPlayerName(value);
         }
     }
