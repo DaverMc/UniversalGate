@@ -61,8 +61,9 @@ public class UniversalGatePlugin extends JavaPlugin {
         languageManager = new LanguageManager(LanguageKeys.class, Locale.ENGLISH, getDataPath().resolve("lang"));
         try {
             languageManager.load(languageManager.getDefaultLanguage());
+            languageManager.load();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            logger().error("Failed to load default language file", e);
         }
     }
 

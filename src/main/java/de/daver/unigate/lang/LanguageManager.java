@@ -38,7 +38,7 @@ public class LanguageManager {
         for(Locale locale : locales) {
             Path languageFile = languageDirectory.resolve(locale.toLanguageTag() + ".lang");
             Properties properties = new Properties();
-            if(!Files.exists(languageDirectory)) Files.createDirectory(languageDirectory);
+            if(!Files.exists(languageDirectory)) Files.createDirectories(languageDirectory);
             if(!Files.exists(languageFile)) Files.createFile(languageFile);
             try (InputStreamReader inputStream = new InputStreamReader(Files.newInputStream(languageFile), StandardCharsets.UTF_8)) {
                 properties.load(inputStream);

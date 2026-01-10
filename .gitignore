@@ -42,5 +42,6 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-/debug_server
+/debug_server/
+/template_server/
 !/debug_server/plugins/UniversalGate/lang/
