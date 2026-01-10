@@ -3,9 +3,8 @@ package de.daver.unigate.listener;
 import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.dimension.Dimension;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-
-import java.sql.SQLException;
 
 public class WorldSwitchListener extends PluginEventListener {
 
@@ -15,14 +14,18 @@ public class WorldSwitchListener extends PluginEventListener {
 
     @EventHandler
     public void onWorldSwitch(PlayerTeleportEvent event) {
-        try {
-            Dimension toDimension = plugin().dimensionCache().select(event.getTo().getWorld().getName());
-            if(toDimension == null) return;
-            if(toDimension.canEnter(event.getPlayer())) return;
-            event.setCancelled(true);
-        } catch (SQLException exception) {
-            return;
-        }
+        Dimension toDimension = plugin().dimensionCache().getActive(event.getTo().getWorld().getName());
+        if(toDimension == null) return;
+        if(toDimension.canEnter(event.getPlayer())) return;
+        event.setCancelled(true);
     }
 
+    @EventHandler
+    public void postWorldSwitched(PlayerChangedWorldEvent event) {
+        var from = event.getFrom();
+        if(from.getPlayerCount() > 0) return;
+        var fromDimension = plugin().dimensionCache().getActive(from.getName());
+        if(fromDimension == null) return;
+        fromDimension.unload(true);
+    }
 }

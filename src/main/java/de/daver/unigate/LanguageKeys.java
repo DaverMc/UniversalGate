@@ -27,7 +27,8 @@ public enum LanguageKeys implements LanguageKey {
     DIMENSION_CREATE_SUCCESS("dimension.create.success", "dimension", "type"),
     DIMENSION_DELETE_SUCCESS("dimension.delete.success", "dimension"),
     DIMENSION_DELETE_CONFIRM("dimension.delete.confirm", "dimension"),
-    DIMENSION_COMMAND_HELP("dimension.command.help");
+    DIMENSION_COMMAND_HELP("dimension.command.help"),
+    SPEED_SET("speed.set", "speed"),;
 
     private final String key;
     private final String[] argNames;

@@ -2,7 +2,6 @@ package de.daver.unigate.listener;
 
 import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.UniversalGatePlugin;
-import de.daver.unigate.lang.Message;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 

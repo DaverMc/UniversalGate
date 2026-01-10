@@ -1,7 +1,6 @@
 package de.daver.unigate.dimension;
 
 import de.daver.unigate.Permissions;
-import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.category.Category;
 import de.daver.unigate.dimension.gen.LevelData;
 import de.daver.unigate.util.FileUtils;
@@ -14,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.sql.SQLException;
 import java.util.Random;
 import java.util.UUID;
 
@@ -26,17 +24,18 @@ public record Dimension(String id, DimensionType type, DimensionStats stats, Dim
         var id = buildId(category, theme);
         var stats = new DimensionStats(creator);
         var dimension = new Dimension(id, type, stats, new DimensionMeta(), new Random().nextLong());
-        LevelData.create(dimension);
         createLevelDatFile(dimension);
-        Bukkit.createWorld(new WorldCreator(dimension.id));
+        dimension.load();
+        dimension.unload(true);
         return dimension;
     }
 
     private static void createLevelDatFile(Dimension dimension) throws IOException {
-        File worldFolder = new File(Bukkit.getWorldContainer(), dimension.id());
-        Files.createDirectories(worldFolder.toPath());
+        var worldFolder = Bukkit.getWorldContainer().toPath().resolve(dimension.id());
+        Files.createDirectories(worldFolder);
         var dimensionTag = LevelData.create(dimension);
-        File levelDatFile =  new File(worldFolder, "level.dat");
+        File levelDatFile =  worldFolder.resolve( "level.dat").toFile();
+        if(!levelDatFile.createNewFile()) return;
         NBTUtil.write(dimensionTag, levelDatFile, true);
     }
 
@@ -46,7 +45,7 @@ public record Dimension(String id, DimensionType type, DimensionStats stats, Dim
     }
 
     public void delete() throws IOException {
-        Bukkit.unloadWorld(id, false);
+        unload(false);
         FileUtils.deleteDir(Bukkit.getWorldContainer().toPath().resolve(id));
     }
 
@@ -54,6 +53,21 @@ public record Dimension(String id, DimensionType type, DimensionStats stats, Dim
         if(meta.state() != DimensionState.ACTIVE) return;
         Bukkit.createWorld(new WorldCreator(id));
         meta.state(DimensionState.LOADED);
+    }
+
+    public void unload(boolean save) {
+        if(meta.state() != DimensionState.LOADED) return;
+        var bukkitWorld = Bukkit.getWorld(id);
+        bukkitWorld.getPlayers().forEach(this::kick);
+        Bukkit.unloadWorld(id, save);
+        meta.state(DimensionState.ACTIVE);
+    }
+
+    public void kick(Player player) {
+        var world = Bukkit.getWorld(id);
+        if(world == null) return;
+        var worldHub = Bukkit.getWorld("world");
+        player.teleport(worldHub.getSpawnLocation());
     }
 
     public boolean enter(Player player) {

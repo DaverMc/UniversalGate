@@ -2,12 +2,9 @@ package de.daver.unigate.command.impl.category;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
-import de.daver.unigate.UniversalGatePlugin;
-import de.daver.unigate.category.CategoryCache;
 import de.daver.unigate.command.CommandExceptions;
 import de.daver.unigate.command.LiteralNode;
 import de.daver.unigate.command.PluginContext;
-import de.daver.unigate.lang.Message;
 
 import java.sql.SQLException;
 
@@ -29,7 +26,7 @@ public class ListSubCommand extends LiteralNode {
             for (var category : categories) {
                 context.plugin().languageManager().message()
                         .key(LanguageKeys.CATEGORY_LIST_ENTRY)
-                        .parsed("category", category.id())
+                        .parsed("category", category.name())
                         .build().send(context.sender());
             }
         } catch (SQLException e) {

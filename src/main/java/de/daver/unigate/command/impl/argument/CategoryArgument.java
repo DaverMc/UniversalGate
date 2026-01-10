@@ -2,12 +2,11 @@ package de.daver.unigate.command.impl.argument;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.UniversalGatePlugin;
+import de.daver.unigate.category.Category;
 import de.daver.unigate.command.ArgumentNode;
 import de.daver.unigate.command.CommandExceptions;
 import de.daver.unigate.command.SuggestionProvider;
 import de.daver.unigate.command.argument.StringArgumentType;
-import de.daver.unigate.category.Category;
-import de.daver.unigate.category.CategoryCache;
 
 import java.sql.SQLException;
 

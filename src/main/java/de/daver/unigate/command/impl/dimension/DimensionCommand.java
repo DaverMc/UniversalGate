@@ -3,7 +3,6 @@ package de.daver.unigate.command.impl.dimension;
 import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.command.LiteralNode;
 import de.daver.unigate.command.PluginContext;
-import de.daver.unigate.lang.Message;
 
 public class DimensionCommand extends LiteralNode {
 
@@ -16,6 +15,10 @@ public class DimensionCommand extends LiteralNode {
         then(new InfoSubCommand());
         then(new TeleportSubCommand());
         then(new AllowedSubCommand());
+        then(new ExportSubCommand());
+        then(new ImportSubCommand());
+        then(new InviteSubCommand());
+        then(new KickSubCommand());
     }
 
     public void showSubCommands(PluginContext context) {

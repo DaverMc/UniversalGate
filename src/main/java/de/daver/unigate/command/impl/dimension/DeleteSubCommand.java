@@ -9,7 +9,6 @@ import de.daver.unigate.command.PluginContext;
 import de.daver.unigate.command.argument.ConfirmArgument;
 import de.daver.unigate.command.impl.argument.DimensionArgument;
 import de.daver.unigate.dimension.Dimension;
-import de.daver.unigate.lang.Message;
 
 import java.io.IOException;
 import java.sql.SQLException;

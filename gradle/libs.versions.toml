@@ -6,6 +6,7 @@ hikari  = "7.0.2"
 nbt = "6.1"
 luckperms = "5.5"
 run-paper = "3.0.2"
+apache-compress = "1.26.0"
 
 [plugins]
 shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
@@ -17,3 +18,4 @@ paper-api = { group = "io.papermc.paper", name = "paper-api", version.ref = "pap
 hikariCP = {group = "com.zaxxer", name = "HikariCP", version.ref = "hikari"}
 nbt = {group = "com.github.Querz", name = "NBT", version.ref = "nbt"}
 luckPerms = {group = "net.luckperms", name = "api", version.ref = "luckperms"}
+apache-compess = {group = "org.apache.commons", name = "commons-compress", version.ref = "apache-compress"}

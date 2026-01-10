@@ -1,6 +1,5 @@
 package de.daver.unigate.lang;
 
-import de.daver.unigate.UniversalGatePlugin;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;

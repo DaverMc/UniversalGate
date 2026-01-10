@@ -2,7 +2,6 @@ package de.daver.unigate.util;
 
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.cacheddata.CachedMetaData;
-import net.luckperms.api.model.user.User;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;

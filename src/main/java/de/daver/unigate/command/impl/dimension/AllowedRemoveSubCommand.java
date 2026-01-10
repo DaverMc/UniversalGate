@@ -8,8 +8,6 @@ import de.daver.unigate.command.PluginContext;
 import de.daver.unigate.command.SuggestionProvider;
 import de.daver.unigate.command.impl.argument.UserArgument;
 import de.daver.unigate.dimension.Dimension;
-import de.daver.unigate.dimension.DimensionCache;
-import de.daver.unigate.lang.Message;
 
 import java.sql.SQLException;
 import java.util.UUID;

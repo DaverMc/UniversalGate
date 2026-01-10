@@ -6,9 +6,12 @@ import de.daver.unigate.category.CategoryCache;
 import de.daver.unigate.command.impl.category.CategoryCommand;
 import de.daver.unigate.command.impl.dimension.DimensionCommand;
 import de.daver.unigate.command.impl.lang.LanguageCommand;
+import de.daver.unigate.command.impl.util.CreativeItemsCommand;
+import de.daver.unigate.command.impl.util.DebugStickCommand;
+import de.daver.unigate.command.impl.util.NightVisionCommand;
+import de.daver.unigate.command.impl.util.SpeedCommand;
 import de.daver.unigate.dimension.DimensionCache;
 import de.daver.unigate.lang.LanguageManager;
-import de.daver.unigate.lang.Message;
 import de.daver.unigate.listener.ChatListener;
 import de.daver.unigate.listener.JoinListener;
 import de.daver.unigate.listener.StopLagListener;
@@ -69,6 +72,10 @@ public class UniversalGatePlugin extends JavaPlugin {
             dispatcher.register(new DimensionCommand().build());
             dispatcher.register(new CategoryCommand().build());
             dispatcher.register(new LanguageCommand().build());
+            dispatcher.register(new SpeedCommand().build());
+            dispatcher.register(new CreativeItemsCommand().build());
+            dispatcher.register(new DebugStickCommand().build());
+            dispatcher.register(new NightVisionCommand().build());
         });
     }
 

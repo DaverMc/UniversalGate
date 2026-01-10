@@ -6,8 +6,6 @@ import de.daver.unigate.command.LiteralNode;
 import de.daver.unigate.command.PluginContext;
 import de.daver.unigate.command.impl.argument.DimensionArgument;
 import de.daver.unigate.dimension.Dimension;
-import de.daver.unigate.dimension.DimensionCache;
-import de.daver.unigate.lang.Message;
 
 public class InfoSubCommand extends LiteralNode {
 

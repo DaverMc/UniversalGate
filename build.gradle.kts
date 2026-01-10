@@ -23,7 +23,7 @@ dependencies {
     compileOnly(libs.luckPerms)
     implementation(libs.nbt)
     implementation(libs.hikariCP)
-
+    implementation(libs.apache.compess)
 }
 
 paper {

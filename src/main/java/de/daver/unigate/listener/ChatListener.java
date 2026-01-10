@@ -2,7 +2,6 @@ package de.daver.unigate.listener;
 
 import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.UniversalGatePlugin;
-import de.daver.unigate.lang.Message;
 import de.daver.unigate.util.PlayerFetcher;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import org.bukkit.event.EventHandler;

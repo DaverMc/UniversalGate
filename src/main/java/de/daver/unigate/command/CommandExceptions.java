@@ -3,7 +3,6 @@ package de.daver.unigate.command;
 import com.mojang.brigadier.LiteralMessage;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
-import de.daver.unigate.dimension.Dimension;
 
 public class CommandExceptions {
 

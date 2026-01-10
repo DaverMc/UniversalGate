@@ -5,8 +5,6 @@ import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.command.CommandExceptions;
 import de.daver.unigate.command.LiteralNode;
 import de.daver.unigate.command.PluginContext;
-import de.daver.unigate.dimension.DimensionCache;
-import de.daver.unigate.lang.Message;
 
 import java.sql.SQLException;
 

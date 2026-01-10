@@ -1,27 +1,28 @@
 #
-#Fri Jan 09 23:11:19 CET 2026
-category.command.help=<link:chat.prefix>You can use these subcommands:<br>- create <category> <theme> {generator}<br>- delete <category><br>- list
-category.create.success=<link:chat.prefix>Successfully created <green><category></green>
-category.delete.success=<link:chat.prefix>Successfully deleted <green><category></green>
-category.list.entry=- <category>
-category.list.header=Categories (<categories>):
+#Sat Jan 10 14:56:03 CET 2026
+category.command.help=<link\:chat.prefix>You can use these subcommands\:<br>- create <name><br>- delete <category><br>- list
+category.create.success=<link\:chat.prefix>Successfully created <green><category></green>
+category.delete.success=<link\:chat.prefix>Successfully deleted <green><category></green>
+category.list.entry=<dark_gray>-</dark_gray> <blue><category></blue>
+category.list.header=<link\:chat.prefix>Categories <dark_gray>(</dark_gray><aqua><categories></aqua><dark_gray>)</dark_gray>\:
 chat.format=<prefix> | <player> | <suffix> <dark_gray>➤ </dark_gray><gray> <message>
 chat.prefix=<b><gradient\:\#00ffff\:\#ff55ff>UniversalGate</gradient></b> <dark_gray>➤ </dark_gray><gray>
-dimension.allowed.add.success=<link:chat.prefix> Successfully added <green><player></green> as allowed to <aqua><dimension></aqua>
+dimension.allowed.add.success=<link\:chat.prefix> Successfully added <green><player></green> as allowed to <aqua><dimension></aqua>
 dimension.allowed.list.entry=<player>,
 dimension.allowed.list.header=This players <players> are allowed to enter <dimension>
-dimension.allowed.remove.success=<link:chat.prefix>Successfully removed <player> from <dimension>
-dimension.command.help=<link\:chat.prefix>These subcommands are available\:<br>- create [category] [theme] {generator}<br>- delete [dimension] confirm <br>- list <br>- info {dimension} <br>- import [folder_name] [category] [name] {generator} {seed} <br>- export [dimension] [version_tag] <br>- stoplag {dimension} <br>- allowlist add [player] <br>- allowlist remove [player] <br>- teleport [dimension] <br>- invite [player] <br>- kick [player] <br>
-dimension.create.success=<link\:chat.prefix>Successfully created a new Dimension (<dimension>) with type <type>
-dimension.delete.confirm=<link\:chat.prefix>You need to <click\:run_command\:'/dimension delete <dimension> confirm'><green>confirm</click> that you want to delete <dimension>
-dimension.delete.success=<link\:chat.prefix>Successfully deleted Dimension (<dimension>)
-dimension.enter.failed=<link:chat.prefix> <red>You are not allowed to enter <purple><dimension></purple>
-dimension.enter.success=<link:chat.prefix> You are now in <green><dimension></green>
-dimension.info=<link:chat.prefix> Information about <id>:<br>-Name: <name><br>-Category: <category><br>-Type: <type><br>-State: <state><br>-Stoplag: <stoplag>
+dimension.allowed.remove.success=<link\:chat.prefix>Successfully removed <player> from <dimension>
+dimension.command.help=<link\:chat.prefix>These subcommands are available\:<br>- create [category] [theme] {generator}<br>- delete [dimension] confirm <br>- list <br>- info {dimension} <br>- import [folder_name] [category] [theme] {generator} <br>- export [dimension] [version_tag] <br>- stoplag {dimension} <br>- allowlist add [player] <br>- allowlist remove [player] <br>- teleport [dimension] <br>- invite [player] <br>- kick [player] <br>
+dimension.create.success=<link\:chat.prefix>Successfully created a new Dimension (<aqua><dimension></aqua>) with type <light_purple><type></light_purple>
+dimension.delete.confirm=<link\:chat.prefix>You need to <click\:run_command\:'/dimension delete <dimension> confirm'><green>confirm</click> that you want to delete <aqua><dimension></aqua>
+dimension.delete.success=<link\:chat.prefix>Successfully deleted Dimension (<aqua><dimension></aqua>)
+dimension.enter.failed=<link\:chat.prefix> <red>You are not allowed to enter <light_purple><dimension></light_purple>
+dimension.enter.success=<link\:chat.prefix> You are now in <green><dimension></green>
+dimension.info=<link\:chat.prefix> Information about <id>\:<br>-Name\: <name><br>-Category\: <category><br>-Type\: <type><br>-State\: <state><br>-Stoplag\: <stoplag>
 dimension.list.entry=- <dimension>
-dimension.list.header=<link:chat.prefix> Found <dimensions> dimensions:
+dimension.list.header=<link\:chat.prefix> Found <dimensions> dimensions\:
 event.join=<link\:chat.prefix>Welcome <player> to UniversalGate\!
 language.reload=<link\:chat.prefix>Successfully reloaded language files
+speed.set=Set speed to <green><speed><green>
 tab.list.footer=<br><gray>Players online <dark_gray>(</dark_gray><green><players></green><dark_gray>)</dark_gray>
 tab.list.header=<br><b><gradient\:\#00ffff\:\#ff55ff>UniversalGate</gradient></b><br>
 tab.list.name=<prefix> <gray>|</gray> <player> <gray>|</gray> <suffix>

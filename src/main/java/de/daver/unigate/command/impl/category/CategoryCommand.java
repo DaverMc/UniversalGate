@@ -3,7 +3,6 @@ package de.daver.unigate.command.impl.category;
 import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.command.LiteralNode;
 import de.daver.unigate.command.PluginContext;
-import de.daver.unigate.lang.Message;
 
 public class CategoryCommand extends LiteralNode {
 

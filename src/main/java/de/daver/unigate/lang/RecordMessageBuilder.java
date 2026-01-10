@@ -4,7 +4,6 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public final class RecordMessageBuilder implements Message.Builder {
 
