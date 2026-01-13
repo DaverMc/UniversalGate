@@ -4,6 +4,13 @@ import de.daver.unigate.lang.LanguageKey;
 
 public enum LanguageKeys implements LanguageKey {
 
+    EVENT_PORTAL_DISABLED("event.portal.disabled"),
+    EVENT_LEAVE("event.leave", "player"),
+    DIMENSION_STOPLAG_DISABLE("dimension.stoplag.disable", "dimension"),
+    DIMENSION_STOPLAG_ENABLE("dimension.stoplag.enable", "dimension"),
+    SERVER_VERSION("server.version"),
+    SERVER_MOTD("server.motd"),
+    SERVER_LISTED_PLAYERS("server.listed.players"),
     BORDER_UNLIMITED("border.unlimited"),
     BORDER_DEFAULT("border.default"),
     NIGHTVISION_ADD("nightvision.add"),
@@ -15,7 +22,7 @@ public enum LanguageKeys implements LanguageKey {
     DIMENSION_INVITE_RECEIVE("dimension.invite.receive", "sender", "dimension"),
     DIMENSION_INVITE_ACCEPT("dimension.invite.accept", "dimension"),
     DIMENSION_INVITE_SEND("dimension.invite.send", "target", "dimension"),
-    DIMENSION_EXPORT_SUCCESS("dimension.export.success", "dimension"),
+    DIMENSION_EXPORT_SUCCESS("dimension.export.success", "dimension", "tag"),
     DIMENSION_IMPORT_SUCCESS("dimension.import.success", "dimension"),
     DIMENSION_ALLOWED_REMOVE_SUCCESS("dimension.allowed.remove.success", "player", "dimension"),
     DIMENSION_ALLOWED_ADD_SUCCESS("dimension.allowed.add.success", "player", "dimension"),

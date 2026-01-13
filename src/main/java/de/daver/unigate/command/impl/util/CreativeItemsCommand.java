@@ -36,7 +36,8 @@ public class CreativeItemsCommand extends LiteralNode {
         var structureBlock = new ItemStack(Material.STRUCTURE_BLOCK);
         var structureVoid = new ItemStack(Material.STRUCTURE_VOID);
         var jigsaw = new ItemStack(Material.JIGSAW);
-        inventory.addItem(barrier, structureVoid, structureBlock, jigsaw);
+        var debugStick = new ItemStack(Material.DEBUG_STICK);
+        inventory.addItem(barrier, structureVoid, structureBlock, jigsaw, debugStick);
         fillCommandBlocks(inventory);
         fillLightBlocks(inventory, languageManager, player);
     }

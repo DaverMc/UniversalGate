@@ -6,6 +6,8 @@ import de.daver.unigate.dimension.gen.LevelData;
 import de.daver.unigate.util.FileUtils;
 import net.querz.nbt.io.NBTUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.GameRule;
+import org.bukkit.GameRules;
 import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -26,8 +28,20 @@ public record Dimension(String id, DimensionType type, DimensionStats stats, Dim
         var dimension = new Dimension(id, type, stats, new DimensionMeta(), new Random().nextLong());
         createLevelDatFile(dimension);
         dimension.load();
+        setGameRules(dimension);
         dimension.unload(true);
         return dimension;
+    }
+
+    private static void setGameRules(Dimension dimension) {
+        if(dimension.type() == DimensionType.OVERWORLD) return;
+        var world = Bukkit.getWorld(dimension.id());
+        world.setGameRule(GameRules.ADVANCE_TIME, false);
+        world.setGameRule(GameRules.ADVANCE_WEATHER, false);
+        world.setGameRule(GameRules.RANDOM_TICK_SPEED, 0);
+        world.setGameRule(GameRules.COMMAND_BLOCKS_WORK, false);
+        world.setGameRule(GameRules.SHOW_ADVANCEMENT_MESSAGES, false);
+        world.setGameRule(GameRules.SHOW_DEATH_MESSAGES, false);
     }
 
     private static void createLevelDatFile(Dimension dimension) throws IOException {

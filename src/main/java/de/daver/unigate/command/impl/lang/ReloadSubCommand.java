@@ -22,6 +22,7 @@ public class ReloadSubCommand extends LiteralNode {
             plugin.languageManager().load(Locale.ENGLISH);
             plugin.languageManager().message().key(LanguageKeys.LANGUAGE_RELOAD)
                     .build().send(context.sender());
+            plugin.serverPingListener().reload();
         } catch (IOException e) {
             plugin.logger().error("Failed to reload language file", e);
             throw CommandExceptions.FILE_EXCEPTION.create();

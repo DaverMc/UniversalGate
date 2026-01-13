@@ -4,6 +4,8 @@ import de.daver.unigate.UniversalGatePlugin;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
+
+//SORTIEREN
 public class TabList {
 
     private final UniversalGatePlugin plugin;

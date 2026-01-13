@@ -7,12 +7,10 @@ import de.daver.unigate.command.impl.category.CategoryCommand;
 import de.daver.unigate.command.impl.dimension.DimensionCommand;
 import de.daver.unigate.command.impl.lang.LanguageCommand;
 import de.daver.unigate.command.impl.util.*;
+import de.daver.unigate.command.task.TaskCommand;
 import de.daver.unigate.dimension.DimensionCache;
 import de.daver.unigate.lang.LanguageManager;
-import de.daver.unigate.listener.ChatListener;
-import de.daver.unigate.listener.JoinListener;
-import de.daver.unigate.listener.StopLagListener;
-import de.daver.unigate.listener.WorldSwitchListener;
+import de.daver.unigate.listener.*;
 import de.daver.unigate.sql.SQLExecutor;
 import de.daver.unigate.util.PlayerFetcher;
 import de.daver.unigate.util.TabList;
@@ -38,6 +36,7 @@ public class UniversalGatePlugin extends JavaPlugin {
     private CategoryCache categoryCache;
     private DimensionCache dimensionCache;
     private SQLExecutor sqlExecutor;
+    private ServerPingListener serverPingListener;
 
     @Override
     public void onDisable() {
@@ -74,7 +73,7 @@ public class UniversalGatePlugin extends JavaPlugin {
             dispatcher.register(new CreativeItemsCommand().build());
             dispatcher.register(new DebugStickCommand().build());
             dispatcher.register(new NightVisionCommand().build());
-            dispatcher.register(new BorderCommand().build());
+            dispatcher.register(new TaskCommand().build());
         });
     }
 
@@ -83,6 +82,10 @@ public class UniversalGatePlugin extends JavaPlugin {
         new JoinListener(this).register();
         new ChatListener(this).register();
         new StopLagListener(this).register();
+        this.serverPingListener = new ServerPingListener(this);
+        serverPingListener.register();
+        new LeaveListener(this).register();
+        new PortalListener(this).register();
     }
 
     private void initializeSQL() {
@@ -173,6 +176,10 @@ public class UniversalGatePlugin extends JavaPlugin {
 
     public DimensionCache dimensionCache() {
         return dimensionCache;
+    }
+
+    public ServerPingListener serverPingListener() {
+        return serverPingListener;
     }
 
 

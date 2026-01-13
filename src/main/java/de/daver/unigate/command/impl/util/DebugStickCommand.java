@@ -20,6 +20,7 @@ public class DebugStickCommand extends LiteralNode {
         player.give(debugStick);
 
         context.plugin().languageManager().message()
-                .key(LanguageKeys.DEBUG_STICK_GIVEN);
+                .key(LanguageKeys.DEBUG_STICK_GIVEN)
+                .build().send(player);
     }
 }

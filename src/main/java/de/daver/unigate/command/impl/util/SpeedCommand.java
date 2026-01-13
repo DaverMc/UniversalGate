@@ -28,7 +28,7 @@ public class SpeedCommand extends LiteralNode {
     private void setSpeed(int speed, PluginContext context) throws CommandSyntaxException {
         var player = context.senderPlayer();
 
-        float speedF = 10.0f / speed;
+        float speedF =  (float) speed / 10.0f;
 
         if(player.isFlying()) player.setFlySpeed(speedF);
         else player.setWalkSpeed(speedF);

@@ -1,0 +1,21 @@
+package de.daver.unigate.command.task;
+
+import de.daver.unigate.command.LiteralNode;
+
+public class TaskCommand extends LiteralNode {
+
+    public TaskCommand() {
+        super("task");
+        then(new ListSubCommand());
+        then(new InfoSubCommand());
+        then(new AcceptSubCommand());
+        then(new CancelSubCommand());
+        then(new FinishSubCommand());
+        then(new MemberSubCommand());
+        then(new CreateSubCommand());
+        then(new DeleteSubCommand());
+        then(new DescriptionSubCommand());
+        then(new DeclineSubCommand());
+        then(new ApproveSubCommand());
+    }
+}
