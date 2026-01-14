@@ -1,6 +1,5 @@
 package de.daver.unigate.command.task;
 
-import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.core.command.LiteralNode;

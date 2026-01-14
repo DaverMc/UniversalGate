@@ -3,15 +3,15 @@ package de.daver.unigate.command.dimension;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.category.Category;
+import de.daver.unigate.command.argument.CategoryArgument;
 import de.daver.unigate.core.command.CommandExceptions;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.core.command.argument.EnumArgument;
 import de.daver.unigate.core.command.argument.WordArgument;
-import de.daver.unigate.command.argument.CategoryArgument;
+import de.daver.unigate.core.util.FileUtils;
 import de.daver.unigate.dimension.Dimension;
 import de.daver.unigate.dimension.DimensionType;
-import de.daver.unigate.core.util.FileUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;

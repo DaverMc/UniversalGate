@@ -1,11 +1,11 @@
 package de.daver.unigate.command.dimension;
 
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.command.argument.DimensionArgument;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
-import de.daver.unigate.command.argument.DimensionArgument;
-import de.daver.unigate.dimension.Dimension;
 import de.daver.unigate.core.util.PlayerFetcher;
+import de.daver.unigate.dimension.Dimension;
 
 public class AllowedSubCommand extends LiteralNode {
 

@@ -7,7 +7,6 @@ import de.daver.unigate.core.command.CommandExceptions;
 import de.daver.unigate.core.command.SuggestionProvider;
 import de.daver.unigate.core.command.argument.StringArgumentType;
 import de.daver.unigate.task.Task;
-import de.daver.unigate.task.TaskCache;
 
 public class TaskArgument extends ArgumentNode<Task> {
 

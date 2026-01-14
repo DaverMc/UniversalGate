@@ -3,10 +3,10 @@ package de.daver.unigate.command.category;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.category.Category;
+import de.daver.unigate.command.argument.CategoryArgument;
 import de.daver.unigate.core.command.CommandExceptions;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
-import de.daver.unigate.command.argument.CategoryArgument;
 
 import java.sql.SQLException;
 

@@ -2,10 +2,13 @@ package de.daver.unigate.dimension;
 
 import de.daver.unigate.Permissions;
 import de.daver.unigate.category.Category;
-import de.daver.unigate.dimension.gen.LevelData;
 import de.daver.unigate.core.util.FileUtils;
+import de.daver.unigate.dimension.gen.LevelData;
 import net.querz.nbt.io.NBTUtil;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Difficulty;
+import org.bukkit.GameRules;
+import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
