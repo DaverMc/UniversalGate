@@ -27,6 +27,7 @@ public class CategoryCache {
         var category = cache.get(id);
         if(category != null) return category;
         category = plugin.sqlExecutor().query(Queries.SELECT_CATEGORY, Queries.TRANSFORMER, id);
+        if(category != null) cache.put(id, category);
         return category;
     }
 

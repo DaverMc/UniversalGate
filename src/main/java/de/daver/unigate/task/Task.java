@@ -17,4 +17,24 @@ public class Task {
         this.state = state;
     }
 
+    public String id() {
+        return this.id;
+    }
+
+    public UUID creator() {
+        return this.creator;
+    }
+
+    public UUID member() {
+        return this.member;
+    }
+
+    public TaskState state() {
+        return this.state;
+    }
+
+    public void setMember(UUID uuid) {
+        this.member = uuid;
+    }
 }
+

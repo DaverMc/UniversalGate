@@ -14,6 +14,7 @@ import de.daver.unigate.listener.*;
 import de.daver.unigate.core.sql.SQLExecutor;
 import de.daver.unigate.core.util.PlayerFetcher;
 import de.daver.unigate.core.util.TabList;
+import de.daver.unigate.task.TaskCache;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.event.node.NodeAddEvent;
@@ -37,6 +38,7 @@ public class UniversalGatePlugin extends JavaPlugin {
     private DimensionCache dimensionCache;
     private SQLExecutor sqlExecutor;
     private ServerPingListener serverPingListener;
+    private TaskCache taskCache;
 
     @Override
     public void onDisable() {
@@ -98,8 +100,11 @@ public class UniversalGatePlugin extends JavaPlugin {
             categoryCache.initialize();
             dimensionCache = new DimensionCache(this);
             dimensionCache.initialize();
+            taskCache = new TaskCache(this);
+            taskCache.initialize();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger().error("Failed to initialize database", e);
+            Bukkit.getPluginManager().disablePlugin(this);
         }
     }
 
