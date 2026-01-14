@@ -1,7 +1,7 @@
 package de.daver.unigate.dimension;
 
 import de.daver.unigate.UniversalGatePlugin;
-import de.daver.unigate.sql.ResultTransformer;
+import de.daver.unigate.core.sql.ResultTransformer;
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -29,7 +29,11 @@ public class DimensionCache {
 
     private void loadActive() throws SQLException {
         var dimensions = plugin.sqlExecutor().query(Queries.SELECT_ACTIVE, ResultTransformer.asList(Queries.DIMENSION_TRANSFORMER));
-        dimensions.forEach(dimension -> cache.put(dimension.id(), dimension));
+        for(var dimension : dimensions) {
+            var allowedUsers = plugin.sqlExecutor().query(Queries.SELECT_ALLOWED, ResultTransformer.asSet(Queries.ALLOWED_TRANSFORMER), dimension.id());
+            dimension.meta().allowedPlayers().addAll(allowedUsers);
+            cache.put(dimension.id(), dimension);
+        }
     }
 
     public void insert(Dimension dimension) throws SQLException {
@@ -58,8 +62,7 @@ public class DimensionCache {
         dimension = plugin.sqlExecutor().query(Queries.SELECT_DIMENSION, Queries.DIMENSION_TRANSFORMER, id);
         if(dimension == null) return null;
         cache.put(id, dimension);
-        var allowedUsers = plugin.sqlExecutor().query(Queries.SELECT_ALLOWED,
-                ResultTransformer.asSet(set -> UUID.fromString(set.getString("player"))), id);
+        var allowedUsers = plugin.sqlExecutor().query(Queries.SELECT_ALLOWED, ResultTransformer.asSet(Queries.ALLOWED_TRANSFORMER), id);
         dimension.meta().allowedPlayers().addAll(allowedUsers);
         return dimension;
     }
@@ -84,6 +87,10 @@ public class DimensionCache {
     public void disallow(Dimension dimension, UUID player) throws SQLException {
         plugin.sqlExecutor().execute(Queries.DELETE_ALLOWED, dimension.id(), player.toString());
         dimension.meta().allowedPlayers().remove(player);
+    }
+
+    public void update(Dimension dimension) throws SQLException {
+        plugin.sqlExecutor().execute(Queries.UPDATE_DIMENSION_META, dimension.meta().stopLag(), dimension.meta().state(), dimension.meta().lastLoaded(), dimension.id());
     }
 
 }

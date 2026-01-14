@@ -1,8 +1,8 @@
 package de.daver.unigate.category;
 
 import de.daver.unigate.UniversalGatePlugin;
-import de.daver.unigate.sql.ResultTransformer;
-import de.daver.unigate.sql.SQLStatement;
+import de.daver.unigate.core.sql.ResultTransformer;
+import de.daver.unigate.core.sql.SQLStatement;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -63,8 +63,9 @@ public class CategoryCache {
 
         ResultTransformer<Category> TRANSFORMER = set ->   {
                 var name = set.getString("name");
+                var id = set.getString("id");
                 if(name == null) return null;
-                return new Category(name);
+                return new Category(id, name);
         };
 
         SQLStatement DELETE_CATEGORY = new SQLStatement("DELETE FROM categories WHERE id = ?")

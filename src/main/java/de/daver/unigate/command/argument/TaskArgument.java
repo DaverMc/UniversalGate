@@ -1,7 +1,8 @@
 package de.daver.unigate.command.argument;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import de.daver.unigate.command.ArgumentNode;
+import de.daver.unigate.core.command.ArgumentNode;
+import de.daver.unigate.core.command.argument.StringArgumentType;
 import de.daver.unigate.task.Task;
 
 public class TaskArgument extends ArgumentNode<Task> {

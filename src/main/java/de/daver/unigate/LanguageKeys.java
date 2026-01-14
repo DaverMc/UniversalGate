@@ -1,6 +1,6 @@
 package de.daver.unigate;
 
-import de.daver.unigate.lang.LanguageKey;
+import de.daver.unigate.core.lang.LanguageKey;
 
 public enum LanguageKeys implements LanguageKey {
 
@@ -33,7 +33,7 @@ public enum LanguageKeys implements LanguageKey {
     DIMENSION_INFO("dimension.info", "id", "name", "category", "type", "state", "stoplag"),
     DIMENSION_LIST_ENTRY("dimension.list.entry", "dimension"),
     DIMENSION_LIST_HEADER("dimension.list.header", "dimensions"),
-    CATEGORY_LIST_ENTRY("category.list.entry", "category"),
+    CATEGORY_LIST_ENTRY("category.list.entry", "category", "id"),
     CATEGORY_LIST_HEADER("category.list.header", "categories"),
     CATEGORY_DELETE_SUCCESS("category.delete.success", "category"),
     CATEGORY_COMMAND_HELP("category.command.help"),

@@ -1,6 +1,6 @@
 package de.daver.unigate.command.task;
 
-import de.daver.unigate.command.LiteralNode;
+import de.daver.unigate.core.command.LiteralNode;
 
 public class MemberSubCommand extends LiteralNode {
 

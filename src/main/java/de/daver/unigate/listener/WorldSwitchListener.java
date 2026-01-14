@@ -2,10 +2,12 @@ package de.daver.unigate.listener;
 
 import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.dimension.Dimension;
+import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,10 +33,17 @@ public class WorldSwitchListener extends PluginEventListener {
 
     @EventHandler
     public void postWorldSwitched(PlayerChangedWorldEvent event) {
+        event.getPlayer().setGameMode(GameMode.CREATIVE);
+
         var from = event.getFrom();
         if(from.getPlayerCount() > 0) return;
-        var fromDimension = plugin().dimensionCache().getActive(from.getName());
-        if(fromDimension == null) return;
-        fromDimension.unload(true);
+        var dimension = plugin().dimensionCache().getActive(from.getName());
+        if(dimension == null) return;
+        dimension.unload(true);
+        try {
+            plugin().dimensionCache().update(dimension);
+        } catch (SQLException exception) {
+            plugin().logger().error("Failed to update dimension {}", dimension.id(), exception);
+        }
     }
 }

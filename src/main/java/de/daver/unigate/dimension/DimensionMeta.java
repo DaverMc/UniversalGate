@@ -48,4 +48,8 @@ public class DimensionMeta {
     public void setStopLag(boolean enabled) {
         this.stopLag = enabled;
     }
+
+    public void setLastLoaded() {
+        this.lastLoaded = Time.from(Instant.now()).getTime();
+    }
 }

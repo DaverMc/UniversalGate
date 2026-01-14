@@ -90,7 +90,7 @@ public interface LevelData {
 
     static void addDataFields(CompoundTag data, Dimension dimension) {
         data.putInt("DataVersion", NBT_VERSION);
-        data.putString("LevelName", dimension.name());
+        data.putString("LevelName", dimension.id());
         data.putLong("RandomSeed", new Random().nextLong());
         data.putInt("GameType", 1);
         data.putBoolean("hardcore", false);

@@ -1,18 +1,18 @@
 #
-#Tue Jan 13 22:53:23 CET 2026
+#Wed Jan 14 00:26:10 CET 2026
 border.default=<link\:chat.prefix>Set worldbord to <green>default</green>
 border.unlimited=<link\:chat.prefix>Set worldbord to <red>unlimited</red>
 category.command.help=<link\:chat.prefix>You can use these subcommands\:<br>- create <name><br>- delete <category><br>- list
 category.create.success=<link\:chat.prefix>Successfully created <green><category></green>
 category.delete.success=<link\:chat.prefix>Successfully deleted <green><category></green>
-category.list.entry=<dark_gray>-</dark_gray> <blue><category></blue>
+category.list.entry=<dark_gray>- <blue><category></blue> (<aqua><id></aqua>)
 category.list.header=<link\:chat.prefix>Categories <dark_gray>(</dark_gray><aqua><categories></aqua><dark_gray>)</dark_gray>\:
 chat.format=<prefix> | <player> | <suffix> <dark_gray>➤ </dark_gray><gray> <message>
 chat.prefix=<b><gradient\:\#00ffff\:\#ff55ff>UniversalGate</gradient></b> <dark_gray>➤ </dark_gray><gray>
 debugstick.given=<link\:chat.prefix>You have received a debugstick
 dimension.allowed.add.success=<link\:chat.prefix> Successfully added <green><player></green> as allowed to <aqua><dimension></aqua>
-dimension.allowed.list.entry=<player>,
-dimension.allowed.list.header=This players <players> are allowed to enter <dimension>
+dimension.allowed.list.entry=<dark_gray>- <blue><player></blue>
+dimension.allowed.list.header=<link:chat.prefix> These <green><players></green> players are allowed to enter <dimension>
 dimension.allowed.remove.success=<link\:chat.prefix>Successfully removed <player> from <dimension>
 dimension.command.help=<link\:chat.prefix>These subcommands are available\:<br>- create [category] [theme] {generator}<br>- delete [dimension] confirm <br>- list <br>- info {dimension} <br>- import [folder_name] [category] [theme] {generator} <br>- export [dimension] [version_tag] <br>- stoplag {dimension} <br>- allowlist add [player] <br>- allowlist remove [player] <br>- teleport [dimension] <br>- invite [player] <br>- kick [player] <br>
 dimension.create.success=<link\:chat.prefix>Successfully created a new Dimension (<aqua><dimension></aqua>) with type <light_purple><type></light_purple>
@@ -22,12 +22,13 @@ dimension.enter.failed=<link\:chat.prefix> <red>You are not allowed to enter <li
 dimension.enter.success=<link\:chat.prefix> You are now in <green><dimension></green>
 dimension.export.success=<link\:chat.prefix> You have exported dimension <dimension> (Version\: <tag>)
 dimension.import.success=<link\:chat.prefix> You have imported dimension <dimension>
-dimension.info=<link\:chat.prefix> Information about <id>\:<br>-Name\: <name><br>-Category\: <category><br>-Type\: <type><br>-State\: <state><br>-Stoplag\: <stoplag>
-dimension.invite.accept=<link\:chat.prefix> You have accept the invite to visit <light_purple><dimension></light_purple>
+dimension.info=<link\:chat.prefix> Information about <id>\:<br>-Name\: <name><br>-Category\: <category><br>-Type\: <type><br>-State\: <state><br>-Stoplag\: <stoplag><br>-Creator\: <creator><br>-Created\: <created><br>-Last Loaded\: <last_loaded><br>
+dimension.invite.accept=new\:dimension.invite.accept[<dimension>]
+dimension.invite.accept\=<link\:chat.prefix>=You have accept the invite to visit <light_purple><dimension></light_purple>
 dimension.invite.receive=<link\:chat.prefix> You have received an invitation from <aqua><sender></aqua> to visit <light_purple><dimension></light_purple> click to <click\:run_command\:'/dimension invite accept'><green>accept</green></click>
 dimension.invite.send=<link\:chat.prefix> You have send an invitation to <aqua><target></aqua> to join you on <light_purple><dimension></light_purple>
 dimension.kick.success=<link\:chat.prefix> You have kicked <aqua><target></aqua> from <light_purple><dimension></light_purple>
-dimension.list.entry=- <dimension>
+dimension.list.entry=<dark_gray>- <blue><dimension></blue> <aqua>(<state>)</aqua>
 dimension.list.header=<link\:chat.prefix> Found <dimensions> dimensions\:
 dimension.stoplag.disable=new\:dimension.stoplag.disable[<dimension>]
 dimension.stoplag.enable=new\:dimension.stoplag.enable[<dimension>]
@@ -42,8 +43,8 @@ nightvision.add=<link\:chat.prefix>You have <green>enabled</green> nightvision
 nightvision.removed=<link\:chat.prefix>You have <red>disabled</red> nightvision
 server.listed.players=Go to Discord\:<br><aqua>RoyalPixels.de</aqua>
 server.motd=<link\:chat.prefix> <br> <blue>Apply on Discord</blue>
-server.version=Apply on Discord
+server.version=<b><blue>Apply on Discord</blue></b>
 speed.set=Set speed to <green><speed><green>
-tab.list.footer=<br><gray>Players online <dark_gray>(</dark_gray><green><players></green><dark_gray>)</dark_gray>
-tab.list.header=<br><b><gradient\:\#00ffff\:\#ff55ff>UniversalGate</gradient></b><br>
+tab.list.footer=<br><gradient\:gray\:dark_gray>\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=</gradient\:gray\:dark_gray><gradient\:dark_gray\:gray>\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=</gradient\:dark_gray\:gray><br><br><gray>Players online <dark_gray>(</dark_gray><green><players></green><dark_gray>)</dark_gray>
+tab.list.header=<br><b><gradient\:\#00ffff\:\#ff55ff>UniversalGate</gradient></b><br><br><gradient\:gray\:dark_gray>\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=</gradient\:gray\:dark_gray><gradient\:dark_gray\:gray>\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=</gradient\:dark_gray\:gray><br>
 tab.list.name=<prefix> <gray>|</gray> <player> <gray>|</gray> <suffix>

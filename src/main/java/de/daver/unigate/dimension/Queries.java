@@ -1,8 +1,8 @@
 package de.daver.unigate.dimension;
 
-import de.daver.unigate.sql.ResultTransformer;
-import de.daver.unigate.sql.SQLDataType;
-import de.daver.unigate.sql.SQLStatement;
+import de.daver.unigate.core.sql.ResultTransformer;
+import de.daver.unigate.core.sql.SQLDataType;
+import de.daver.unigate.core.sql.SQLStatement;
 
 import java.util.Random;
 import java.util.UUID;
@@ -74,7 +74,6 @@ interface Queries {
 
     SQLStatement INSERT_ALLOWED = new SQLStatement("""
                 INSERT INTO allowed_dimensions (dimension, player) VALUES (?, ?)
-                ON CONFLICT(dimension, category) DO NOTHING
             """).addStringArgument()
             .addStringArgument();
 
@@ -89,5 +88,13 @@ interface Queries {
                 CREATE TABLE IF NOT EXISTS allowed_dimensions (dimension TEXT, player TEXT, PRIMARY KEY(dimension, player))
             """);
 
-    SQLStatement SELECT_ALLOWED = new SQLStatement("SELECT * FROM allowed_dimensions WHERE dimension = ?");
+    SQLStatement SELECT_ALLOWED = new SQLStatement("SELECT * FROM allowed_dimensions WHERE dimension = ?")
+            .addStringArgument();
+
+    SQLStatement UPDATE_DIMENSION_META = new SQLStatement("UPDATE dimensions SET stop_lag = ?, stop_lag = ? WHERE id = ?")
+            .addBooleanArgument()
+            .addLongArgument()
+            .addConverted(Dimension.class, SQLDataType.STRING, Dimension::id);
+
+    ResultTransformer<UUID> ALLOWED_TRANSFORMER = set -> UUID.fromString(set.getString("player"));
 }

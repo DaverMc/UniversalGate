@@ -3,12 +3,9 @@ package de.daver.unigate.dimension;
 import de.daver.unigate.Permissions;
 import de.daver.unigate.category.Category;
 import de.daver.unigate.dimension.gen.LevelData;
-import de.daver.unigate.util.FileUtils;
+import de.daver.unigate.core.util.FileUtils;
 import net.querz.nbt.io.NBTUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.GameRule;
-import org.bukkit.GameRules;
-import org.bukkit.WorldCreator;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,6 +33,8 @@ public record Dimension(String id, DimensionType type, DimensionStats stats, Dim
     private static void setGameRules(Dimension dimension) {
         if(dimension.type() == DimensionType.OVERWORLD) return;
         var world = Bukkit.getWorld(dimension.id());
+        world.setDifficulty(Difficulty.PEACEFUL);
+
         world.setGameRule(GameRules.ADVANCE_TIME, false);
         world.setGameRule(GameRules.ADVANCE_WEATHER, false);
         world.setGameRule(GameRules.RANDOM_TICK_SPEED, 0);
@@ -75,6 +74,7 @@ public record Dimension(String id, DimensionType type, DimensionStats stats, Dim
         bukkitWorld.getPlayers().forEach(this::kick);
         Bukkit.unloadWorld(id, save);
         meta.state(DimensionState.ACTIVE);
+        meta.setLastLoaded();
     }
 
     public void kick(Player player) {
@@ -101,9 +101,5 @@ public record Dimension(String id, DimensionType type, DimensionStats stats, Dim
 
     public String category() {
         return id.split(SEPARATOR)[0];
-    }
-
-    public String name() {
-        return id.split(SEPARATOR)[1];
     }
 }
