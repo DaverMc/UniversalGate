@@ -2,6 +2,7 @@ package de.daver.unigate.command.task;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.command.argument.TaskArgument;
 import de.daver.unigate.core.command.CommandExceptions;
 import de.daver.unigate.core.command.LiteralNode;
@@ -15,6 +16,7 @@ public class FinishSubCommand extends LiteralNode {
 
     protected FinishSubCommand() {
         super("finish");
+        permission(Permissions.TASK_FINISH);
         then(new TaskArgument("task"))
                 .executor(this::finishTask);
     }

@@ -2,6 +2,7 @@ package de.daver.unigate.command.dimension;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.category.Category;
 import de.daver.unigate.command.argument.CategoryArgument;
 import de.daver.unigate.core.command.CommandExceptions;
@@ -23,6 +24,7 @@ public class ImportSubCommand extends LiteralNode {
 
     public ImportSubCommand() {
         super("import");
+        permission(Permissions.DIMENSION_IMPORT);
         then(new WordArgument("file"))
                 .suggestions(this::files)
                 .then(new CategoryArgument("category"))

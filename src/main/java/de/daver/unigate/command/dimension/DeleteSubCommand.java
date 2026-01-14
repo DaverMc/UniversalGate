@@ -2,6 +2,7 @@ package de.daver.unigate.command.dimension;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.command.argument.DimensionArgument;
 import de.daver.unigate.core.command.CommandExceptions;
@@ -17,6 +18,7 @@ public class DeleteSubCommand extends LiteralNode {
 
     public DeleteSubCommand() {
         super("delete");
+        permission(Permissions.DIMENSION_DELETE);
         then(new DimensionArgument("dimension"))
                 .executor(this::sendConfirmMessage)
                 .then(new ConfirmArgument())

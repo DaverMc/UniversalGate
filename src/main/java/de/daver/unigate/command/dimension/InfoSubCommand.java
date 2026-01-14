@@ -2,6 +2,7 @@ package de.daver.unigate.command.dimension;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.command.argument.DimensionArgument;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
@@ -17,6 +18,7 @@ public class InfoSubCommand extends LiteralNode {
 
     protected InfoSubCommand() {
         super("info");
+        permission(Permissions.DIMENSION_INFO);
         var dimension = new DimensionArgument("dimension");
         executor(this::showLocalInfo);
         then(dimension).executor(this::showInfo);

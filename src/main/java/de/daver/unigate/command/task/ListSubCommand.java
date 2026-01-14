@@ -2,6 +2,7 @@ package de.daver.unigate.command.task;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.core.command.argument.EnumArgument;
@@ -14,6 +15,7 @@ public class ListSubCommand extends LiteralNode {
 
     protected ListSubCommand() {
         super("list");
+        permission(Permissions.TASK_LIST);
         executor(this::listTasks);
         then(new EnumArgument<>("state", TaskState.class))
                 .executor(this::listStateTasks);

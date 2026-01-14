@@ -2,6 +2,7 @@ package de.daver.unigate.command.task;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.command.argument.TaskArgument;
 import de.daver.unigate.core.command.CommandExceptions;
 import de.daver.unigate.core.command.LiteralNode;
@@ -16,6 +17,7 @@ public class AcceptSubCommand extends LiteralNode {
 
     protected AcceptSubCommand() {
         super("accept");
+        permission(Permissions.TASK_ACCEPT);
         then(new TaskArgument("task"))
                 .executor(this::accept);
     }

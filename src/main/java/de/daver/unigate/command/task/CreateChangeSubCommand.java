@@ -2,6 +2,7 @@ package de.daver.unigate.command.task;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.command.argument.DimensionArgument;
 import de.daver.unigate.core.command.CommandExceptions;
 import de.daver.unigate.core.command.LiteralNode;
@@ -17,6 +18,7 @@ public class CreateChangeSubCommand extends LiteralNode {
 
     protected CreateChangeSubCommand() {
         super("change");
+        permission(Permissions.TASK_CREATE_CHANGE);
         then(new DimensionArgument("dimension"))
                 .executor(this::createChange);
     }

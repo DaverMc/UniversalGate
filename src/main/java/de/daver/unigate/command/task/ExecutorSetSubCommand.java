@@ -2,6 +2,7 @@ package de.daver.unigate.command.task;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.command.argument.TaskArgument;
 import de.daver.unigate.command.argument.UserArgument;
 import de.daver.unigate.core.command.CommandExceptions;
@@ -17,6 +18,7 @@ public class ExecutorSetSubCommand extends LiteralNode {
 
     protected ExecutorSetSubCommand() {
         super("set");
+        permission(Permissions.TASK_EXECUTOR_SET);
         then(new TaskArgument("task"))
                 .then(new UserArgument("user"))
                 .executor(this::addMember);

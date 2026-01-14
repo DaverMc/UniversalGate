@@ -3,6 +3,7 @@ package de.daver.unigate.command.util;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.core.command.argument.NumberArgument;
@@ -11,6 +12,7 @@ public class SpeedCommand extends LiteralNode {
 
     public SpeedCommand() {
         super("speed");
+        permission(Permissions.COMMAND_SPEED);
         executor(this::resetSpeed);
         then(new NumberArgument<>("speed", IntegerArgumentType.integer(1, 10), Integer.class))
                 .executor(this::setSpeed);

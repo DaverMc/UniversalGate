@@ -2,6 +2,7 @@ package de.daver.unigate.command.util;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.core.lang.LanguageKey;
@@ -18,6 +19,7 @@ public class CreativeItemsCommand extends LiteralNode {
 
     public CreativeItemsCommand() {
         super("creativeitems");
+        permission(Permissions.COMMAND_CREATIVE_ITEMS);
         executor(this::openCreativeItemsInv);
     }
 

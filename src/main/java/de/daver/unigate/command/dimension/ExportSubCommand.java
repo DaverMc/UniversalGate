@@ -2,6 +2,7 @@ package de.daver.unigate.command.dimension;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.command.argument.DimensionArgument;
 import de.daver.unigate.core.command.CommandExceptions;
 import de.daver.unigate.core.command.LiteralNode;
@@ -17,6 +18,7 @@ public class ExportSubCommand extends LiteralNode {
 
     protected ExportSubCommand() {
         super("export");
+        permission(Permissions.DIMENSION_EXPORT);
         then(new DimensionArgument("dimension"))
                 .then(new WordArgument("tag"))
                 .executor(this::exportDimension);

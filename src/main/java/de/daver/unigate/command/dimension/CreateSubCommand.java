@@ -2,6 +2,7 @@ package de.daver.unigate.command.dimension;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.category.Category;
 import de.daver.unigate.command.argument.CategoryArgument;
 import de.daver.unigate.core.command.CommandExceptions;
@@ -19,7 +20,7 @@ class CreateSubCommand extends LiteralNode {
 
     public CreateSubCommand() {
         super("create");
-
+        permission(Permissions.DIMENSION_CREATE);
         var categoryArg = then(new CategoryArgument("category"));
 
         var themeArg = categoryArg.then(new WordArgument("theme"));

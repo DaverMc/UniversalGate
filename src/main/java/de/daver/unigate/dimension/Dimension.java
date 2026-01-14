@@ -97,8 +97,8 @@ public record Dimension(String id, DimensionType type, DimensionStats stats, Dim
 
 
     public boolean canEnter(@NotNull Player player) {
-        if(player.hasPermission(Permissions.ENTER_ALL)) return true;
-        if(player.hasPermission(Permissions.ENTER_CATEGORY + category())) return true;
+        if(player.hasPermission(Permissions.DIMENSION_ENTER_ALL)) return true;
+        if(player.hasPermission(Permissions.DIMENSION_ENTER_CATEGORY + category())) return true;
         return meta.allowedPlayers().contains(player.getUniqueId());
     }
 

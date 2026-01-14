@@ -2,6 +2,7 @@ package de.daver.unigate.command.category;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.category.Category;
 import de.daver.unigate.core.command.CommandExceptions;
 import de.daver.unigate.core.command.LiteralNode;
@@ -18,6 +19,7 @@ class CreateSubCommand extends LiteralNode {
 
     protected CreateSubCommand() {
         super("create");
+        permission(Permissions.CATEGORY_CREATE);
         then(new WordArgument("id"))
                 .then(new WordArgument("name"))
                 .executor(this::createCategory);

@@ -2,6 +2,7 @@ package de.daver.unigate.command.dimension;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.command.argument.UserArgument;
 import de.daver.unigate.core.command.CommandExceptions;
 import de.daver.unigate.core.command.LiteralNode;
@@ -16,6 +17,7 @@ public class AllowedAddSubCommand extends LiteralNode {
 
     protected AllowedAddSubCommand() {
         super("add");
+        permission(Permissions.DIMENSION_ALLOWED_ADD);
         then(new UserArgument("user"))
                 .executor(this::allowPlayer);
     }

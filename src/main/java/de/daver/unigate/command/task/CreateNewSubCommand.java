@@ -2,6 +2,7 @@ package de.daver.unigate.command.task;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.category.Category;
 import de.daver.unigate.command.argument.CategoryArgument;
 import de.daver.unigate.core.command.CommandExceptions;
@@ -21,6 +22,7 @@ public class CreateNewSubCommand extends LiteralNode {
 
     protected CreateNewSubCommand() {
         super("new");
+        permission(Permissions.TASK_CREATE_NEW);
         then(new CategoryArgument("category"))
                 .then(new WordArgument("theme"))
                 .executor(this::createNew);

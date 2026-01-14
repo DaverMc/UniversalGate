@@ -2,6 +2,7 @@ package de.daver.unigate.command.task;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.command.argument.TaskArgument;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
@@ -12,6 +13,7 @@ public class InfoSubCommand extends LiteralNode {
 
     protected InfoSubCommand() {
         super("info");
+        permission(Permissions.TASK_INFO);
         then(new TaskArgument("task"))
                 .executor(this::showInfo);
     }

@@ -2,6 +2,7 @@ package de.daver.unigate.command.util;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import org.bukkit.Material;
@@ -11,6 +12,7 @@ public class DebugStickCommand extends LiteralNode {
 
     public DebugStickCommand() {
         super("debugstick");
+        permission(Permissions.COMMAND_DEBUG_STICK);
         executor(this::giveDebugStick);
     }
 
