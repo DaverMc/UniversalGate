@@ -278,7 +278,7 @@ paths:
 
 # Region restriction settings
 region-restrictions-options:
-  # What type of users are allowed to WorldEdit in a region
+  # What action of users are allowed to WorldEdit in a region
   #  - MEMBER = Players added to a region
   #  - OWNER = Players who own the region
   mode: "MEMBER"
@@ -435,7 +435,7 @@ limits:
     #  - Will not work when setting entities directly to a world, rather than using an EditSession(Builder)
     #  - Setting fast-placement to false forces writing directly to the world (for example).
     skip-creature-spawn-events: false
-    # List of blocks to deny use of. Can be either an entire block type or a block with a specific property value.
+    # List of blocks to deny use of. Can be either an entire block action or a block with a specific property value.
     # Where block properties are specified, any blockstate with the property will be disallowed (e.g. all directions
     # of a waterlogged fence). For blocking/remapping of all occurrences of a property like waterlogged, see
     # remap-properties below.

@@ -8,7 +8,7 @@ import java.util.UUID;
 interface Queries {
 
     SQLStatement CREATE_TABLE = new SQLStatement("""
-            CREATE TABLE IF NOT EXISTS tasks (id TEXT PRIMARY KEY, creator TEXT, executor TEXT, state TEXT, type TEXT, dimension TEXT, description TEXT)
+            CREATE TABLE IF NOT EXISTS tasks (id TEXT PRIMARY KEY, creator TEXT, executor TEXT, state TEXT, action TEXT, dimension TEXT, description TEXT)
             """);
 
     SQLStatement LOAD_ALL = new SQLStatement("SELECT * FROM tasks");
@@ -23,7 +23,7 @@ interface Queries {
             .addStringArgument();
 
 
-    SQLStatement INSERT = new SQLStatement("INSERT INTO tasks (id, creator, executor, state, type, dimension, description) VALUES (?, ?, ?, ?, ?, ?, ?)")
+    SQLStatement INSERT = new SQLStatement("INSERT INTO tasks (id, creator, executor, state, action, dimension, description) VALUES (?, ?, ?, ?, ?, ?, ?)")
             .addStringArgument()
             .addStringArgument()
             .addStringArgument()
@@ -36,7 +36,7 @@ interface Queries {
         var id = set.getString("id");
         var creator = set.getString("creator");
         var state = set.getString("state");
-        var type = set.getString("type");
+        var type = set.getString("action");
         var dimension = set.getString("dimension");
         Task task = new Task(id, UUID.fromString(creator), TaskType.valueOf(type), TaskState.valueOf(state), dimension);
 

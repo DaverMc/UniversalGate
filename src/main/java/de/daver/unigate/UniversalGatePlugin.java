@@ -8,6 +8,7 @@ import de.daver.unigate.command.dimension.DimensionCommand;
 import de.daver.unigate.command.dimension.ExportSubCommand;
 import de.daver.unigate.command.dimension.ImportSubCommand;
 import de.daver.unigate.command.lang.LanguageCommand;
+import de.daver.unigate.command.statue.StatueCommand;
 import de.daver.unigate.command.task.TaskCommand;
 import de.daver.unigate.command.util.*;
 import de.daver.unigate.core.lang.LanguageManager;
@@ -16,6 +17,7 @@ import de.daver.unigate.core.util.PlayerFetcher;
 import de.daver.unigate.core.util.TabList;
 import de.daver.unigate.dimension.DimensionCache;
 import de.daver.unigate.listener.*;
+import de.daver.unigate.statue.StatueClickListeners;
 import de.daver.unigate.task.TaskCache;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import net.luckperms.api.LuckPermsProvider;
@@ -44,6 +46,8 @@ public class UniversalGatePlugin extends JavaPlugin {
     private SQLExecutor sqlExecutor;
     private ServerPingListener serverPingListener;
     private TaskCache taskCache;
+    private StatueInteractListener statueInteractListener;
+    private ItemInteractListener itemInteractListener;
 
     @Override
     public void onDisable() {
@@ -83,6 +87,7 @@ public class UniversalGatePlugin extends JavaPlugin {
             dispatcher.register(new NightVisionCommand().build());
             dispatcher.register(new TaskCommand().build());
             dispatcher.register(new HubCommand().build());
+            dispatcher.register(new StatueCommand().build());
         });
     }
 
@@ -95,6 +100,11 @@ public class UniversalGatePlugin extends JavaPlugin {
         serverPingListener.register();
         new LeaveListener(this).register();
         new PortalListener(this).register();
+        this.itemInteractListener = new ItemInteractListener(this);
+        itemInteractListener.register();
+        this.statueInteractListener = new StatueInteractListener(this);
+        statueInteractListener.register();
+        StatueClickListeners.register(this);
     }
 
     private void initializeSQL() {
@@ -219,6 +229,14 @@ public class UniversalGatePlugin extends JavaPlugin {
 
     public TaskCache taskCache() {
         return taskCache;
+    }
+
+    public ItemInteractListener itemInteractListener() {
+        return itemInteractListener;
+    }
+
+    public StatueInteractListener statueInteractListener() {
+        return statueInteractListener;
     }
 
     public static UniversalGatePlugin getInstance() {

@@ -1,3 +1,5 @@
+#
+#Wed Jan 14 21:53:51 CET 2026
 border.default=<link\:chat.prefix> Set worldbord to <green>default</green>
 border.unlimited=<link\:chat.prefix> Set worldbord to <red>unlimited</red>
 category.command.help=<link\:chat.prefix> You can use these subcommands\:<br>- create <name><br>- delete <category><br>- list
@@ -7,7 +9,7 @@ category.list.entry=<dark_gray>- <blue><category></blue> (<aqua><id></aqua>)
 category.list.header=<link\:chat.prefix> Categories <dark_gray>(</dark_gray><aqua><categories></aqua><dark_gray>)</dark_gray>\:
 chat.format=<prefix> <gray>|</gray> <player> <gray>|</gray> <suffix> <dark_gray>? </dark_gray><gray> <message>
 chat.prefix=<b><gradient\:\#00ffff\:\#ff55ff>UniversalGate</gradient></b> <dark_gray>? </dark_gray><gray>
-command.hub=<link:chat.prefix> You have teleported to the hub
+command.hub=<link\:chat.prefix> You have teleported to the hub
 debugstick.given=<link\:chat.prefix> You have received a debugstick
 dimension.allowed.add.success=<link\:chat.prefix> Successfully added <green><player></green> as allowed to <aqua><dimension></aqua>
 dimension.allowed.list.entry=<dark_gray>- <blue><player></blue>
@@ -28,11 +30,11 @@ dimension.invite.send=<link\:chat.prefix> You have send an invitation to <aqua><
 dimension.kick.success=<link\:chat.prefix> You have kicked <aqua><target></aqua> from <light_purple><dimension></light_purple>
 dimension.list.entry=<dark_gray>- <blue><dimension></blue> <aqua>(<state>)</aqua>
 dimension.list.header=<link\:chat.prefix> Found <dimensions> dimensions\:
-dimension.stoplag.disable=<link:chat.prefix> You have <red>disabled</red> stoplag for <aqua><dimension></aqua>
-dimension.stoplag.enable=<link:chat.prefix> You have <green>enabled</green> stoplag for <aqua><dimension></aqua>
+dimension.stoplag.disable=<link\:chat.prefix> You have <red>disabled</red> stoplag for <aqua><dimension></aqua>
+dimension.stoplag.enable=<link\:chat.prefix> You have <green>enabled</green> stoplag for <aqua><dimension></aqua>
 event.join=<link\:chat.prefix>Welcome <aqua><player></aqua>
 event.leave=<link\:chat.prefix> <aqua><player></aqua> left the game
-event.portal.disabled=<link:chat.prefix> Portals are <red>disabled</red>
+event.portal.disabled=<link\:chat.prefix> Portals are <red>disabled</red>
 gui.creativeitems.title=<green> <b> Creative Item </b></green>
 item.light.air.title=<light_purple>Lighted Air [<level>]</light_purple>
 item.light.water.title=<blue>Lighted Water [<level>]</blue>
@@ -42,7 +44,10 @@ nightvision.removed=<link\:chat.prefix> You have <red>disabled</red> nightvision
 server.listed.players=Go to Discord\:<br><aqua>RoyalPixels.de</aqua>
 server.motd=<link\:chat.prefix> <blue>Apply on Discord</blue>
 server.version=<b><blue>Apply on Discord</blue></b>
-speed.set=<link:chat.prefix> Set speed to <green><speed><green>
+speed.set=<link\:chat.prefix> Set speed to <green><speed><green>
+statue.deselected=new\:statue.deselected
+statue.selected=new\:statue.selected
+statue.tools.received=new\:statue.tools.received
 tab.list.footer=<br><gradient\:gray\:dark_gray>\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=</gradient\:gray\:dark_gray><gradient\:dark_gray\:gray>\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=</gradient\:dark_gray\:gray><br><br><gray>Players online <dark_gray>(</dark_gray><green><players></green><dark_gray>)</dark_gray>
 tab.list.header=<br><b><gradient\:\#00ffff\:\#ff55ff>UniversalGate</gradient></b><br><br><gradient\:gray\:dark_gray>\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=</gradient\:gray\:dark_gray><gradient\:dark_gray\:gray>\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=</gradient\:dark_gray\:gray><br>
 tab.list.name=<prefix> <gray>|</gray> <player> <gray>|</gray> <suffix>

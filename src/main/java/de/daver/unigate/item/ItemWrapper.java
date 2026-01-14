@@ -1,0 +1,61 @@
+package de.daver.unigate.item;
+
+import de.daver.unigate.UniversalGatePlugin;
+import net.kyori.adventure.text.Component;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
+
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
+public record ItemWrapper(UniversalGatePlugin plugin, ItemStack itemStack) {
+
+    public ItemWrapper(UniversalGatePlugin plugin, Material material) {
+        this(plugin, new ItemStack(material));
+    }
+
+    public ItemWrapper displayName(Function<UniversalGatePlugin, Component> displayNameSupplier) {
+        return displayName(displayNameSupplier.apply(plugin));
+    }
+
+    public ItemWrapper displayName(Component displayName) {
+        return modifyMeta(meta -> meta.displayName(displayName));
+    }
+
+    public ItemWrapper lore(Function<UniversalGatePlugin, Component> loreSupplier) {
+        return lore(loreSupplier.apply(plugin));
+    }
+
+    public ItemWrapper lore(Component lore) {
+        return modifyMeta(meta -> meta.lore(List.of(lore)));
+    }
+
+    public ItemWrapper clickAction(String actionId) {
+        NamespacedKey key = new NamespacedKey(plugin, "custom_action_id");
+        return modifyMeta(meta -> meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, actionId));
+    }
+
+    public ItemWrapper mode(int mode) {
+        NamespacedKey key = new NamespacedKey(plugin, "custom_mode");
+        return modifyMeta(meta -> meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, mode));
+    }
+
+    public int getMode() {
+        NamespacedKey key = new NamespacedKey(plugin, "custom_mode");
+        return itemStack.getItemMeta().getPersistentDataContainer().getOrDefault(key, PersistentDataType.INTEGER, 0);
+    }
+
+    private ItemWrapper modifyMeta(Consumer<ItemMeta> metaConsumer) {
+        ItemMeta meta = itemStack.getItemMeta();
+        if (meta != null) {
+            metaConsumer.accept(meta);
+            itemStack.setItemMeta(meta);
+        }
+        return this;
+    }
+}

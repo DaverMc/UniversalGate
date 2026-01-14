@@ -14,7 +14,7 @@ public class VoidGenerator implements DimensionGenerator {
 
         CompoundTag generator = new CompoundTag();
         overworld.put("generator", generator);
-        generator.putString("type", "minecraft:flat");
+        generator.putString("action", "minecraft:flat");
 
         // Flatworld-Settings
         CompoundTag settings = new CompoundTag();

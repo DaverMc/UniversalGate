@@ -4,6 +4,9 @@ import de.daver.unigate.core.lang.LanguageKey;
 
 public enum LanguageKeys implements LanguageKey {
 
+    STATUE_TOOLS_RECEIVED("statue.tools.received"),
+    STATUE_DESELECTED("statue.deselected"),
+    STATUE_SELECTED("statue.selected"),
     COMMAND_HUB("command.hub"),
     TASK_REOPEN_SUCCESS("task.reopen.success", "task"),
     TASK_NOT_DECLINED("task.not.declined", "task"),
@@ -22,8 +25,8 @@ public enum LanguageKeys implements LanguageKey {
     TASK_DESCRIPTION_SET("task.description.set", "task", "description"),
     TASK_DELETE_SUCCESS("task.delete.success", "task"),
     TASK_DELETE_CONFIRM("task.delete.confirm", "task"),
-    TASK_INFO( "task.info", "id", "dimension", "type", "state", "creator", "executor", "description"),
-    TASK_LIST_ENTRY( "task.list.entry", "id", "type"),
+    TASK_INFO( "task.info", "id", "dimension", "action", "state", "creator", "executor", "description"),
+    TASK_LIST_ENTRY( "task.list.entry", "id", "action"),
     TASK_LIST_HEADER("task.list.header", "tasks"),
     TASK_CREATE_NEW("task.create.new", "task", "dimension"),
     TASK_CREATE_CHANGE("task.create.change", "task", "dimension"),
@@ -53,7 +56,7 @@ public enum LanguageKeys implements LanguageKey {
     DIMENSION_ALLOWED_LIST_HEADER("dimension.allowed.list.header", "dimension", "players"),
     DIMENSION_ENTER_FAILED("dimension.enter.failed", "dimension"),
     DIMENSION_ENTER_SUCCESS("dimension.enter.success", "dimension"),
-    DIMENSION_INFO("dimension.info", "id", "name", "category", "type", "state", "stoplag"),
+    DIMENSION_INFO("dimension.info", "id", "name", "category", "action", "state", "stoplag"),
     DIMENSION_LIST_ENTRY("dimension.list.entry", "dimension"),
     DIMENSION_LIST_HEADER("dimension.list.header", "dimensions"),
     CATEGORY_LIST_ENTRY("category.list.entry", "category", "id"),
@@ -67,7 +70,7 @@ public enum LanguageKeys implements LanguageKey {
     TAB_LIST_HEADER("tab.list.header"),
     TAB_LIST_NAME("tab.list.name", "player"),
     LANGUAGE_RELOAD("language.reload"),
-    DIMENSION_CREATE_SUCCESS("dimension.create.success", "dimension", "type"),
+    DIMENSION_CREATE_SUCCESS("dimension.create.success", "dimension", "action"),
     DIMENSION_DELETE_SUCCESS("dimension.delete.success", "dimension"),
     DIMENSION_DELETE_CONFIRM("dimension.delete.confirm", "dimension"),
     DIMENSION_COMMAND_HELP("dimension.command.help"),

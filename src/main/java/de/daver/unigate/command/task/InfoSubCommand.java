@@ -25,7 +25,7 @@ public class InfoSubCommand extends LiteralNode {
                 .key(LanguageKeys.TASK_INFO)
                 .parsed("id", task.id())
                 .parsed("dimension", task.dimensionId())
-                .parsed("type", task.type().name())
+                .parsed("action", task.type().name())
                 .parsed("state", task.state().name())
                 .parsed("creator", PlayerFetcher.getPlayerName(task.creator()))
                 .parsed("executor", executor)

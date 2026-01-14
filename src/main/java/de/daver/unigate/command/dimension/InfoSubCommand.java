@@ -47,7 +47,7 @@ public class InfoSubCommand extends LiteralNode {
                 .parsed("id", dimension.id())
                 .parsed("name", dimension.id())
                 .parsed("category", dimension.category())
-                .parsed("type", dimension.type().name())
+                .parsed("action", dimension.type().name())
                 .parsed("state", dimension.meta().state().name())
                 .parsed("stoplag", dimension.meta().stopLag() ? "true" : "false")
                 .parsed("created", creationDate)

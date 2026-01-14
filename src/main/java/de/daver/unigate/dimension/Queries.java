@@ -16,7 +16,7 @@ interface Queries {
     SQLStatement CREATE_DIMENSIONS_TABLE = new SQLStatement("""
                 CREATE TABLE IF NOT EXISTS dimensions (
                 id TEXT PRIMARY KEY,
-                type TEXT,
+                action TEXT,
                 creation_time INTEGER,
                 creator TEXT,
                 stop_lag INTEGER,
@@ -31,7 +31,7 @@ interface Queries {
         String id = set.getString("id");
         if (id == null) return null;
 
-        var typeString = set.getString("type");
+        var typeString = set.getString("action");
         if (typeString == null) return null;
         DimensionType type = DimensionType.valueOf(typeString);
 
@@ -52,10 +52,10 @@ interface Queries {
     };
 
     SQLStatement INSERT_DIMENSION = new SQLStatement("""
-                INSERT INTO dimensions (id, type, creation_time, creator, stop_lag, state, last_loaded)
+                INSERT INTO dimensions (id, action, creation_time, creator, stop_lag, state, last_loaded)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(id) DO UPDATE SET
-                   type = excluded.type,
+                   action = excluded.action,
                    creation_time = excluded.creation_time,
                    creator = excluded.creator,
                    stop_lag = excluded.stop_lag,

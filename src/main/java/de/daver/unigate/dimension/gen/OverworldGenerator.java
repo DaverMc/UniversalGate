@@ -15,7 +15,7 @@ public class OverworldGenerator implements DimensionGenerator {
         CompoundTag generator = new CompoundTag();
         overworld.put("generator", generator);
 
-        generator.putString("type", "minecraft:noise");
+        generator.putString("action", "minecraft:noise");
         generator.putString("settings", "minecraft:overworld");
         generator.put("biome_source", createBiomeSourceNBT());
 
@@ -24,7 +24,7 @@ public class OverworldGenerator implements DimensionGenerator {
 
     private CompoundTag createBiomeSourceNBT() {
         CompoundTag biomeSource = new CompoundTag();
-        biomeSource.putString("type", "minecraft:multi_noise");
+        biomeSource.putString("action", "minecraft:multi_noise");
         biomeSource.putString("preset", "minecraft:overworld");
         return biomeSource;
     }

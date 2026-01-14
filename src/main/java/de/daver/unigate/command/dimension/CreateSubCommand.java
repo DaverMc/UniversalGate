@@ -26,7 +26,7 @@ class CreateSubCommand extends LiteralNode {
         var themeArg = categoryArg.then(new WordArgument("theme"));
         themeArg.executor(this::createDimension);
 
-        var typeArg = themeArg.then(new EnumArgument<>("type", DimensionType.class));
+        var typeArg = themeArg.then(new EnumArgument<>("action", DimensionType.class));
         typeArg.executor(this::createCustomDimension);
     }
 
@@ -39,7 +39,7 @@ class CreateSubCommand extends LiteralNode {
     private void createCustomDimension(PluginContext context) throws CommandSyntaxException {
         Category category = context.getArgument("category", Category.class);
         String theme = context.getArgument("theme", String.class);
-        DimensionType type = context.getArgument("type", DimensionType.class);
+        DimensionType type = context.getArgument("action", DimensionType.class);
         createDimension(category, theme, type, context);
     }
 
@@ -52,7 +52,7 @@ class CreateSubCommand extends LiteralNode {
             context.plugin().languageManager().message()
                     .key(LanguageKeys.DIMENSION_CREATE_SUCCESS)
                     .parsed("dimension",dimension.id())
-                    .parsed("type", dimension.type())
+                    .parsed("action", dimension.type())
                     .build().send(context.sender());
 
         } catch (SQLException e) {
