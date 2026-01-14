@@ -93,7 +93,7 @@ interface Queries {
 
     SQLStatement UPDATE_DIMENSION_META = new SQLStatement("UPDATE dimensions SET stop_lag = ?, state = ?, last_loaded = ? WHERE id = ?")
             .addBooleanArgument()
-            .addConverted(Dimension.class, SQLDataType.STRING, Dimension::id)
+            .addConverted(DimensionState.class, SQLDataType.STRING, DimensionState::name)
             .addLongArgument()
             .addStringArgument();
 
