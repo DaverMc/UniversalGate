@@ -17,5 +17,6 @@ public class TaskCommand extends LiteralNode {
         then(new DescriptionSubCommand());
         then(new DeclineSubCommand());
         then(new ApproveSubCommand());
+        then(new ReOpenSubCommand());
     }
 }

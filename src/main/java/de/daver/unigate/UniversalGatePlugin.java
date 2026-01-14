@@ -5,6 +5,8 @@ import com.zaxxer.hikari.HikariDataSource;
 import de.daver.unigate.category.CategoryCache;
 import de.daver.unigate.command.category.CategoryCommand;
 import de.daver.unigate.command.dimension.DimensionCommand;
+import de.daver.unigate.command.dimension.ExportSubCommand;
+import de.daver.unigate.command.dimension.ImportSubCommand;
 import de.daver.unigate.command.lang.LanguageCommand;
 import de.daver.unigate.command.task.TaskCommand;
 import de.daver.unigate.command.util.CreativeItemsCommand;
@@ -21,6 +23,7 @@ import de.daver.unigate.task.TaskCache;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.event.node.NodeAddEvent;
+import net.luckperms.api.node.NodeType;
 import net.luckperms.api.node.types.InheritanceNode;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -28,8 +31,10 @@ import org.slf4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.Locale;
+import java.util.Objects;
 
 public class UniversalGatePlugin extends JavaPlugin {
 
@@ -53,6 +58,7 @@ public class UniversalGatePlugin extends JavaPlugin {
         instance = this;
         loadLanguages();
         initializeSQL();
+        initializeFiles();
         registerCommands();
         registerListeners();
         setUpTabList();
@@ -111,6 +117,15 @@ public class UniversalGatePlugin extends JavaPlugin {
         }
     }
 
+    private void initializeFiles() {
+        try {
+            Files.createDirectories(ImportSubCommand.importDir(this));
+            Files.createDirectories(ExportSubCommand.exportDir(this));
+        } catch (IOException e) {
+            logger().error("Failed to create directories", e);
+        }
+    }
+
     private HikariConfig createHikariConfig() {
         var config = new HikariConfig();
         var databaseFile = createDatabaseFile();
@@ -148,6 +163,20 @@ public class UniversalGatePlugin extends JavaPlugin {
                 .parsed("prefix", PlayerFetcher.getPrefix(user))
                 .parsed("suffix", PlayerFetcher.getSuffix(user))
                 .build().get(user));
+
+        tabList.setSorter(player -> {
+            var api = LuckPermsProvider.get();
+            var user = api.getUserManager().getUser(player.getUniqueId());
+            if(user == null) return 0;
+            return user.getNodes().stream()
+                    .filter(NodeType.INHERITANCE::matches)
+                    .map(NodeType.INHERITANCE::cast)
+                    .map(node -> api.getGroupManager().getGroup(node.getGroupName()))
+                    .filter(Objects::nonNull)
+                    .mapToInt(group -> group.getWeight().orElse(0))
+                    .max()
+                    .orElse(0);
+        });
         onLuckPermsGroupChange();
     }
 

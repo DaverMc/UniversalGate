@@ -18,6 +18,7 @@ public class DimensionCache {
     public DimensionCache(UniversalGatePlugin plugin) {
         this.plugin = plugin;
         this.cache = new ConcurrentHashMap<>();
+
     }
 
     public void initialize() throws SQLException {

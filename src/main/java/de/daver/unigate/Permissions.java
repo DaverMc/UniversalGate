@@ -52,5 +52,6 @@ public interface Permissions {
     String TASK_EXECUTOR = TASK + ".executor";
     String TASK_EXECUTOR_SET = TASK_EXECUTOR + ".set";
     String TASK_EXECUTOR_REMOVE = TASK_EXECUTOR + ".remove";
+    String TASK_REOPEN = TASK + ".reopen";
 
 }

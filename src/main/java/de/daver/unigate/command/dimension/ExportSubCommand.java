@@ -10,8 +10,10 @@ import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.core.command.argument.WordArgument;
 import de.daver.unigate.core.util.FileUtils;
 import de.daver.unigate.dimension.Dimension;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.sql.SQLException;
 
 public class ExportSubCommand extends LiteralNode {
@@ -39,7 +41,7 @@ public class ExportSubCommand extends LiteralNode {
         var worldContainer = context.plugin().getServer().getWorldContainer().toPath();
         var dataFolder = context.plugin().getDataFolder().toPath();
         var source = worldContainer.resolve(dimension.id());
-        var target = dataFolder.resolve("dim_exports").resolve(dimension.id() + "_" + tag + ".tar.gz");
+        var target = exportDir(context.plugin()).resolve(dimension.id() + "_" + tag + ".tar.gz");
 
         try {
             FileUtils.compressDirectory(source, target);
@@ -53,5 +55,9 @@ public class ExportSubCommand extends LiteralNode {
                 .parsed("dimension", dimension.id())
                 .parsed("tag", tag)
                 .build().send(context.sender());
+    }
+
+    public static Path exportDir(JavaPlugin plugin) {
+        return plugin.getDataPath().resolve("dim_exports");
     }
 }

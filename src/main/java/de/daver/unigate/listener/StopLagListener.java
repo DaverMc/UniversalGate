@@ -4,6 +4,7 @@ import de.daver.unigate.UniversalGatePlugin;
 import org.bukkit.Material;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.type.Bed;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Minecart;
 import org.bukkit.event.Cancellable;
@@ -105,6 +106,8 @@ public class StopLagListener extends PluginEventListener {
         var reason = event.getSpawnReason();
         if(reason == CreatureSpawnEvent.SpawnReason.COMMAND ||
         reason == CreatureSpawnEvent.SpawnReason.CUSTOM) return;
+
+        if(event.getEntityType() == org.bukkit.entity.EntityType.ARMOR_STAND) return;
 
         cancel(event, event.getLocation().getWorld().getName());
     }

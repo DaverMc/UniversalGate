@@ -4,6 +4,10 @@ import de.daver.unigate.core.lang.LanguageKey;
 
 public enum LanguageKeys implements LanguageKey {
 
+    APPLY_CONFIRMED("apply.confirmed"),
+    APPLY_INFORMATION("apply.information"),
+    TASK_REOPEN_SUCCESS("task.reopen.success", "task"),
+    TASK_NOT_DECLINED("task.not.declined", "task"),
     TASK_EXECUTOR_REMOVE("task.executor.remove", "task", "executor"),
     TASK_EXECUTOR_SET("task.executor.set", "task", "executor"),
     TASK_FINISH_SUCCESS("task.finish.success", "task"),
