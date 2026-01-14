@@ -6,39 +6,28 @@ import de.daver.unigate.core.command.CommandExceptions;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.command.argument.TaskArgument;
+import de.daver.unigate.command.argument.UserArgument;
+import de.daver.unigate.core.util.PlayerFetcher;
 import de.daver.unigate.task.Task;
-import de.daver.unigate.task.TaskState;
 
 import java.sql.SQLException;
+import java.util.UUID;
 
-public class FinishSubCommand extends LiteralNode {
+public class ExecutorSetSubCommand extends LiteralNode {
 
-    protected FinishSubCommand() {
-        super("finish");
+    protected ExecutorSetSubCommand() {
+        super("set");
         then(new TaskArgument("task"))
-                .executor(this::finishTask);
+                .then(new UserArgument("user"))
+                .executor(this::addMember);
     }
 
-    void finishTask(PluginContext context) throws CommandSyntaxException {
+    void addMember(PluginContext context) throws CommandSyntaxException {
         var player = context.senderPlayer();
+        var target = context.getArgument("user", UUID.class);
         var task = context.getArgument("task", Task.class);
 
-        if(task.state() != TaskState.IN_WORK) {
-            context.plugin().languageManager().message()
-                    .key(LanguageKeys.TASK_NOT_IN_WORK)
-                    .parsed("task", task.id())
-                    .build().send(player);
-            return;
-        }
-        if(task.executor() == null) {
-            context.plugin().languageManager().message()
-                    .key(LanguageKeys.TASK_NO_EXECUTOR)
-                    .parsed("task", task.id())
-                    .build().send(player);
-            return;
-        }
-
-        task.setState(TaskState.FINISHED);
+        task.setExecutor(target);
 
         try {
             context.plugin().taskCache().update(task);
@@ -48,8 +37,9 @@ public class FinishSubCommand extends LiteralNode {
         }
 
         context.plugin().languageManager().message()
-                .key(LanguageKeys.TASK_FINISH_SUCCESS)
+                .key(LanguageKeys.TASK_EXECUTOR_SET)
                 .parsed("task", task.id())
+                .parsed("executor", PlayerFetcher.getPlayerName(target))
                 .build().send(player);
 
     }

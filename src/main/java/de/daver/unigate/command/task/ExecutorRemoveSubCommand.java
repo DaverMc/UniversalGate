@@ -6,53 +6,45 @@ import de.daver.unigate.core.command.CommandExceptions;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.command.argument.TaskArgument;
-import de.daver.unigate.core.command.argument.ConfirmArgument;
+import de.daver.unigate.core.util.PlayerFetcher;
 import de.daver.unigate.task.Task;
-import de.daver.unigate.task.TaskState;
 
 import java.sql.SQLException;
 
-public class DeclineSubCommand extends LiteralNode {
+public class ExecutorRemoveSubCommand extends LiteralNode {
 
-    protected DeclineSubCommand() {
-        super("decline");
+    protected ExecutorRemoveSubCommand() {
+        super("remove");
         then(new TaskArgument("task"))
-                .executor(this::sendConfirmMessage)
-                .then(new ConfirmArgument())
-                .executor(this::declineTask);
+                .executor(this::removeMember);
     }
 
-    void sendConfirmMessage(PluginContext context) throws CommandSyntaxException {
+    void removeMember(PluginContext context) throws CommandSyntaxException {
         var player = context.senderPlayer();
         var task = context.getArgument("task", Task.class);
-
-        context.plugin().languageManager().message()
-                .key(LanguageKeys.TASK_DECLINE_CONFIRM)
-                .parsed("task", task.id())
-                .build().send(player);
-    }
-
-    void declineTask(PluginContext context) throws CommandSyntaxException {
-        var player = context.senderPlayer();
-        var task = context.getArgument("task", Task.class);
-
-        if(task.state() != TaskState.FINISHED) {
+        var executor = task.executor();
+        if(executor == null) {
             context.plugin().languageManager().message()
-                    .key(LanguageKeys.TASK_NOT_FINISHED)
+                    .key(LanguageKeys.TASK_NO_EXECUTOR)
                     .parsed("task", task.id())
                     .build().send(player);
             return;
         }
-        task.setState(TaskState.DECLINED);
+
+        task.setExecutor(null);
+
         try {
             context.plugin().taskCache().update(task);
         } catch (SQLException e) {
             context.plugin().logger().error("Failed to update task {}", task.id(), e);
             throw CommandExceptions.DATABASE_EXCEPTION.create();
         }
+
         context.plugin().languageManager().message()
-                .key(LanguageKeys.TASK_DECLINE_SUCCESS)
+                .key(LanguageKeys.TASK_EXECUTOR_REMOVE)
                 .parsed("task", task.id())
+                .parsed("executor", PlayerFetcher.getPlayerName(executor))
                 .build().send(player);
+
     }
 }

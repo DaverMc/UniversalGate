@@ -11,7 +11,7 @@ public class TaskCommand extends LiteralNode {
         then(new AcceptSubCommand());
         then(new CancelSubCommand());
         then(new FinishSubCommand());
-        then(new MemberSubCommand());
+        then(new ExecutorSubCommand());
         then(new CreateSubCommand());
         then(new DeleteSubCommand());
         then(new DescriptionSubCommand());

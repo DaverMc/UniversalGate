@@ -48,7 +48,7 @@ class CreateSubCommand extends LiteralNode {
             var id = Dimension.buildId(category, theme);
             if(context.plugin().dimensionCache().select(id) != null) throw CommandExceptions.VALUE_EXISTING.create(id);
             Dimension dimension = Dimension.create(category, theme, type, context.executor().getUniqueId());
-            UniversalGatePlugin.getInstance().dimensionCache().insert(dimension);
+            context.plugin().dimensionCache().insert(dimension);
             context.plugin().languageManager().message()
                     .key(LanguageKeys.DIMENSION_CREATE_SUCCESS)
                     .parsed("dimension",dimension.id())

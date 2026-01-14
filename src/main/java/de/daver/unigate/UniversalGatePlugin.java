@@ -187,6 +187,9 @@ public class UniversalGatePlugin extends JavaPlugin {
         return serverPingListener;
     }
 
+    public TaskCache taskCache() {
+        return taskCache;
+    }
 
     public static UniversalGatePlugin getInstance() {
         return instance;

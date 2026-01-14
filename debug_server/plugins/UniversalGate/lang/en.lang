@@ -1,5 +1,5 @@
 #
-#Wed Jan 14 00:26:10 CET 2026
+#Wed Jan 14 12:02:33 CET 2026
 border.default=<link\:chat.prefix>Set worldbord to <green>default</green>
 border.unlimited=<link\:chat.prefix>Set worldbord to <red>unlimited</red>
 category.command.help=<link\:chat.prefix>You can use these subcommands\:<br>- create <name><br>- delete <category><br>- list
@@ -12,7 +12,7 @@ chat.prefix=<b><gradient\:\#00ffff\:\#ff55ff>UniversalGate</gradient></b> <dark_
 debugstick.given=<link\:chat.prefix>You have received a debugstick
 dimension.allowed.add.success=<link\:chat.prefix> Successfully added <green><player></green> as allowed to <aqua><dimension></aqua>
 dimension.allowed.list.entry=<dark_gray>- <blue><player></blue>
-dimension.allowed.list.header=<link:chat.prefix> These <green><players></green> players are allowed to enter <dimension>
+dimension.allowed.list.header=<link\:chat.prefix> These <green><players></green> players are allowed to enter <dimension>
 dimension.allowed.remove.success=<link\:chat.prefix>Successfully removed <player> from <dimension>
 dimension.command.help=<link\:chat.prefix>These subcommands are available\:<br>- create [category] [theme] {generator}<br>- delete [dimension] confirm <br>- list <br>- info {dimension} <br>- import [folder_name] [category] [theme] {generator} <br>- export [dimension] [version_tag] <br>- stoplag {dimension} <br>- allowlist add [player] <br>- allowlist remove [player] <br>- teleport [dimension] <br>- invite [player] <br>- kick [player] <br>
 dimension.create.success=<link\:chat.prefix>Successfully created a new Dimension (<aqua><dimension></aqua>) with type <light_purple><type></light_purple>
@@ -48,3 +48,29 @@ speed.set=Set speed to <green><speed><green>
 tab.list.footer=<br><gradient\:gray\:dark_gray>\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=</gradient\:gray\:dark_gray><gradient\:dark_gray\:gray>\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=</gradient\:dark_gray\:gray><br><br><gray>Players online <dark_gray>(</dark_gray><green><players></green><dark_gray>)</dark_gray>
 tab.list.header=<br><b><gradient\:\#00ffff\:\#ff55ff>UniversalGate</gradient></b><br><br><gradient\:gray\:dark_gray>\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=</gradient\:gray\:dark_gray><gradient\:dark_gray\:gray>\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=</gradient\:dark_gray\:gray><br>
 tab.list.name=<prefix> <gray>|</gray> <player> <gray>|</gray> <suffix>
+task.accept.success=<link:chat.prefix> You have accepted <green><task></green>
+task.approve.success=<link:chat.prefix> You have approved <green><task></green>
+task.cancel.success=<link:chat.prefix> You have cancelled <green><task></green>
+task.create.change=<link:chat.prefix> You have create a new Task <green><task></green> for Dimension <aqua><dimension></aqua>
+task.create.new=<link:chat.prefix> You have create a new Task <green><task></green> and a new Dimension <aqua><dimension></aqua>
+task.decline.confirm=<link\:chat.prefix>You need to <click\:run_command\:'/task delete <task> confirm'><green>confirm</click> that you want to decline <green><task></green>
+task.decline.success=<link\:chat.prefix>You have declined <green><task></green>
+task.delete.confirm=<link\:chat.prefix>You need to <click\:run_command\:'/task delete <task> confirm'><green>confirm</click> that you want to delete <green><task></green>
+task.delete.success=<link\:chat.prefix>You have deleted <green><task></green>
+task.description.set=<link:chat.prefix> You have set the description of <green><task></green> to <br> <aqua><description></aqua>
+task.executor.remove=<link:chat.prefix> You have removed the executor <aqua><executor></aqua> of task <green><task></green>
+task.executor.set=<link:chat.prefix> You have set the executor <aqua><executor></aqua> of task <green><task></green>
+task.finish.success=<link:chat.prefix> You finished task <green><task></green>
+task.info=<link\:chat.prefix> Information about <id>\:\
+  <br>-<green>Dimension</green>\: <dimension>\
+  <br>-<light_purple>Type</light_purple>\: <type>\
+  <br>-<aqua>State</aqua>\: <state>\
+  <br>-<blue>Creator</blue>\: <creator>\
+  <br>-<blue>Executor</blue>\: <executor>\
+  <br>-<yellow>Description</yellow>\: <description>
+task.list.entry=<dark_gray>- <blue><id></blue> (<aqua><type></aqua>)
+task.list.header=<link\:chat.prefix>Tasks <dark_gray>(</dark_gray><aqua><tasks></aqua><dark_gray>)</dark_gray>\:
+task.no.executor=<link\:chat.prefix>This task <green><task></green> has no Executor
+task.not.finished=<link\:chat.prefix>This task <green><task></green> is not finished
+task.not.in.work=<link\:chat.prefix>This task <green><task></green> is not in work
+task.not.open=<link\:chat.prefix>This task <green><task></green> is not open

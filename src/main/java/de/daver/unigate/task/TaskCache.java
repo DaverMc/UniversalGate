@@ -2,18 +2,16 @@ package de.daver.unigate.task;
 
 import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.core.sql.ResultTransformer;
-import de.daver.unigate.core.sql.SQLDataType;
-import de.daver.unigate.core.sql.SQLStatement;
-import de.daver.unigate.core.util.PlayerFetcher;
+import de.daver.unigate.dimension.Dimension;
 
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Stream;
 
 public class TaskCache {
+
+    private static final String SEPARATOR = "_";
 
     private final UniversalGatePlugin plugin;
     private final Map<String, Task> cache;
@@ -23,16 +21,29 @@ public class TaskCache {
         this.cache = new ConcurrentHashMap<>();
     }
 
-    public Stream<Task> getTasks() {
-        return cache.values().stream();
+    public Collection<Task> getTasks() {
+        return cache.values();
     }
 
-    public void put(Task task) throws SQLException {
-        if(cache.containsKey(task.id())) return;
+    public Task get(String id) {
+        return cache.get(id);
+    }
+
+    public boolean put(Task task) throws SQLException {
+        if(cache.containsKey(task.id())) return false;
         cache.put(task.id(), task);
-        plugin.sqlExecutor().execute(Queries.INSERT, task.id(),
-                PlayerFetcher.getPlayerName(task.creator()),
-                PlayerFetcher.getPlayerName(task.member()), task.state().name());
+
+        var executor = task.executor();
+        plugin.sqlExecutor().execute(Queries.INSERT,
+                task.id(),
+                task.creator().toString(),
+                executor == null ? null : executor.toString(),
+                task.state().name(),
+                task.type().name(),
+                task.dimensionId(),
+                task.description());
+
+        return true;
     }
 
     public void delete(Task task) throws SQLException {
@@ -51,40 +62,13 @@ public class TaskCache {
         loadAll();
     }
 
-    private interface Queries {
+    public void update(Task task) throws SQLException {
+        var executor = task.executor() == null ? null : task.executor().toString();
+        plugin.sqlExecutor().execute(Queries.UPDATE, task.state().name(), executor, task.description(), task.id());
+    }
 
-        SQLStatement CREATE_TABLE = new SQLStatement("""
-                CREATE TABLE IF NOT EXISTS tasks (id TEXT PRIMARY KEY, creator TEXT, member TEXT, state TEXT)
-                """);
-
-        SQLStatement LOAD_ALL = new SQLStatement("SELECT * FROM tasks");
-
-        SQLStatement DELETE = new SQLStatement("DELETE FROM tasks WHERE id = ?")
-                .addStringArgument();
-
-        SQLStatement UPDATE = new SQLStatement("UPDATE tasks SET state = ?, member = ? WHERE id = ?")
-                .addStringArgument()
-                .addStringArgument()
-                .addStringArgument();
-
-
-
-        SQLStatement INSERT = new SQLStatement("INSERT INTO tasks (id, creator, member, state) VALUES (?, ?, ?, ?)")
-                .addStringArgument()
-                .addStringArgument()
-                .addStringArgument()
-                .addStringArgument();
-
-        ResultTransformer<Task> TRANSFORMER = set -> {
-            var id = set.getString("id");
-            var creator = set.getString("creator");
-            var member = set.getString("member");
-            var state = set.getString("state");
-            Task task = new Task(id, UUID.fromString(creator), TaskState.valueOf(state));
-            task.setMember(UUID.fromString(member));
-            return task;
-        };
-
+    public String createId(Dimension dimension, TaskType type) {
+        return dimension.id() + SEPARATOR + type.name() + SEPARATOR + (getTasks().size() + 1);
     }
 
 }

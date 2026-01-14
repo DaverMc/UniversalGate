@@ -9,6 +9,7 @@ import java.util.UUID;
 public class PlayerFetcher {
 
     public static String getPlayerName(UUID uuid) {
+        if(uuid == null) return "null";
         var user = LuckPermsProvider.get().getUserManager().getUser(uuid);
         return user == null ? null : user.getFriendlyName();
     }

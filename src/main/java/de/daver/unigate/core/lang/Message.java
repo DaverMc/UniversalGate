@@ -37,6 +37,7 @@ public interface Message {
         }
 
         default Builder parsed(String key, String value) {
+            if(value == null) value = "";
             return tagResolver(TagResolver.resolver(Placeholder.parsed(key, value)));
         }
 
