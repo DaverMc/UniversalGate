@@ -2,6 +2,7 @@ package de.daver.unigate.listener;
 
 import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.UniversalGatePlugin;
+import de.daver.unigate.command.util.HubCommand;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -21,5 +22,7 @@ public class JoinListener extends PluginEventListener {
                 .key(LanguageKeys.EVENT_JOIN)
                 .parsed("player", player.getName())
                 .build().send(player);
+
+        HubCommand.teleport(player);
     }
 }

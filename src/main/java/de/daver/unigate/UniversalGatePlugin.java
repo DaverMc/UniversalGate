@@ -9,10 +9,7 @@ import de.daver.unigate.command.dimension.ExportSubCommand;
 import de.daver.unigate.command.dimension.ImportSubCommand;
 import de.daver.unigate.command.lang.LanguageCommand;
 import de.daver.unigate.command.task.TaskCommand;
-import de.daver.unigate.command.util.CreativeItemsCommand;
-import de.daver.unigate.command.util.DebugStickCommand;
-import de.daver.unigate.command.util.NightVisionCommand;
-import de.daver.unigate.command.util.SpeedCommand;
+import de.daver.unigate.command.util.*;
 import de.daver.unigate.core.lang.LanguageManager;
 import de.daver.unigate.core.sql.SQLExecutor;
 import de.daver.unigate.core.util.PlayerFetcher;
@@ -85,6 +82,7 @@ public class UniversalGatePlugin extends JavaPlugin {
             dispatcher.register(new DebugStickCommand().build());
             dispatcher.register(new NightVisionCommand().build());
             dispatcher.register(new TaskCommand().build());
+            dispatcher.register(new HubCommand().build());
         });
     }
 

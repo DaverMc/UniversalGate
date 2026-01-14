@@ -91,10 +91,11 @@ interface Queries {
     SQLStatement SELECT_ALLOWED = new SQLStatement("SELECT * FROM allowed_dimensions WHERE dimension = ?")
             .addStringArgument();
 
-    SQLStatement UPDATE_DIMENSION_META = new SQLStatement("UPDATE dimensions SET stop_lag = ?, stop_lag = ? WHERE id = ?")
+    SQLStatement UPDATE_DIMENSION_META = new SQLStatement("UPDATE dimensions SET stop_lag = ?, state = ?, last_loaded = ? WHERE id = ?")
             .addBooleanArgument()
+            .addConverted(Dimension.class, SQLDataType.STRING, Dimension::id)
             .addLongArgument()
-            .addConverted(Dimension.class, SQLDataType.STRING, Dimension::id);
+            .addStringArgument();
 
     ResultTransformer<UUID> ALLOWED_TRANSFORMER = set -> UUID.fromString(set.getString("player"));
 }
