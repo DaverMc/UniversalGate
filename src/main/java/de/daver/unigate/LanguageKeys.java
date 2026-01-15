@@ -4,6 +4,23 @@ import de.daver.unigate.core.lang.LanguageKey;
 
 public enum LanguageKeys implements LanguageKey {
 
+    GUI_STATUE_INVENTORY("gui.statue.inventory"),
+    ITEM_STATUE_INVENTORY_TITLE("item.statue.inventory.title"),
+    ITEM_STATUE_SETTINGS_TITLE("item.statue.settings.title"),
+    STATUE_CLONED("statue.cloned"),
+    STATUE_NOT_SELECTED("statue.not.selected"),
+    STATUE_TOOLS_REMOVED("statue.tools.removed"),
+    ITEM_STATUE_HEAD_NAME("item.statue.head.name"),
+    ITEM_STATUE_BODY_NAME("item.statue.body.name"),
+    ITEM_STATUE_ARM_LEFT_NAME("item.statue.arm.left.name"),
+    ITEM_STATUE_ARM_RIGHT_NAME("item.statue.arm.right.name"),
+    ITEM_STATUE_LEG_LEFT_NAME("item.statue.leg.left.name"),
+    ITEM_STATUE_LEG_RIGHT_NAME("item.statue.leg.right.name"),
+    ITEM_STATUE_POSITION_NAME("item.statue.position.name"),
+    ITEM_STATUE_EDITOR_LORE_X( "item.statue.editor.lore.x"),
+    ITEM_STATUE_EDITOR_LORE_Y( "item.statue.editor.lore.y"),
+    ITEM_STATUE_EDITOR_LORE_Z( "item.statue.editor.lore.z"),
+    STATUE_TOOLS_CHANGE_AXIS("statue.tools.change.axis", "axis"),
     STATUE_TOOLS_RECEIVED("statue.tools.received"),
     STATUE_DESELECTED("statue.deselected"),
     STATUE_SELECTED("statue.selected"),

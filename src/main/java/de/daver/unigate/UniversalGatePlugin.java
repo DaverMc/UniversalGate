@@ -5,8 +5,6 @@ import com.zaxxer.hikari.HikariDataSource;
 import de.daver.unigate.category.CategoryCache;
 import de.daver.unigate.command.category.CategoryCommand;
 import de.daver.unigate.command.dimension.DimensionCommand;
-import de.daver.unigate.command.dimension.ExportSubCommand;
-import de.daver.unigate.command.dimension.ImportSubCommand;
 import de.daver.unigate.command.lang.LanguageCommand;
 import de.daver.unigate.command.statue.StatueCommand;
 import de.daver.unigate.command.task.TaskCommand;
@@ -17,7 +15,7 @@ import de.daver.unigate.core.util.PlayerFetcher;
 import de.daver.unigate.core.util.TabList;
 import de.daver.unigate.dimension.DimensionCache;
 import de.daver.unigate.listener.*;
-import de.daver.unigate.statue.StatueClickListeners;
+import de.daver.unigate.statue.itemlistener.*;
 import de.daver.unigate.task.TaskCache;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import net.luckperms.api.LuckPermsProvider;
@@ -31,6 +29,7 @@ import org.slf4j.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.Locale;
 import java.util.Objects;
@@ -62,6 +61,7 @@ public class UniversalGatePlugin extends JavaPlugin {
         initializeFiles();
         registerCommands();
         registerListeners();
+        registerItemListener();
         setUpTabList();
     }
 
@@ -104,7 +104,22 @@ public class UniversalGatePlugin extends JavaPlugin {
         itemInteractListener.register();
         this.statueInteractListener = new StatueInteractListener(this);
         statueInteractListener.register();
-        StatueClickListeners.register(this);
+        new StatueDialogClickListener(this).register();
+        new BlockPlaceBreakListener(this).register();
+        new CustomInventoryHolderListener(this).register();
+    }
+
+    private void registerItemListener() {
+        var registry = itemInteractListener;
+        registry.register(HeadItemListener.ID, new HeadItemListener());
+        registry.register(BodyItemListener.ID, new BodyItemListener());
+        registry.register(LeftArmItemListener.ID, new LeftArmItemListener());
+        registry.register(RightArmItemListener.ID, new RightArmItemListener());
+        registry.register(LeftLegItemListener.ID, new LeftLegItemListener());
+        registry.register(RightLegItemListener.ID, new RightLegItemListener());
+        registry.register(PositionItemListener.ID, new PositionItemListener());
+        registry.register(SettingsItemListener.ID, new SettingsItemListener());
+        registry.register(InventoryItemListener.ID, new InventoryItemListener());
     }
 
     private void initializeSQL() {
@@ -127,8 +142,8 @@ public class UniversalGatePlugin extends JavaPlugin {
 
     private void initializeFiles() {
         try {
-            Files.createDirectories(ImportSubCommand.importDir(this));
-            Files.createDirectories(ExportSubCommand.exportDir(this));
+            Files.createDirectories(importDir());
+            Files.createDirectories(exportDir());
         } catch (IOException e) {
             logger().error("Failed to create directories", e);
         }
@@ -237,6 +252,14 @@ public class UniversalGatePlugin extends JavaPlugin {
 
     public StatueInteractListener statueInteractListener() {
         return statueInteractListener;
+    }
+
+    public Path importDir() {
+        return getDataFolder().toPath().resolve("dim_imports");
+    }
+
+    public Path exportDir() {
+        return getDataPath().resolve("dim_exports");
     }
 
     public static UniversalGatePlugin getInstance() {

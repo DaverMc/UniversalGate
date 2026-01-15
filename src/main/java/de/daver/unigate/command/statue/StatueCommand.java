@@ -7,6 +7,6 @@ public class StatueCommand extends LiteralNode {
     public StatueCommand() {
         super("statue");
         then(new DeselectSubCommand());
-        then(new ToolsSubCommand());
+        then(new CloneSubCommand());
     }
 }

@@ -13,7 +13,6 @@ import de.daver.unigate.core.command.argument.WordArgument;
 import de.daver.unigate.core.util.FileUtils;
 import de.daver.unigate.dimension.Dimension;
 import de.daver.unigate.dimension.DimensionType;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -57,7 +56,7 @@ public class ImportSubCommand extends LiteralNode {
         if(Files.exists(newDir)) throw CommandExceptions.VALUE_EXISTING.create(id);
 
         try {
-            var source = importDir(context.plugin()).resolve(file);
+            var source = context.plugin().importDir().resolve(file);
             FileUtils.copyContents(source, newDir);
             var dimension = Dimension.create(category, theme, type, creator.getUniqueId());
             context.plugin().dimensionCache().insert(dimension);
@@ -76,13 +75,11 @@ public class ImportSubCommand extends LiteralNode {
 
     }
 
-    public static Path importDir(JavaPlugin plugin) {
-        return plugin.getDataFolder().toPath().resolve("dim_imports");
-    }
+
 
     Stream<String> files(PluginContext context) {
         try{
-            var stream = Files.list(importDir(context.plugin()));
+            var stream = Files.list(context.plugin().importDir());
             return stream.map(Path::getFileName).map(Path::toString);
         } catch (IOException exception) {
             context.plugin().logger().error("Could not list files", exception);

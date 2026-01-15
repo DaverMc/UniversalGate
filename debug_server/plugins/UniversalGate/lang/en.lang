@@ -1,5 +1,5 @@
 #
-#Wed Jan 14 21:53:51 CET 2026
+#Thu Jan 15 15:41:00 CET 2026
 border.default=<link\:chat.prefix> Set worldbord to <green>default</green>
 border.unlimited=<link\:chat.prefix> Set worldbord to <red>unlimited</red>
 category.command.help=<link\:chat.prefix> You can use these subcommands\:<br>- create <name><br>- delete <category><br>- list
@@ -8,7 +8,7 @@ category.delete.success=<link\:chat.prefix> Successfully deleted <green><categor
 category.list.entry=<dark_gray>- <blue><category></blue> (<aqua><id></aqua>)
 category.list.header=<link\:chat.prefix> Categories <dark_gray>(</dark_gray><aqua><categories></aqua><dark_gray>)</dark_gray>\:
 chat.format=<prefix> <gray>|</gray> <player> <gray>|</gray> <suffix> <dark_gray>? </dark_gray><gray> <message>
-chat.prefix=<b><gradient\:\#00ffff\:\#ff55ff>UniversalGate</gradient></b> <dark_gray>? </dark_gray><gray>
+chat.prefix=<b><gradient\:\#00ffff\:\#ff55ff>UniversalGate</gradient></b> <gray>
 command.hub=<link\:chat.prefix> You have teleported to the hub
 debugstick.given=<link\:chat.prefix> You have received a debugstick
 dimension.allowed.add.success=<link\:chat.prefix> Successfully added <green><player></green> as allowed to <aqua><dimension></aqua>
@@ -36,8 +36,21 @@ event.join=<link\:chat.prefix>Welcome <aqua><player></aqua>
 event.leave=<link\:chat.prefix> <aqua><player></aqua> left the game
 event.portal.disabled=<link\:chat.prefix> Portals are <red>disabled</red>
 gui.creativeitems.title=<green> <b> Creative Item </b></green>
+gui.statue.inventory=<green> <b> Statue Items </b></green>
 item.light.air.title=<light_purple>Lighted Air [<level>]</light_purple>
 item.light.water.title=<blue>Lighted Water [<level>]</blue>
+item.statue.arm.left.name=<aqua>Left Arm Pose
+item.statue.arm.right.name=<aqua>Right Arm Pose
+item.statue.body.name=<aqua> Body Pose
+item.statue.editor.lore.x=<green>X</green><br><dark_gray>Y</dark_gray<br><dark_gray>Z</dark_gray>
+item.statue.editor.lore.y=<dark_gray>X</dark_gray><br><green>Y</green><br><dark_gray>Z</dark_gray>
+item.statue.editor.lore.z=<dark_gray>X</dark_gray><br><dark_gray>Y</dark_gray><br><green>Z</green>
+item.statue.head.name=<aqua> Head Pose
+item.statue.inventory.title=<green> Equipment
+item.statue.leg.left.name=<aqua>Left Leg Pose
+item.statue.leg.right.name=<aqua>Right Leg Pose
+item.statue.position.name=<aqua>Position
+item.statue.settings.title=<light_purple>Settings
 language.reload=<link\:chat.prefix> Successfully reloaded language files
 nightvision.add=<link\:chat.prefix> You have <green>enabled</green> nightvision
 nightvision.removed=<link\:chat.prefix> You have <red>disabled</red> nightvision
@@ -45,9 +58,13 @@ server.listed.players=Go to Discord\:<br><aqua>RoyalPixels.de</aqua>
 server.motd=<link\:chat.prefix> <blue>Apply on Discord</blue>
 server.version=<b><blue>Apply on Discord</blue></b>
 speed.set=<link\:chat.prefix> Set speed to <green><speed><green>
-statue.deselected=new\:statue.deselected
-statue.selected=new\:statue.selected
-statue.tools.received=new\:statue.tools.received
+statue.cloned=<link\:chat.prefix> Cloned Statue
+statue.deselected=<link\:chat.prefix> <red> Deselected Statue
+statue.not.selected=<link\:chat.prefix> No Statue selected
+statue.selected=<link\:chat.prefix> <green> Selected Statue
+statue.tools.change.axis=<link\:chat.prefix> You are now editing <green><axis>-Axis</green>
+statue.tools.received=<link\:chat.prefix> You have received the Statue Tools
+statue.tools.removed=<link\:chat.prefix> Given your old inventory back
 tab.list.footer=<br><gradient\:gray\:dark_gray>\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=</gradient\:gray\:dark_gray><gradient\:dark_gray\:gray>\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=</gradient\:dark_gray\:gray><br><br><gray>Players online <dark_gray>(</dark_gray><green><players></green><dark_gray>)</dark_gray>
 tab.list.header=<br><b><gradient\:\#00ffff\:\#ff55ff>UniversalGate</gradient></b><br><br><gradient\:gray\:dark_gray>\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=</gradient\:gray\:dark_gray><gradient\:dark_gray\:gray>\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=</gradient\:dark_gray\:gray><br>
 tab.list.name=<prefix> <gray>|</gray> <player> <gray>|</gray> <suffix>
