@@ -3,23 +3,15 @@ package de.daver.unigate.statue.itemlistener;
 import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.item.ItemActionListener;
-import de.daver.unigate.listener.PluginEventListener;
 import de.daver.unigate.statue.Statue;
-import io.papermc.paper.connection.PlayerGameConnection;
 import io.papermc.paper.dialog.Dialog;
-import io.papermc.paper.event.player.PlayerCustomClickEvent;
 import io.papermc.paper.registry.data.dialog.ActionButton;
 import io.papermc.paper.registry.data.dialog.DialogBase;
 import io.papermc.paper.registry.data.dialog.action.DialogAction;
 import io.papermc.paper.registry.data.dialog.input.DialogInput;
 import io.papermc.paper.registry.data.dialog.type.DialogType;
 import net.kyori.adventure.key.Key;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 
@@ -32,35 +24,51 @@ public class SettingsItemListener implements ItemActionListener {
         var player = context.player();
         var statue = context.plugin().statueInteractListener().get(player);
         if(statue == null) return;
-        var dialog = createDialog(context.plugin(), statue);
+        var dialog = createDialog(context.plugin(), player, statue);
         player.showDialog(dialog);
     }
 
-    private Dialog createDialog(UniversalGatePlugin plugin, Statue statue) {
+    private Dialog createDialog(UniversalGatePlugin plugin, Player player, Statue statue) {
         var lang = plugin.languageManager();
+
+        var dialogTitle = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_TITLE).build().get(player);
+        var displayNameTitle = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_DISPLAY_NAME).build().get(player);
+        var smallTitle = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_SMALL).build().get(player);
+        var basePlateTitle = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_BASE).build().get(player);
+        var visibleTitle = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_VISIBLE).build().get(player);
+        var gravitiyTitle = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_GRAVITY).build().get(player);
+        var armsTitle = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_ARMS).build().get(player);
+        var glowingTitle = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_GLOWING).build().get(player);
+        var nameVisibleTitle = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_NAME_VISIBLE).build().get(player);
+        var deleteTitle = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_DELETE).build().get(player);
+        var confirmTitle = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_CONFIRM).build().get(player);;
+        var confirmHover = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_CONFIRM_HOVER).build().get(player);
+        var discardTitle = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_DISCARD).build().get(player);;
+        var discardHover = lang.message().key(LanguageKeys.DIALOG_STATUE_SETTINGS_DISCARD_HOVER).build().get(player);
+
         return Dialog.create(builder -> builder.empty()
-                .base(DialogBase.builder(Component.text("Configure your new experience value"))
+                .base(DialogBase.builder(dialogTitle)
                         .inputs(List.of(
-                                DialogInput.text("display_name", Component.text("Display Name", NamedTextColor.AQUA))
+                                DialogInput.text("display_name", displayNameTitle)
                                         .initial(statue.displayName())
-                                        .width(500)
+                                        .width(200)
                                         .maxLength(1000)
                                         .build(),
-                                DialogInput.bool("small", Component.text("Small", NamedTextColor.AQUA))
+                                DialogInput.bool("small", smallTitle)
                                         .initial(statue.small()).build(),
-                                DialogInput.bool("base", Component.text("Base", NamedTextColor.AQUA))
+                                DialogInput.bool("base", basePlateTitle)
                                         .initial(statue.basePlate()).build(),
-                                DialogInput.bool("visible", Component.text("Visible", NamedTextColor.AQUA))
+                                DialogInput.bool("visible", visibleTitle)
                                         .initial(statue.visible()).build(),
-                                DialogInput.bool("gravity", Component.text("Gravity", NamedTextColor.AQUA))
+                                DialogInput.bool("gravity", gravitiyTitle)
                                         .initial(statue.gravity()).build(),
-                                DialogInput.bool("arms", Component.text("Arms", NamedTextColor.AQUA))
+                                DialogInput.bool("arms", armsTitle)
                                         .initial(statue.arms()).build(),
-                                DialogInput.bool("glowing", Component.text("Glowing", NamedTextColor.AQUA))
+                                DialogInput.bool("glowing", glowingTitle)
                                         .initial(statue.glowing()).build(),
-                                DialogInput.bool("name_visible", Component.text("NameVisible", NamedTextColor.AQUA))
+                                DialogInput.bool("name_visible", nameVisibleTitle)
                                         .initial(statue.nameVisible()).build(),
-                                DialogInput.bool("delete", Component.text("Delete", NamedTextColor.RED))
+                                DialogInput.bool("delete", deleteTitle)
                                         .initial(false)
                                         .build()
                                 ))
@@ -68,14 +76,14 @@ public class SettingsItemListener implements ItemActionListener {
                 )
                 .type(DialogType.confirmation(
                         ActionButton.create(
-                                Component.text("Confirm", TextColor.color(0xAEFFC1)),
-                                Component.text("Click to confirm your input."),
+                                confirmTitle,
+                                confirmHover,
                                 100,
                                 DialogAction.customClick(Key.key("unigate:statue_settings_confirmed"), null)
                         ),
                         ActionButton.create(
-                                Component.text("Discard", TextColor.color(0xFFA0B1)),
-                                Component.text("Click to discard your input."),
+                                discardTitle,
+                                discardHover,
                                 100,
                                 null
                         )

@@ -1,5 +1,6 @@
 package de.daver.unigate.listener;
 
+import de.daver.unigate.Permissions;
 import de.daver.unigate.UniversalGatePlugin;
 import io.papermc.paper.connection.PlayerGameConnection;
 import io.papermc.paper.event.player.PlayerCustomClickEvent;
@@ -46,6 +47,7 @@ public class StatueDialogClickListener extends PluginEventListener {
         if (nameVisible != null) statue.nameVisible(nameVisible);
         if(delete != null) {
             if(!delete) return;
+            if(!player.hasPermission(Permissions.STATUE_DELETE)) return;
             plugin().statueInteractListener().deselect(player);
             statue.delete();
         }

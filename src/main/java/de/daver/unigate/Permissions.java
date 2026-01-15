@@ -54,4 +54,10 @@ public interface Permissions {
     String TASK_EXECUTOR_REMOVE = TASK_EXECUTOR + ".remove";
     String TASK_REOPEN = TASK + ".reopen";
 
+    String STATUE = PREFIX + "statue";
+    String STATUE_USE = STATUE + ".use";
+    String STATUE_CLONE = STATUE + ".clone";
+    String STATUE_DELETE = STATUE + ".delete";
+    String STATUE_DESELECT_COMMAND = STATUE + ".deselect.command";
+
 }

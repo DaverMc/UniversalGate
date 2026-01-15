@@ -2,6 +2,7 @@ package de.daver.unigate.command.statue;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 
@@ -9,6 +10,7 @@ public class CloneSubCommand extends LiteralNode {
 
     protected CloneSubCommand() {
         super("clone");
+        permission(Permissions.STATUE_CLONE);
         executor(this::cloneStatue);
     }
 

@@ -4,6 +4,20 @@ import de.daver.unigate.core.lang.LanguageKey;
 
 public enum LanguageKeys implements LanguageKey {
 
+    DIALOG_STATUE_SETTINGS_TITLE("dialog.statue.settings.title"),
+    DIALOG_STATUE_SETTINGS_DISPLAY_NAME("dialog.statue.settings.display-name"),
+    DIALOG_STATUE_SETTINGS_SMALL("dialog.statue.settings.small"),
+    DIALOG_STATUE_SETTINGS_BASE("dialog.statue.settings.base"),
+    DIALOG_STATUE_SETTINGS_VISIBLE("dialog.statue.settings.visible"),
+    DIALOG_STATUE_SETTINGS_GRAVITY("dialog.statue.settings.gravity"),
+    DIALOG_STATUE_SETTINGS_ARMS("dialog.statue.settings.arms"),
+    DIALOG_STATUE_SETTINGS_GLOWING("dialog.statue.settings.glowing"),
+    DIALOG_STATUE_SETTINGS_NAME_VISIBLE("dialog.statue.settings.name-visible"),
+    DIALOG_STATUE_SETTINGS_DELETE("dialog.statue.settings.delete"),
+    DIALOG_STATUE_SETTINGS_CONFIRM("dialog.statue.settings.confirm"),
+    DIALOG_STATUE_SETTINGS_CONFIRM_HOVER("dialog.statue.settings.confirm.hover"),
+    DIALOG_STATUE_SETTINGS_DISCARD("dialog.statue.settings.discard"),
+    DIALOG_STATUE_SETTINGS_DISCARD_HOVER("dialog.statue.settings.discard.hover"),
     GUI_STATUE_INVENTORY("gui.statue.inventory"),
     ITEM_STATUE_INVENTORY_TITLE("item.statue.inventory.title"),
     ITEM_STATUE_SETTINGS_TITLE("item.statue.settings.title"),

@@ -44,6 +44,7 @@ public record Dimension(String id, DimensionType type, DimensionStats stats, Dim
         world.setGameRule(GameRules.COMMAND_BLOCKS_WORK, false);
         world.setGameRule(GameRules.SHOW_ADVANCEMENT_MESSAGES, false);
         world.setGameRule(GameRules.SHOW_DEATH_MESSAGES, false);
+
     }
 
     private static void createLevelDatFile(Dimension dimension) throws IOException {
