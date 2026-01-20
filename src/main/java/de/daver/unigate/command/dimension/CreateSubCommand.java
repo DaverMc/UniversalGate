@@ -52,7 +52,7 @@ class CreateSubCommand extends LiteralNode {
             context.plugin().languageManager().message()
                     .key(LanguageKeys.DIMENSION_CREATE_SUCCESS)
                     .parsed("dimension",dimension.id())
-                    .parsed("action", dimension.type())
+                    .parsed("type", dimension.type())
                     .build().send(context.sender());
 
         } catch (SQLException e) {

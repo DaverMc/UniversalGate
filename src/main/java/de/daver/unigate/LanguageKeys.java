@@ -4,6 +4,7 @@ import de.daver.unigate.core.lang.LanguageKey;
 
 public enum LanguageKeys implements LanguageKey {
 
+    STATUE_COMMAND_HELP("statue.command.help"),
     DIALOG_STATUE_SETTINGS_TITLE("dialog.statue.settings.title"),
     DIALOG_STATUE_SETTINGS_DISPLAY_NAME("dialog.statue.settings.display-name"),
     DIALOG_STATUE_SETTINGS_SMALL("dialog.statue.settings.small"),

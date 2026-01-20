@@ -21,7 +21,7 @@ public interface DimensionGenerator {
 
         CompoundTag overworld = new CompoundTag();
         dimensions.put("minecraft:overworld", overworld);
-        overworld.putString("action", "minecraft:overworld");
+        overworld.putString("type", "minecraft:overworld");
 
         return overworld;
     }

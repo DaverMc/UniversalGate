@@ -10,7 +10,6 @@ public class DeselectSubCommand extends LiteralNode {
 
     protected DeselectSubCommand() {
         super("deselect");
-        permission(Permissions.STATUE_DESELECT_COMMAND);
         executor(this::removeSelectedStatue);
     }
 

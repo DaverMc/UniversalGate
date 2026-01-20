@@ -89,16 +89,28 @@ public interface LevelData {
     }
 
     static void addDataFields(CompoundTag data, Dimension dimension) {
+        data.put("ScheduledEvents", new ListTag<>(CompoundTag.class));
+
+        data.putBoolean("allowCommands",false);
+        data.putInt("clearWeatherTime", 0);
         data.putInt("DataVersion", NBT_VERSION);
-        data.putString("LevelName", dimension.id());
-        data.putLong("RandomSeed", new Random().nextLong());
+        data.putLong("DayTime", 0L);
+        data.putBoolean("Difficulty", false);
+        data.putBoolean("DifficultyLocked", false);
         data.putInt("GameType", 1);
         data.putBoolean("hardcore", false);
         data.putBoolean("initialized", true);
+        data.putLong("LastPlayed", System.currentTimeMillis());
+        data.putString("LevelName", dimension.id());
+        data.putBoolean("raining", false);
+        data.putInt("rainTime", 0);
+        data.putBoolean("thundering", false);
+        data.putInt("thunderTime", 0);
+        data.putLong("Time", 0L);
         data.putInt("version", 19133);
+        data.putInt("WanderingTraderSpawnChance", 0);
+        data.putInt("WanderingTraderSpawnDelay", 0);
+        data.putBoolean("WasModded", true);
     }
-
-
-
 
 }

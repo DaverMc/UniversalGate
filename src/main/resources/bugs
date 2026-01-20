@@ -17,9 +17,12 @@
 + Armorstand kann nicht platziert werden
 / Reopen Task Command fehlt
 / Import und Export Ordner werden nicht neu erstellt
-/ TabList sortieren
++ TabList sortieren
 / Armorstand Tool programmieren
++ Void-Welten können nicht erstellt/geladen werden
+Wenn das erstellen fehlschlägt, Dateien, oder Datenbankeinträge löschen
 Armorstand cannot be rotated
+Statue Pose Save/List/Load füllen
 Message Channels
 Command Suggestions nur das was auch Permissions technisch erlaubt ist anzeigen
 TabList Header und Footer werden nicht aktualisiert wenn ein spieler neu joint oder leaved

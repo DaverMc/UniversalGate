@@ -14,7 +14,7 @@ public class VoidGenerator implements DimensionGenerator {
 
         CompoundTag generator = new CompoundTag();
         overworld.put("generator", generator);
-        generator.putString("action", "minecraft:flat");
+        generator.putString("type", "minecraft:flat");
 
         // Flatworld-Settings
         CompoundTag settings = new CompoundTag();
@@ -24,8 +24,14 @@ public class VoidGenerator implements DimensionGenerator {
         ListTag<CompoundTag> layers = new ListTag<>(CompoundTag.class);
         settings.put("layers", layers);
 
+        ListTag<CompoundTag> structures = new ListTag<>(CompoundTag.class);
+        settings.put("structure_overrides", structures);
+
         // Biome festlegen
         settings.putString("biome", "minecraft:plains");
+
+        settings.putBoolean("features", false);
+        settings.putBoolean("lakes", false);
 
         return root;
     }
