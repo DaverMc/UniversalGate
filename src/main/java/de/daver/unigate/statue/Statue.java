@@ -8,78 +8,75 @@ import org.bukkit.util.EulerAngle;
 
 import java.util.function.Consumer;
 
-public record Statue(ArmorStand stand) {
+public class Statue {
+
+    private final ArmorStand stand;
+    private final StatuePose headPose;
+    private final StatuePose bodyPose;
+    private final StatuePose leftArmPose;
+    private final StatuePose rightArmPose;
+    private final StatuePose leftLegPose;
+    private final StatuePose rightLegPose;
+    private final StatuePosition position;
+    private final StatueEquipment equipment;
+    private final StatueAttributes attributes;
 
     public Statue(ArmorStand stand) {
         this.stand = stand;
+        this.headPose = new StatuePose(this, new PoseBridges.Head());
+        this.bodyPose = new StatuePose(this, new PoseBridges.Body());
+        this.leftArmPose = new StatuePose(this, new PoseBridges.LeftArm());
+        this.rightArmPose = new StatuePose(this, new PoseBridges.RightArm());
+        this.leftLegPose = new StatuePose(this, new PoseBridges.LeftLeg());
+        this.rightLegPose = new StatuePose(this, new PoseBridges.RightLeg());
+        this.position = new StatuePosition(stand);
+        this.equipment = new StatueEquipment(this);
+        this.attributes = new StatueAttributes(this);
+
         stand.setGravity(false);
-        stand.setArms(true);
         stand.setInvulnerable(true);
     }
 
-    public void move(double x, double y, double z) {
-        stand.teleport(stand.getLocation().add(x, y, z));
+    public StatuePose head() {
+        return this.headPose;
     }
 
-    public void moveHead(int x, int y, int z) {
-        addEulerAngle(stand.getHeadPose(), x, y, z, stand::setHeadPose);
+    public StatuePose body() {
+        return this.bodyPose;
     }
 
-    public void moveBody(int x, int y, int z)  {
-        addEulerAngle(stand.getBodyPose(), x, y, z, stand::setBodyPose);
+    public StatuePose leftArm() {
+        return this.leftArmPose;
     }
 
-    public void moveLeftArm(int x, int y, int z) {
-        addEulerAngle(stand.getLeftArmPose(), x, y, z, stand::setLeftArmPose);
+    public StatuePose rightArm() {
+        return this.rightArmPose;
     }
 
-    public void moveRightArm(int x, int y, int z) {
-        addEulerAngle(stand.getRightArmPose(), x, y, z, stand::setRightArmPose);
+    public StatuePose leftLeg() {
+        return this.leftLegPose;
     }
 
-    public void moveLeftLeg(int x, int y, int z) {
-        addEulerAngle(stand.getLeftLegPose(), x, y, z, stand::setLeftLegPose);
+    public StatuePose rightLeg() {
+        return this.rightLegPose;
     }
 
-    public void moveRightLeg(int x, int y, int z) {
-        addEulerAngle(stand.getRightLegPose(), x, y, z, stand::setRightLegPose);
+    public StatuePosition position() {
+        return this.position;
     }
 
-    public boolean toggleGravity() {
-        if(stand.hasGravity()) stand.setGravity(false);
-        else stand.setGravity(true);
-        return stand.hasGravity();
+    public StatueEquipment equipment() {
+        return this.equipment;
     }
 
-    public boolean toggleGlowing() {
-        if(stand.isGlowing()) stand.setGlowing(false);
-        else stand.setGlowing(true);
-        return stand.isGlowing();
-
+    public StatueAttributes attributes() {
+        return this.attributes;
     }
 
-    public boolean toggleSmall() {
-        if(stand.isSmall()) stand.setSmall(false);
-        else stand.setSmall(true);
-        return stand.isSmall();
-    }
-
-    public boolean toggleVisible() {
-        if(stand.isVisible()) stand.setVisible(false);
-        else stand.setVisible(true);
-        return stand.isVisible();
-    }
-
-    public boolean toggleArms() {
-        if(stand.hasArms()) stand.setArms(false);
-        else stand.setArms(true);
-        return stand.hasArms();
-    }
-
-    public boolean toggleBasePlate() {
-        if(stand.hasBasePlate()) stand.setBasePlate(false);
-        else stand.setBasePlate(true);
-        return stand.hasBasePlate();
+    public ArmorStand getEntity() {
+        var stand = this.stand;
+        if(!stand.isValid()) return null;
+        return this.stand;
     }
 
     public void setCustomName(Component customName) {
@@ -111,7 +108,7 @@ public record Statue(ArmorStand stand) {
         target.setSmall(stand.isSmall());
         target.setVisible(stand.isVisible());
         target.setGlowing(stand.isGlowing());
-        target.setCustomName(stand.getCustomName());
+        target.customName(stand.customName());
         target.setCustomNameVisible(stand.isCustomNameVisible());
 
         target.setHeadPose(stand.getHeadPose());

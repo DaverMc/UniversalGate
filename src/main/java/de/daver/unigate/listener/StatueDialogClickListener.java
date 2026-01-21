@@ -36,21 +36,18 @@ public class StatueDialogClickListener extends PluginEventListener {
         var player = connection.getPlayer();
         var statue = plugin().statueInteractListener().get(player);
         if (statue == null) return;
+        var attributes = statue.attributes();
 
-        if (name != null) statue.setCustomName(MiniMessage.miniMessage().deserialize(name));
-        if (small != null) statue.small(small);
-        if (base != null) statue.basePlate(base);
-        if (visible != null) statue.visible(visible);
-        if (gravity != null) statue.gravity(gravity);
-        if (arms != null) statue.arms(arms);
-        if (glowing != null) statue.glowing(glowing);
-        if (nameVisible != null) statue.nameVisible(nameVisible);
-        if(delete != null) {
-            if(!delete) return;
-            if(!player.hasPermission(Permissions.STATUE_DELETE)) return;
-            plugin().statueInteractListener().deselect(player);
-            statue.delete();
-        }
+        if (name != null) attributes.setName(MiniMessage.miniMessage().deserialize(name));
+        if (small != null) attributes.setSmall(small);
+        if (base != null) attributes.setBasePlate(base);
+        if (visible != null) attributes.setVisible(visible);
+        if (arms != null) attributes.setArms(arms);
+        if (glowing != null) attributes.setGlowing(glowing);
+
+        if(delete == null || !delete) return;
+        if(!player.hasPermission(Permissions.STATUE_DELETE)) return;
+        plugin().statueInteractListener().deselect(player);
+        statue.delete();
     }
-
 }

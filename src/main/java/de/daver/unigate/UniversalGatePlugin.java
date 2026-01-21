@@ -144,6 +144,7 @@ public class UniversalGatePlugin extends JavaPlugin {
         try {
             Files.createDirectories(importDir());
             Files.createDirectories(exportDir());
+            Files.createDirectories(poseDir());
         } catch (IOException e) {
             logger().error("Failed to create directories", e);
         }
@@ -262,6 +263,9 @@ public class UniversalGatePlugin extends JavaPlugin {
         return getDataPath().resolve("dim_exports");
     }
 
+    public Path poseDir() {
+        return getDataPath().resolve("statue_pose");
+    }
     public static UniversalGatePlugin getInstance() {
         return instance;
     }

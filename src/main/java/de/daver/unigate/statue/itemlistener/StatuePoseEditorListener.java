@@ -7,7 +7,7 @@ import de.daver.unigate.item.ItemWrapper;
 import de.daver.unigate.statue.Statue;
 
 
-public abstract class StatueEditorListener implements ItemActionListener {
+public abstract class StatuePoseEditorListener implements ItemActionListener {
 
     public static final int AXIS_X = 0;
     public static final int AXIS_Y = 1;
@@ -50,7 +50,7 @@ public abstract class StatueEditorListener implements ItemActionListener {
     }
 
     private void nexMode(int mode, ItemWrapper item, Context context) {
-        if(mode == 2) item.mode(0);
+        if(mode == AXIS_Z) item.mode(0);
         else item.mode(mode + 1);
         mode = item.getMode();
 

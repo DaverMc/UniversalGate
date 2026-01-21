@@ -26,12 +26,12 @@ public class StatueInventoryGui implements InventoryHolder {
     }
 
     private void fillItems(Statue statue) {
-        inv.setItem(0, statue.stand().getEquipment().getHelmet());
-        inv.setItem(1, statue.stand().getEquipment().getChestplate());
-        inv.setItem(2, statue.stand().getEquipment().getLeggings());
-        inv.setItem(3, statue.stand().getEquipment().getBoots());
-        inv.setItem(4, statue.stand().getEquipment().getItemInMainHand());
-        inv.setItem(5, statue.stand().getEquipment().getItemInOffHand());
+        inv.setItem(0, statue.equipment().helmet());
+        inv.setItem(1, statue.equipment().chestPlate());
+        inv.setItem(2, statue.equipment().leggings());
+        inv.setItem(3, statue.equipment().boots());
+        inv.setItem(4, statue.equipment().mainHand());
+        inv.setItem(5, statue.equipment().offHand());
 
         inv.setItem(9, new ItemStack(Material.GOLDEN_HELMET));
         inv.setItem(10, new ItemStack(Material.GOLDEN_CHESTPLATE));
@@ -61,12 +61,15 @@ public class StatueInventoryGui implements InventoryHolder {
         var mainHand = inv.getItem(4);
         var offHand = inv.getItem(5);
 
-        statue.stand().getEquipment().setHelmet(helmet);
-        statue.stand().getEquipment().setChestplate(chestplate);
-        statue.stand().getEquipment().setLeggings(leggings);
-        statue.stand().getEquipment().setBoots(boots);
-        statue.stand().getEquipment().setItemInMainHand(mainHand);
-        statue.stand().getEquipment().setItemInOffHand(offHand);
+        var equip = statue.equipment();
+
+        equip.setHelmet(helmet);
+        equip.setChestPlate(chestplate);
+        equip.setLeggings(leggings);
+        equip.setBoots(boots);
+        equip.setMainHand(mainHand);
+        equip.setOffHand(offHand);
+        equip.show();
     }
 
     @Override

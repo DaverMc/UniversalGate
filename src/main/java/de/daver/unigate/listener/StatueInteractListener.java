@@ -1,9 +1,7 @@
 package de.daver.unigate.listener;
 
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.UniversalGatePlugin;
-import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.core.lang.LanguageKey;
 import de.daver.unigate.item.ItemWrapper;
 import de.daver.unigate.statue.Statue;
@@ -13,9 +11,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -24,7 +20,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static de.daver.unigate.statue.itemlistener.StatueEditorListener.AXIS_X;
+import static de.daver.unigate.statue.itemlistener.StatuePoseEditorListener.AXIS_X;
 
 public class StatueInteractListener extends PluginEventListener {
 
