@@ -9,6 +9,6 @@ public class RightLegItemListener extends StatuePoseEditorListener {
     @Override
     protected void move(Statue statue, int x, int y, int z, Context context) {
         statue.rightLeg().add(x, y, z);
-        statue.leftLeg().update();
+        statue.rightLeg().update();
     }
 }

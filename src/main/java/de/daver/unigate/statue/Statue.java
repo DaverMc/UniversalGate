@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.util.EulerAngle;
 
 import java.util.function.Consumer;
@@ -23,6 +24,10 @@ public class Statue {
 
     public Statue(ArmorStand stand) {
         this.stand = stand;
+        stand.setGravity(false);
+        stand.setInvulnerable(true);
+        stand.setDisabledSlots(EquipmentSlot.values());
+
         this.headPose = new StatuePose(this, new PoseBridges.Head());
         this.bodyPose = new StatuePose(this, new PoseBridges.Body());
         this.leftArmPose = new StatuePose(this, new PoseBridges.LeftArm());
@@ -33,8 +38,7 @@ public class Statue {
         this.equipment = new StatueEquipment(this);
         this.attributes = new StatueAttributes(this);
 
-        stand.setGravity(false);
-        stand.setInvulnerable(true);
+
     }
 
     public StatuePose head() {
@@ -79,24 +83,8 @@ public class Statue {
         return this.stand;
     }
 
-    public void setCustomName(Component customName) {
-        stand.customName(customName);
-    }
-
     public void delete() {
         stand.remove();
-    }
-
-    private void addEulerAngle(EulerAngle angle, int x, int y, int z, Consumer<EulerAngle> setter) {
-        var newAngle = angle.add(Math.toRadians(x), Math.toRadians(y), Math.toRadians(z));
-        setter.accept(newAngle);
-    }
-
-    public Statue copy(Location location) {
-        var newStand = location.getWorld().spawn(location, ArmorStand.class);
-        var newStatue = new Statue(newStand);
-        this.copyAttributes(newStatue);
-        return newStatue;
     }
 
     public void copyAttributes(Statue other) {
@@ -124,12 +112,6 @@ public class Statue {
         target.getEquipment().setBoots(stand.getEquipment().getBoots());
         target.getEquipment().setItemInMainHand(stand.getEquipment().getItemInMainHand());
         target.getEquipment().setItemInOffHand(stand.getEquipment().getItemInOffHand());
-    }
-
-    public String displayName() {
-        var name = stand.customName();
-        if(name == null) return "";
-        return MiniMessage.miniMessage().serialize(name);
     }
 
     public boolean small() {

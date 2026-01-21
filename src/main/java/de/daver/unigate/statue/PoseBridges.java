@@ -38,12 +38,12 @@ class PoseBridges {
 
         @Override
         public void apply(EulerAngle angle, ArmorStand armorStand) {
-
+            armorStand.setLeftArmPose(angle);
         }
 
         @Override
         public EulerAngle loadPose(ArmorStand armorStand) {
-            return null;
+            return armorStand.getLeftArmPose();
         }
     }
 
@@ -51,12 +51,12 @@ class PoseBridges {
 
         @Override
         public void apply(EulerAngle angle, ArmorStand armorStand) {
-
+            armorStand.setRightArmPose(angle);
         }
 
         @Override
         public EulerAngle loadPose(ArmorStand armorStand) {
-            return null;
+            return armorStand.getRightArmPose();
         }
     }
 
@@ -64,12 +64,12 @@ class PoseBridges {
 
         @Override
         public void apply(EulerAngle angle, ArmorStand armorStand) {
-
+            armorStand.setLeftLegPose(angle);
         }
 
         @Override
         public EulerAngle loadPose(ArmorStand armorStand) {
-            return null;
+            return armorStand.getLeftLegPose();
         }
     }
 
@@ -77,12 +77,12 @@ class PoseBridges {
 
         @Override
         public void apply(EulerAngle angle, ArmorStand armorStand) {
-
+            armorStand.setRightLegPose(angle);
         }
 
         @Override
         public EulerAngle loadPose(ArmorStand armorStand) {
-            return null;
+            return armorStand.getRightLegPose();
         }
     }
 }

@@ -46,19 +46,18 @@ public class ItemInteractListener extends PluginEventListener {
     public void onDrop(PlayerDropItemEvent event) {
         var item = event.getItemDrop().getItemStack();
         var itemAction = ItemAction.fromDrop(event.getPlayer().isSneaking());
-        execute(item, itemAction, event.getPlayer());
-        event.setCancelled(true);
+        if(execute(item, itemAction, event.getPlayer())) event.setCancelled(true);
     }
 
-    private void execute(ItemStack item, ItemAction action, Player player) {
+    private boolean execute(ItemStack item, ItemAction action, Player player) {
         var key = new NamespacedKey(plugin(), "custom_action_id");
         String actionId = item.getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.STRING);
-        if (actionId == null) return;
+        if (actionId == null) return false;
 
         var clickable = listeners.get(actionId);
-        if (clickable == null) return;
+        if (clickable == null) return false;
 
         clickable.onClick(new ItemActionListener.Context(item, action, player, plugin()));
-
+        return true;
     }
 }

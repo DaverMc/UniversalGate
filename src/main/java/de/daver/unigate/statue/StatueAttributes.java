@@ -1,6 +1,7 @@
 package de.daver.unigate.statue;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.ArmorStand;
 
 public class StatueAttributes {
@@ -64,6 +65,10 @@ public class StatueAttributes {
         return this.name;
     }
 
+    public String nameString() {
+        if(name == null) return "";
+        return MiniMessage.miniMessage().serialize(name);
+    }
 
     public void setSmall(boolean small) {
         this.small = small;

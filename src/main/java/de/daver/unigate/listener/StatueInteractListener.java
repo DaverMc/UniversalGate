@@ -34,7 +34,8 @@ public class StatueInteractListener extends PluginEventListener {
     }
 
     public void remove(Player player) {
-        statues.remove(player.getUniqueId());
+        if(statues.remove(player.getUniqueId()) == null) return;
+        giveBackInventory(player);
     }
 
     public Statue get(Player player) {
@@ -63,10 +64,10 @@ public class StatueInteractListener extends PluginEventListener {
                 .key(LanguageKeys.STATUE_DESELECTED)
                 .build().send(player);
         giveBackInventory(player);
-        statue.stand().removePotionEffect(PotionEffectType.GLOWING);
+        statue.getEntity().removePotionEffect(PotionEffectType.GLOWING);
     }
 
-    public void select(Player player, ArmorStand armorStand) {
+    private void select(Player player, ArmorStand armorStand) {
         if(statues.containsKey(player.getUniqueId())) return;
         Statue statue = new Statue(armorStand);
         statues.put(player.getUniqueId(), statue);
@@ -74,7 +75,7 @@ public class StatueInteractListener extends PluginEventListener {
                 .key(LanguageKeys.STATUE_SELECTED)
                 .build().send(player);
         giveTools(player);
-        statue.stand().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, Integer.MAX_VALUE, 0, false, false));
+        statue.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, Integer.MAX_VALUE, 0, false, false));
     }
 
     private void giveBackInventory(Player player) {

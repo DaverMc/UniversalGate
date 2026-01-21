@@ -1,5 +1,5 @@
 #
-#Thu Jan 15 17:57:05 CET 2026
+#Wed Jan 21 21:11:07 CET 2026
 border.default=<link\:chat.prefix> Set worldbord to <green>default</green>
 border.unlimited=<link\:chat.prefix> Set worldbord to <red>unlimited</red>
 category.command.help=<link\:chat.prefix> You can use these subcommands\:<br>- create <name><br>- delete <category><br>- list
@@ -16,8 +16,8 @@ dialog.statue.settings.base=<aqua>Base Plate Visible</aqua>
 dialog.statue.settings.confirm=<green>Confirm</green>
 dialog.statue.settings.confirm.hover=<green>Click to confirm</green>
 dialog.statue.settings.delete=<red>Delete</red>
-dialog.statue.settings.discard=<red>Discard</red>
-dialog.statue.settings.discard.hover=<red>Click to discard changes</red>
+dialog.statue.settings.delete.hover=<red>Click to delete Statue</red>
+dialog.statue.settings.discard=new\:dialog.statue.settings.discard
 dialog.statue.settings.display-name=<aqua>Enter Name</aqua>
 dialog.statue.settings.glowing=<aqua>Glowing</aqua>
 dialog.statue.settings.gravity=<aqua>Gravity</aqua>
@@ -73,6 +73,7 @@ server.motd=<link\:chat.prefix> <blue>Apply on Discord</blue>
 server.version=<b><blue>Apply on Discord</blue></b>
 speed.set=<link\:chat.prefix> Set speed to <green><speed><green>
 statue.cloned=<link\:chat.prefix> Cloned Statue
+statue.command.help=new\:statue.command.help
 statue.deselected=<link\:chat.prefix> <red> Deselected Statue
 statue.not.selected=<link\:chat.prefix> No Statue selected
 statue.selected=<link\:chat.prefix> <green> Selected Statue
