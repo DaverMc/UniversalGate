@@ -2,10 +2,12 @@ package de.daver.unigate.command.item;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.core.command.argument.TextArgument;
 import de.daver.unigate.item.ItemWrapper;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 
@@ -13,6 +15,7 @@ public class RenameSubCommand extends LiteralNode {
 
     protected RenameSubCommand() {
         super("rename");
+        permission(Permissions.COMMAND_ICON_RENAME);
         then(new TextArgument("name"))
                 .executor(this::renameItem);
     }
@@ -22,7 +25,8 @@ public class RenameSubCommand extends LiteralNode {
         var itemStack = player.getInventory().getItemInMainHand();
         if(itemStack.getType() == Material.AIR) return;
         var nameString = context.getArgument("name", String.class);
-        var nameComponent = MiniMessage.miniMessage().deserialize(nameString);
+        var nameComponent = MiniMessage.miniMessage().deserialize(nameString)
+                .decoration(TextDecoration.ITALIC, false);
         var itemWrapper = new ItemWrapper(context.plugin(), itemStack);
         itemWrapper.displayName(nameComponent);
 

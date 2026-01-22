@@ -9,6 +9,9 @@ public interface Permissions {
     String COMMAND_DEBUG_STICK = COMMAND + ".debug_stick";
     String COMMAND_NIGHT_VISION = COMMAND + ".night_vision";
     String COMMAND_SPEED = COMMAND + ".speed";
+    String COMMAND_ICON = COMMAND + ".icon";
+    String COMMAND_ICON_RENAME = COMMAND_ICON + ".rename";
+    String COMMAND_ICON_LORE = COMMAND_ICON + ".lore";
 
     String CATEGORY = PREFIX + "category";
     String CATEGORY_CREATE = CATEGORY + ".create";

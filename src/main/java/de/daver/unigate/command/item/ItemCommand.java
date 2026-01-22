@@ -5,7 +5,7 @@ import de.daver.unigate.core.command.LiteralNode;
 public class ItemCommand extends LiteralNode {
 
     public ItemCommand() {
-        super("item");
+        super("icon");
         then(new RenameSubCommand());
         then(new LoreSubCommand());
     }

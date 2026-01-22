@@ -7,9 +7,8 @@ import de.daver.unigate.core.command.ArgumentSerializer;
 public class TextArgument extends ArgumentNode<String> {
 
     public TextArgument(String name) {
-        super(name, StringArgumentType.string(), new Serializer(), String.class);
+        super(name, StringArgumentType.greedyString(), new Serializer(), String.class);
     }
-
 
     static class Serializer implements ArgumentSerializer<String> {
 

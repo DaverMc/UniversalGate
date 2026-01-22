@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -38,6 +39,21 @@ public record ItemWrapper(UniversalGatePlugin plugin, ItemStack itemStack) {
         return modifyMeta(meta -> meta.lore(lore));
     }
 
+    public ItemWrapper lore(int index, Component line) {
+        return modifyMeta(meta -> {
+            var lore = meta.lore();
+            if(lore == null) lore = new ArrayList<>();
+            for(int i = lore.size(); i <= index; i++) lore.add(Component.empty());
+            lore.set(index, line);
+            meta.lore(lore);
+        });
+    }
+
+    public Component getLore(int index) {
+        var lore = itemStack.getItemMeta().lore();
+        if(lore == null || index >= lore.size()) return Component.empty();
+        return lore.get(index);
+    }
     public ItemWrapper clickAction(String actionId) {
         NamespacedKey key = new NamespacedKey(plugin, "custom_action_id");
         return modifyMeta(meta -> meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, actionId));
@@ -52,6 +68,7 @@ public record ItemWrapper(UniversalGatePlugin plugin, ItemStack itemStack) {
         NamespacedKey key = new NamespacedKey(plugin, "custom_mode");
         return itemStack.getItemMeta().getPersistentDataContainer().getOrDefault(key, PersistentDataType.INTEGER, 0);
     }
+
 
     private ItemWrapper modifyMeta(Consumer<ItemMeta> metaConsumer) {
         ItemMeta meta = itemStack.getItemMeta();

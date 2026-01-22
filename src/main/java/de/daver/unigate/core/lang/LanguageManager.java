@@ -48,6 +48,10 @@ public class LanguageManager {
         }
     }
 
+    public void load() throws IOException {
+        load(getDefaultLanguage());
+    }
+
     public void unload(Locale... locales) {
         for(Locale locale : locales) {
             languages.remove(locale.getLanguage());
@@ -96,8 +100,8 @@ public class LanguageManager {
     public String getRawMessage(Locale locale, String languageKey) {
         if (languageKey == null) return "missing:null";
 
-        Properties properties = languages.getOrDefault(locale.getLanguage(), new Properties());
-        if (properties == null) return "missing:" + languageKey;
+        Properties properties = languages.get(locale.getLanguage());
+        if (properties == null) properties = languages.get(defaultLocale);
 
         String message = properties.getProperty(languageKey);
         if (message == null) return locale.getLanguage() + ":" + languageKey;

@@ -21,7 +21,7 @@ public class ReloadSubCommand extends LiteralNode {
     public void reload(PluginContext context) throws CommandSyntaxException {
         var plugin = context.plugin();
         try {
-            plugin.languageManager().load(Locale.ENGLISH);
+            plugin.languageManager().load();
             plugin.languageManager().message().key(LanguageKeys.LANGUAGE_RELOAD)
                     .build().send(context.sender());
             plugin.serverPingListener().reload();

@@ -28,13 +28,12 @@ public class ArgumentNode<T> extends CommandNodeWrapper<
     }
 
     public ArgumentNode<T> suggestions(SuggestionProvider<T> suggestionProvider) {
-        this.suggestionsProvider = suggestionProvider;
-        this.suggestionsOnly = true;
-        return self();
+        return suggestions(suggestionProvider, false);
     }
 
-    public ArgumentNode<T> allowCustomInput(boolean enabled) {
-        this.suggestionsOnly = enabled;
+    public ArgumentNode<T> suggestions(SuggestionProvider<T> suggestionProvider, boolean allowCustomInput) {
+        this.suggestionsProvider = suggestionProvider;
+        this.suggestionsOnly = !allowCustomInput;
         return self();
     }
 
