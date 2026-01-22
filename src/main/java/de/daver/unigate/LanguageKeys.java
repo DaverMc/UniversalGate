@@ -37,6 +37,7 @@ public enum LanguageKeys implements LanguageKey {
     ITEM_STATUE_EDITOR_LORE_X( "item.statue.editor.lore.x"),
     ITEM_STATUE_EDITOR_LORE_Y( "item.statue.editor.lore.y"),
     ITEM_STATUE_EDITOR_LORE_Z( "item.statue.editor.lore.z"),
+    ITEM_STATUE_EDITOR_LORE_ROTATION("item.statue.editor.lore.rotation"),
     STATUE_TOOLS_CHANGE_AXIS("statue.tools.change.axis", "axis"),
     STATUE_TOOLS_RECEIVED("statue.tools.received"),
     STATUE_DESELECTED("statue.deselected"),

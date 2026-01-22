@@ -17,10 +17,10 @@ public class StatuePosition extends Vector3D {
 
     private void load(ArmorStand stand) {
         var location = stand.getLocation();
-        addX(location.getX());
-        addY(location.getY());
-        addZ(location.getZ());
-        addYaw(location.getYaw());
+        setX(location.getX());
+        setY(location.getY());
+        setZ(location.getZ());
+        setYaw(location.getYaw());
     }
 
     public void setYaw(float yaw) {
@@ -32,7 +32,7 @@ public class StatuePosition extends Vector3D {
     }
 
     public void addYaw(float yaw) {
-        this.yaw = yaw;
+        this.yaw += yaw;
     }
 
     public void update() {

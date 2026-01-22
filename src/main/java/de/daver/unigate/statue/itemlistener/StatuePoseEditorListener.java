@@ -49,7 +49,7 @@ public abstract class StatuePoseEditorListener implements ItemActionListener {
         };
     }
 
-    private void nexMode(int mode, ItemWrapper item, Context context) {
+    protected void nexMode(int mode, ItemWrapper item, Context context) {
         if(mode == AXIS_Z) item.mode(0);
         else item.mode(mode + 1);
         mode = item.getMode();

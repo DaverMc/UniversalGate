@@ -1,5 +1,5 @@
 #
-#Thu Jan 22 00:37:13 CET 2026
+#Thu Jan 22 10:20:34 CET 2026
 border.default=<link\:chat.prefix> Set worldbord to <green>default</green>
 border.unlimited=<link\:chat.prefix> Set worldbord to <red>unlimited</red>
 category.command.help=<link\:chat.prefix> You can use these subcommands\:<br>- create <name><br>- delete <category><br>- list
@@ -55,6 +55,7 @@ item.light.water.title=<blue>Lighted Water [<level>]</blue>
 item.statue.arm.left.name=<aqua>Left Arm Pose
 item.statue.arm.right.name=<aqua>Right Arm Pose
 item.statue.body.name=<aqua> Body Pose
+item.statue.editor.lore.rotation=new\:item.statue.editor.lore.rotation
 item.statue.editor.lore.x=<green>X</green><br><dark_gray>Y</dark_gray><br><dark_gray>Z</dark_gray>
 item.statue.editor.lore.y=<dark_gray>X</dark_gray><br><green>Y</green><br><dark_gray>Z</dark_gray>
 item.statue.editor.lore.z=<dark_gray>X</dark_gray><br><dark_gray>Y</dark_gray><br><green>Z</green>
@@ -72,11 +73,11 @@ server.motd=<link\:chat.prefix> <blue>Apply on Discord</blue>
 server.version=<b><blue>Apply on Discord</blue></b>
 speed.set=<link\:chat.prefix> Set speed to <green><speed><green>
 statue.cloned=<link\:chat.prefix> Cloned Statue
-statue.command.help=<link\:chat.prefix> SubCommands: pose, deselect, clone
+statue.command.help=<link\:chat.prefix> SubCommands\: pose, deselect, clone
 statue.deselected=<link\:chat.prefix> <red> Deselected Statue
 statue.not.selected=<link\:chat.prefix> No Statue selected
-statue.pose.list.header=<link\:chat.prefix> Available Statue Poses\:
 statue.pose.list.entry=- <blue><pose><blue>
+statue.pose.list.header=<link\:chat.prefix> Available Statue Poses\:
 statue.pose.load.success=<link\:chat.prefix> Loaded Pose <aqua><pose></aqua>
 statue.pose.save.success=<link\:chat.prefix> Saved Pose <aqua><pose></aqua>
 statue.selected=<link\:chat.prefix> <green> Selected Statue
