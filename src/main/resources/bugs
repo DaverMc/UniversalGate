@@ -28,8 +28,8 @@
 + Archive und Activate Feature einbauen für ungenutzte Dimensionen
 + UUID für Dimensionen einführen vor allem im Bezug auf Tasks
 + Dimension Rename
-Armorstand Clone Armorstand fliegt irgendwo hin
-Languagesystem falls Sprache nicht vorhanden ist wirds nicht auf default umgeleitet
++ Armorstand Clone Armorstand fliegt irgendwo hin
++ Languagesystem falls Sprache nicht vorhanden ist wirds nicht auf default umgeleitet
 Wenn das erstellen fehlschlägt, Dateien, oder Datenbankeinträge löschen
 (Message Channels)
 (Portalblöcke in Custom Items)

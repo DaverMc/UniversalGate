@@ -110,7 +110,6 @@ public class Statue {
         otherEquipment.setMainHand(equipment.mainHand());
         otherEquipment.setOffHand(equipment.offHand());
 
-        other.position().set(position());
         other.head().set(head());
         other.body().set(body());
         other.leftArm().set(leftArm());
