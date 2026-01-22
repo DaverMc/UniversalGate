@@ -2,23 +2,23 @@ package de.daver.unigate.dimension;
 
 import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.core.sql.ResultTransformer;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 
 import java.sql.SQLException;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DimensionCache {
 
-    private final Map<String, Dimension> cache;
+    private final Map<String, Dimension> active;
+    private final Set<String> archived;
     private final UniversalGatePlugin plugin;
 
     public DimensionCache(UniversalGatePlugin plugin) {
         this.plugin = plugin;
-        this.cache = new ConcurrentHashMap<>();
-
+        this.active = new ConcurrentHashMap<>();
+        this.archived = ConcurrentHashMap.newKeySet();
     }
 
     public void initialize() throws SQLException {
@@ -26,6 +26,7 @@ public class DimensionCache {
         plugin.sqlExecutor().execute(Queries.CREATE_ALLOWED_TABLE);
 
         loadActive();
+        loadArchived();
     }
 
     private void loadActive() throws SQLException {
@@ -33,8 +34,13 @@ public class DimensionCache {
         for(var dimension : dimensions) {
             var allowedUsers = plugin.sqlExecutor().query(Queries.SELECT_ALLOWED, ResultTransformer.asSet(Queries.ALLOWED_TRANSFORMER), dimension.id());
             dimension.meta().allowedPlayers().addAll(allowedUsers);
-            cache.put(dimension.id(), dimension);
+            active.put(dimension.id(), dimension);
         }
+    }
+
+    private void loadArchived() throws SQLException {
+        var dimensionIds = plugin.sqlExecutor().query(Queries.SELECT_ARCHIVED, ResultTransformer.asList(Queries.ID_TRANSFORMER));
+        this.archived.addAll(dimensionIds);
     }
 
     public void insert(Dimension dimension) throws SQLException {
@@ -47,14 +53,14 @@ public class DimensionCache {
                 dimension.meta().state(),
                 dimension.meta().lastLoaded());
 
-        cache.put(dimension.id(), dimension);
+        active.put(dimension.id(), dimension);
     }
 
     public void delete(Dimension dimension) throws SQLException {
         plugin.sqlExecutor().execute(Queries.DELETE_DIMENSION, dimension.id());
         plugin.sqlExecutor().execute(Queries.DELETE_DIMENSION_ALLOWED, dimension.id());
 
-        cache.remove(dimension.id());
+        active.remove(dimension.id());
     }
 
     public Dimension select(String id) throws SQLException {
@@ -62,14 +68,14 @@ public class DimensionCache {
         if(dimension != null) return dimension;
         dimension = plugin.sqlExecutor().query(Queries.SELECT_DIMENSION, Queries.DIMENSION_TRANSFORMER, id);
         if(dimension == null) return null;
-        cache.put(id, dimension);
+        active.put(id, dimension);
         var allowedUsers = plugin.sqlExecutor().query(Queries.SELECT_ALLOWED, ResultTransformer.asSet(Queries.ALLOWED_TRANSFORMER), id);
         dimension.meta().allowedPlayers().addAll(allowedUsers);
         return dimension;
     }
 
     public Dimension getActive(String id) {
-        return cache.get(id);
+        return active.get(id);
     }
 
     public List<Dimension> getAll() throws SQLException {
@@ -77,7 +83,7 @@ public class DimensionCache {
     }
 
     public Collection<Dimension> getActive() {
-        return cache.values();
+        return active.values();
     }
 
     public void allow(Dimension dimension, UUID player) throws SQLException {
@@ -94,4 +100,33 @@ public class DimensionCache {
         plugin.sqlExecutor().execute(Queries.UPDATE_DIMENSION_META, dimension.meta().stopLag(), dimension.meta().state(), dimension.meta().lastLoaded(), dimension.id());
     }
 
+    public void archive(Dimension dimension) throws SQLException {
+        if(dimension.meta().state() == DimensionState.LOADED) dimension.unload(true);
+        dimension.meta().state(DimensionState.ARCHIVED);
+        update(dimension);
+        active.remove(dimension.id());
+        archived.add(dimension.id());
+    }
+
+    public boolean activate(String id) throws SQLException {
+        var dimension = plugin.sqlExecutor().query(Queries.SELECT_ARCHIVED_DIMENSION, Queries.DIMENSION_TRANSFORMER, id);
+        if(dimension == null) return false;
+
+        var allowedUsers = plugin.sqlExecutor().query(Queries.SELECT_ALLOWED, ResultTransformer.asSet(Queries.ALLOWED_TRANSFORMER), id);
+        dimension.meta().allowedPlayers().addAll(allowedUsers);
+        active.put(dimension.id(), dimension);
+        archived.remove(dimension.id());
+
+        dimension.meta().state(DimensionState.ACTIVE);
+        update(dimension);
+        return true;
+    }
+
+    public static World getServerMainWorld() {
+        return Bukkit.getWorlds().getFirst();
+    }
+
+    public Set<String> getArchived() {
+        return archived;
+    }
 }

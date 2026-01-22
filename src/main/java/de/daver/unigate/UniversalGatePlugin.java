@@ -270,10 +270,6 @@ public class UniversalGatePlugin extends JavaPlugin {
         return getDataPath().resolve("statue_pose");
     }
 
-    public World getMainWorld() {
-        return Bukkit.getWorlds().getFirst();
-    }
-
     public static UniversalGatePlugin getInstance() {
         return instance;
     }

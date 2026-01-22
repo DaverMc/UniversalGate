@@ -26,6 +26,6 @@ public class JoinListener extends PluginEventListener {
             plugin().tabList().sendHeaderFooter(online);
         }
 
-        HubCommand.teleport(player, plugin());
+        HubCommand.teleport(player);
     }
 }

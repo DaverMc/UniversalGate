@@ -37,7 +37,7 @@ public class WorldSwitchListener extends PluginEventListener {
         event.getPlayer().setGameMode(GameMode.CREATIVE);
 
         var from = event.getFrom();
-        if(from == plugin().getMainWorld()) return;
+        if(from == DimensionCache.getServerMainWorld()) return;
         if(from.getPlayerCount() > 0) return;
         var dimension = plugin().dimensionCache().getActive(from.getName());
         if(dimension == null) return;

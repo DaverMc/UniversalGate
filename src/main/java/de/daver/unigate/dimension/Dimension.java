@@ -5,10 +5,7 @@ import de.daver.unigate.category.Category;
 import de.daver.unigate.core.util.FileUtils;
 import de.daver.unigate.dimension.gen.LevelData;
 import net.querz.nbt.io.NBTUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.Difficulty;
-import org.bukkit.GameRules;
-import org.bukkit.WorldCreator;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -78,6 +75,7 @@ public record Dimension(String id, DimensionType type, DimensionStats stats, Dim
     public void unload(boolean save) {
         if(meta.state() != DimensionState.LOADED) return;
         var bukkitWorld = Bukkit.getWorld(id);
+        if(bukkitWorld == DimensionCache.getServerMainWorld()) throw new IllegalStateException("Cannot unload main world!");
         bukkitWorld.getPlayers().forEach(this::kick);
         Bukkit.unloadWorld(id, save);
         meta.state(DimensionState.ACTIVE);

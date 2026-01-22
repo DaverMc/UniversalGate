@@ -20,6 +20,8 @@ public class DimensionCommand extends LiteralNode {
         then(new InviteSubCommand());
         then(new KickSubCommand());
         then(new StopLagSubCommand());
+        then(new ArchiveSubCommand());
+        then(new ActivateSubCommand());
     }
 
     public void showSubCommands(PluginContext context) {

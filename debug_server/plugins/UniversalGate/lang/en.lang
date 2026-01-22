@@ -1,5 +1,5 @@
 #
-#Thu Jan 22 10:57:15 CET 2026
+#Thu Jan 22 13:25:00 CET 2026
 border.default=<link\:chat.prefix> Set worldbord to <green>default</green>
 border.unlimited=<link\:chat.prefix> Set worldbord to <red>unlimited</red>
 category.command.help=<link\:chat.prefix> You can use these subcommands\:<br>- create <name><br>- delete <category><br>- list
@@ -10,8 +10,8 @@ category.list.header=<link\:chat.prefix> Categories <dark_gray>(</dark_gray><aqu
 chat.format=<prefix> <gray>|</gray> <player> <gray>|</gray> <suffix> <dark_gray>? </dark_gray><gray> <message>
 chat.prefix=<b><gradient\:\#00ffff\:\#ff55ff>UniversalGate</gradient></b> <gray>
 command.hub=<link\:chat.prefix> You have teleported to the hub
-command.item.lore=<link:chat.prefix> Updated Lore
-command.item.rename=<link:chat.prefix> Set Name to <name>
+command.item.lore=<link\:chat.prefix> Updated Lore
+command.item.rename=<link\:chat.prefix> Set Name to <name>
 debugstick.given=<link\:chat.prefix> You have received a debugstick
 dialog.statue.settings.arms=<aqua>Arms Visible</aqua>
 dialog.statue.settings.base=<aqua>Base Plate Visible</aqua>
@@ -26,10 +26,12 @@ dialog.statue.settings.name-visible=<aqua>Name Visible</aqua>
 dialog.statue.settings.small=<aqua>Small</aqua>
 dialog.statue.settings.title=<aqua>Statue Settings</aqua>
 dialog.statue.settings.visible=<aqua>Visible</aqua>
+dimension.activate=<link:chat.prefix> Reactivated <green><dimension></green>
 dimension.allowed.add.success=<link\:chat.prefix> Successfully added <green><player></green> as allowed to <aqua><dimension></aqua>
 dimension.allowed.list.entry=<dark_gray>- <blue><player></blue>
 dimension.allowed.list.header=<link\:chat.prefix> These <green><players></green> players are allowed to enter <dimension>
 dimension.allowed.remove.success=<link\:chat.prefix> Successfully removed <player> from <dimension>
+dimension.archive=<link:chat.prefix> Archived <red><dimension></red>
 dimension.command.help=<link\:chat.prefix> These subcommands are available\:<br>- create [category] [theme] {generator}<br>- delete [dimension] confirm <br>- list <br>- info {dimension} <br>- import [folder_name] [category] [theme] {generator} <br>- export [dimension] [version_tag] <br>- stoplag {dimension} <br>- allowlist add [player] <br>- allowlist remove [player] <br>- teleport [dimension] <br>- invite [player] <br>- kick [player] <br>
 dimension.create.success=<link\:chat.prefix> Successfully created a new Dimension (<aqua><dimension></aqua>) with type <light_purple><type></light_purple>
 dimension.delete.confirm=<link\:chat.prefix> You need to <click\:run_command\:'/dimension delete <dimension> confirm'><green>confirm</click> that you want to delete <aqua><dimension></aqua>

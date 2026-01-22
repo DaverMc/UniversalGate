@@ -4,6 +4,8 @@ import de.daver.unigate.core.lang.LanguageKey;
 
 public enum LanguageKeys implements LanguageKey {
 
+    DIMENSION_ACTIVATE("dimension.activate", "dimension"),
+    DIMENSION_ARCHIVE("dimension.archive", "dimension"),
     COMMAND_ITEM_LORE("command.item.lore"),
     COMMAND_ITEM_RENAME("command.item.rename", "item"),
     STATUE_POSE_LIST_HEADER("statue.pose.list.header"),

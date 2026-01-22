@@ -13,6 +13,11 @@ interface Queries {
 
     SQLStatement SELECT_ACTIVE = new SQLStatement("SELECT * FROM dimensions WHERE state = 'ACTIVE'");
 
+    SQLStatement SELECT_ARCHIVED = new SQLStatement("SELECT * FROM dimensions WHERE state = 'ARCHIVED'");
+
+    SQLStatement SELECT_ARCHIVED_DIMENSION = new SQLStatement("SELECT * FROM dimensions WHERE state = 'ARCHIVED' AND id = ?")
+            .addStringArgument();
+
     SQLStatement CREATE_DIMENSIONS_TABLE = new SQLStatement("""
                 CREATE TABLE IF NOT EXISTS dimensions (
                 id TEXT PRIMARY KEY,
@@ -50,6 +55,8 @@ interface Queries {
         DimensionMeta meta = new DimensionMeta(state, stopLagI == 1, lastLoaded);
         return new Dimension(id, type, stats, meta, new Random().nextLong());
     };
+
+    ResultTransformer<String> ID_TRANSFORMER = set -> set.getString("id");
 
     SQLStatement INSERT_DIMENSION = new SQLStatement("""
                 INSERT INTO dimensions (id, type, creation_time, creator, stop_lag, state, last_loaded)
