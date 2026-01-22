@@ -20,11 +20,11 @@
 + TabList sortieren
 / Armorstand Tool programmieren
 + Void-Welten können nicht erstellt/geladen werden
-Wenn das erstellen fehlschlägt, Dateien, oder Datenbankeinträge löschen
+/ Statue Pose Save/List/Load füllen
 Armorstand cannot be rotated
-Statue Pose Save/List/Load füllen
+Item Benennen / Set Lore / Enchant(Glow)
 Message Channels
-Item Benennen / Content-Tools
+Wenn das erstellen fehlschlägt, Dateien, oder Datenbankeinträge löschen
 Command Suggestions nur das was auch Permissions technisch erlaubt ist anzeigen
 TabList Header und Footer werden nicht aktualisiert wenn ein spieler neu joint oder leaved
 (Portalblöcke in Custom Items)
