@@ -1,5 +1,5 @@
 #
-#Thu Jan 22 13:25:00 CET 2026
+#Thu Jan 22 17:25:48 CET 2026
 border.default=<link\:chat.prefix> Set worldbord to <green>default</green>
 border.unlimited=<link\:chat.prefix> Set worldbord to <red>unlimited</red>
 category.command.help=<link\:chat.prefix> You can use these subcommands\:<br>- create <name><br>- delete <category><br>- list
@@ -26,12 +26,12 @@ dialog.statue.settings.name-visible=<aqua>Name Visible</aqua>
 dialog.statue.settings.small=<aqua>Small</aqua>
 dialog.statue.settings.title=<aqua>Statue Settings</aqua>
 dialog.statue.settings.visible=<aqua>Visible</aqua>
-dimension.activate=<link:chat.prefix> Reactivated <green><dimension></green>
+dimension.activate=<link\:chat.prefix> Reactivated <green><dimension></green>
 dimension.allowed.add.success=<link\:chat.prefix> Successfully added <green><player></green> as allowed to <aqua><dimension></aqua>
 dimension.allowed.list.entry=<dark_gray>- <blue><player></blue>
 dimension.allowed.list.header=<link\:chat.prefix> These <green><players></green> players are allowed to enter <dimension>
 dimension.allowed.remove.success=<link\:chat.prefix> Successfully removed <player> from <dimension>
-dimension.archive=<link:chat.prefix> Archived <red><dimension></red>
+dimension.archive=<link\:chat.prefix> Archived <red><dimension></red>
 dimension.command.help=<link\:chat.prefix> These subcommands are available\:<br>- create [category] [theme] {generator}<br>- delete [dimension] confirm <br>- list <br>- info {dimension} <br>- import [folder_name] [category] [theme] {generator} <br>- export [dimension] [version_tag] <br>- stoplag {dimension} <br>- allowlist add [player] <br>- allowlist remove [player] <br>- teleport [dimension] <br>- invite [player] <br>- kick [player] <br>
 dimension.create.success=<link\:chat.prefix> Successfully created a new Dimension (<aqua><dimension></aqua>) with type <light_purple><type></light_purple>
 dimension.delete.confirm=<link\:chat.prefix> You need to <click\:run_command\:'/dimension delete <dimension> confirm'><green>confirm</click> that you want to delete <aqua><dimension></aqua>
@@ -47,6 +47,7 @@ dimension.invite.send=<link\:chat.prefix> You have send an invitation to <aqua><
 dimension.kick.success=<link\:chat.prefix> You have kicked <aqua><target></aqua> from <light_purple><dimension></light_purple>
 dimension.list.entry=<dark_gray>- <blue><dimension></blue> <aqua>(<state>)</aqua>
 dimension.list.header=<link\:chat.prefix> Found <dimensions> dimensions\:
+dimension.renamed=new\:dimension.renamed[<old>][<new>]
 dimension.stoplag.disable=<link\:chat.prefix> You have <red>disabled</red> stoplag for <aqua><dimension></aqua>
 dimension.stoplag.enable=<link\:chat.prefix> You have <green>enabled</green> stoplag for <aqua><dimension></aqua>
 event.join=<link\:chat.prefix>Welcome <aqua><player></aqua>

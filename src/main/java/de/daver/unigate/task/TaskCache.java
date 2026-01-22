@@ -36,7 +36,7 @@ public class TaskCache {
         var executor = task.executor();
         plugin.sqlExecutor().execute(Queries.INSERT,
                 task.id(),
-                task.creator().toString(),
+                task.creator(),
                 executor == null ? null : executor.toString(),
                 task.state().name(),
                 task.type().name(),
@@ -68,7 +68,7 @@ public class TaskCache {
     }
 
     public String createId(Dimension dimension, TaskType type) {
-        return dimension.id() + SEPARATOR + type.name() + SEPARATOR + (getTasks().size() + 1);
+        return dimension.name() + SEPARATOR + type.name() + SEPARATOR + (getTasks().size() + 1);
     }
 
 }

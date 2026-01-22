@@ -34,7 +34,7 @@ public class CreateChangeSubCommand extends LiteralNode {
             context.plugin().languageManager().message()
                     .key(LanguageKeys.TASK_CREATE_CHANGE)
                     .parsed("task", id)
-                    .parsed("dimension", dimension.id())
+                    .parsed("dimension", dimension.name())
                     .build().send(player);
         } catch (SQLException e) {
             context.plugin().logger().error("Failed to create task {}", task.id(), e);

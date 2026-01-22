@@ -29,7 +29,7 @@ public class DeleteSubCommand extends LiteralNode {
     private void sendConfirmMessage(PluginContext context) {
         context.plugin().languageManager().message()
                 .key(LanguageKeys.DIMENSION_DELETE_CONFIRM)
-                .parsed("dimension", context.getArgument("dimension", Dimension.class).id())
+                .parsed("dimension", context.getArgument("dimension", Dimension.class).name())
                 .build().send(context.sender());
     }
 
@@ -40,7 +40,7 @@ public class DeleteSubCommand extends LiteralNode {
             UniversalGatePlugin.getInstance().dimensionCache().delete(dimension);
             context.plugin().languageManager().message()
                     .key(LanguageKeys.DIMENSION_DELETE_SUCCESS)
-                    .parsed("dimension", dimension.id())
+                    .parsed("dimension", dimension.name())
                     .build().send(context.sender());
         } catch (IOException e) {
             context.plugin().logger().error("Failed to delete dimension", e);

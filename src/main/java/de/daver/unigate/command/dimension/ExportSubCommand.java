@@ -10,10 +10,8 @@ import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.core.command.argument.WordArgument;
 import de.daver.unigate.core.util.FileUtils;
 import de.daver.unigate.dimension.Dimension;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.sql.SQLException;
 
 public class ExportSubCommand extends LiteralNode {
@@ -34,24 +32,24 @@ public class ExportSubCommand extends LiteralNode {
         try {
             context.plugin().dimensionCache().update(dimension);
         } catch (SQLException exception) {
-            context.plugin().logger().error("Failed to update dimension {}", dimension.id(), exception);
+            context.plugin().logger().error("Failed to update dimension {}", dimension.name(), exception);
             throw CommandExceptions.DATABASE_EXCEPTION.create();
         }
 
         var worldContainer = context.plugin().getServer().getWorldContainer().toPath();
-        var source = worldContainer.resolve(dimension.id());
-        var target = context.plugin().exportDir().resolve(dimension.id() + "_" + tag + ".tar.gz");
+        var source = worldContainer.resolve(dimension.name());
+        var target = context.plugin().exportDir().resolve(dimension.name() + "_" + tag + ".tar.gz");
 
         try {
             FileUtils.compressDirectory(source, target);
         } catch (IOException exception) {
-            context.plugin().logger().error("Could not export dimension {}", dimension.id(), exception);
+            context.plugin().logger().error("Could not export dimension {}", dimension.name(), exception);
             throw CommandExceptions.FILE_EXCEPTION.create();
         }
 
         context.plugin().languageManager().message()
                 .key(LanguageKeys.DIMENSION_EXPORT_SUCCESS)
-                .parsed("dimension", dimension.id())
+                .parsed("dimension", dimension.name())
                 .parsed("tag", tag)
                 .build().send(context.sender());
     }

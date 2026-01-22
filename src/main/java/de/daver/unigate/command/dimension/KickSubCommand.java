@@ -32,7 +32,7 @@ public class KickSubCommand extends LiteralNode {
         context.plugin().languageManager().message()
                 .key(LanguageKeys.DIMENSION_KICK_SUCCESS)
                 .parsed("target", PlayerFetcher.getPlayerName(target))
-                .parsed("dimension", dimension.id())
+                .parsed("dimension", dimension.name())
                 .build().send(context.sender());
     }
 }

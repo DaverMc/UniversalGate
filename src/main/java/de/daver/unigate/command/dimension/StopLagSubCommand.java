@@ -24,13 +24,13 @@ public class StopLagSubCommand extends LiteralNode {
             dimension.meta().setStopLag(false);
             context.plugin().languageManager().message()
                     .key(LanguageKeys.DIMENSION_STOPLAG_DISABLE)
-                    .parsed("dimension", dimension.id())
+                    .parsed("dimension", dimension.name())
                     .build().send(player);
         } else {
             dimension.meta().setStopLag(true);
             context.plugin().languageManager().message()
                     .key(LanguageKeys.DIMENSION_STOPLAG_ENABLE)
-                    .parsed("dimension", dimension.id())
+                    .parsed("dimension", dimension.name())
                     .build().send(player);
         }
     }

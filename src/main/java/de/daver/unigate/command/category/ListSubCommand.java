@@ -29,7 +29,7 @@ public class ListSubCommand extends LiteralNode {
                 context.plugin().languageManager().message()
                         .key(LanguageKeys.CATEGORY_LIST_ENTRY)
                         .parsed("category", category.name())
-                        .parsed("id", category.id())
+                        .parsed("name", category.id())
                         .build().send(context.sender());
             }
         } catch (SQLException e) {

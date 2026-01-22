@@ -48,21 +48,22 @@ public class ImportSubCommand extends LiteralNode {
         Category category = context.getArgument("category", Category.class);
         String theme = context.getArgument("theme", String.class);
 
-        var id = Dimension.buildId(category, theme);
+        var id = Dimension.buildName(category, theme);
         var creator = context.senderPlayer();
 
         var worldContainer = context.plugin().getServer().getWorldContainer().toPath();
-        var newDir = worldContainer.resolve(Dimension.buildId(category, theme));
+        var newDir = worldContainer.resolve(Dimension.buildName(category, theme));
         if(Files.exists(newDir)) throw CommandExceptions.VALUE_EXISTING.create(id);
 
         try {
             var source = context.plugin().importDir().resolve(file);
             FileUtils.copyContents(source, newDir);
-            var dimension = Dimension.create(category, theme, type, creator.getUniqueId());
+            var dimension = new Dimension(category, theme, type ,creator.getUniqueId());
+            dimension.create();
             context.plugin().dimensionCache().insert(dimension);
             context.plugin().languageManager().message()
                     .key(LanguageKeys.DIMENSION_IMPORT_SUCCESS)
-                    .parsed("dimension", dimension.id())
+                    .parsed("dimension", dimension.name())
                     .parsed("source", file)
                     .build().send(context.sender());
         } catch (IOException exception) {

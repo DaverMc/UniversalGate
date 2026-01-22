@@ -4,6 +4,7 @@ import de.daver.unigate.core.lang.LanguageKey;
 
 public enum LanguageKeys implements LanguageKey {
 
+    DIMENSION_RENAMED("dimension.renamed", "old", "new"),
     DIMENSION_ACTIVATE("dimension.activate", "dimension"),
     DIMENSION_ARCHIVE("dimension.archive", "dimension"),
     COMMAND_ITEM_LORE("command.item.lore"),
@@ -65,8 +66,8 @@ public enum LanguageKeys implements LanguageKey {
     TASK_DESCRIPTION_SET("task.description.set", "task", "description"),
     TASK_DELETE_SUCCESS("task.delete.success", "task"),
     TASK_DELETE_CONFIRM("task.delete.confirm", "task"),
-    TASK_INFO( "task.info", "id", "dimension", "action", "state", "creator", "executor", "description"),
-    TASK_LIST_ENTRY( "task.list.entry", "id", "action"),
+    TASK_INFO( "task.info", "name", "dimension", "action", "state", "creator", "executor", "description"),
+    TASK_LIST_ENTRY( "task.list.entry", "name", "action"),
     TASK_LIST_HEADER("task.list.header", "tasks"),
     TASK_CREATE_NEW("task.create.new", "task", "dimension"),
     TASK_CREATE_CHANGE("task.create.change", "task", "dimension"),
@@ -96,10 +97,10 @@ public enum LanguageKeys implements LanguageKey {
     DIMENSION_ALLOWED_LIST_HEADER("dimension.allowed.list.header", "dimension", "players"),
     DIMENSION_ENTER_FAILED("dimension.enter.failed", "dimension"),
     DIMENSION_ENTER_SUCCESS("dimension.enter.success", "dimension"),
-    DIMENSION_INFO("dimension.info", "id", "name", "category", "action", "state", "stoplag"),
+    DIMENSION_INFO("dimension.info", "name", "name", "category", "action", "state", "stoplag"),
     DIMENSION_LIST_ENTRY("dimension.list.entry", "dimension"),
     DIMENSION_LIST_HEADER("dimension.list.header", "dimensions"),
-    CATEGORY_LIST_ENTRY("category.list.entry", "category", "id"),
+    CATEGORY_LIST_ENTRY("category.list.entry", "category", "name"),
     CATEGORY_LIST_HEADER("category.list.header", "categories"),
     CATEGORY_DELETE_SUCCESS("category.delete.success", "category"),
     CATEGORY_COMMAND_HELP("category.command.help"),

@@ -38,7 +38,7 @@ public class DimensionArgument extends ArgumentNode<Dimension> {
 
         @Override
         public String serialize(Dimension value) {
-            return value.id();
+            return value.name();
         }
     }
 }

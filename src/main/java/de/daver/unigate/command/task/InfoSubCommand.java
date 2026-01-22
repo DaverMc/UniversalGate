@@ -23,7 +23,7 @@ public class InfoSubCommand extends LiteralNode {
         var executor = task.executor() == null ? "" : PlayerFetcher.getPlayerName(task.executor());
         context.plugin().languageManager().message()
                 .key(LanguageKeys.TASK_INFO)
-                .parsed("id", task.id())
+                .parsed("name", task.id())
                 .parsed("dimension", task.dimensionId())
                 .parsed("action", task.type().name())
                 .parsed("state", task.state().name())

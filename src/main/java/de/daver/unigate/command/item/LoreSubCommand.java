@@ -22,6 +22,7 @@ public class LoreSubCommand extends LiteralNode {
         super("lore");
         permission(Permissions.COMMAND_ICON_LORE);
         then(new NumberArgument<>("index", IntegerArgumentType.integer(), Integer.class))
+                .executor(this::deleteLoreLine)
                 .then(new TextArgument("lines"))
                 .suggestions(this::suggestExistingLine, true)
                 .executor(this::setItemLoreLines);
@@ -48,6 +49,19 @@ public class LoreSubCommand extends LiteralNode {
                 .decoration(TextDecoration.ITALIC, false);
 
         itemWrapper.lore(index, lineComponent);
+
+        context.plugin().languageManager().message()
+                .key(LanguageKeys.COMMAND_ITEM_LORE)
+                .build().send(player);
+    }
+
+    private void deleteLoreLine(PluginContext context) throws CommandSyntaxException {
+        var player = context.senderPlayer();
+        var itemStack = player.getInventory().getItemInMainHand();
+        if(itemStack.getType() == Material.AIR) return;
+        var itemWrapper = new ItemWrapper(context.plugin(), itemStack);
+        var index = context.getArgument("index", Integer.class);
+        itemWrapper.lore(index, null);
 
         context.plugin().languageManager().message()
                 .key(LanguageKeys.COMMAND_ITEM_LORE)

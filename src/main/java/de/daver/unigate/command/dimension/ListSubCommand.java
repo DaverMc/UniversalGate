@@ -28,7 +28,7 @@ public class ListSubCommand extends LiteralNode {
             for (var dimension : dimensions) {
                 context.plugin().languageManager().message()
                         .key(LanguageKeys.DIMENSION_LIST_ENTRY)
-                        .parsed("dimension", dimension.id())
+                        .parsed("dimension", dimension.name())
                         .parsed("state", dimension.meta().state())
                         .build().send(context.sender());
             }

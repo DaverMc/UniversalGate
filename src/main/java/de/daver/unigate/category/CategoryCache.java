@@ -50,26 +50,26 @@ public class CategoryCache {
         SQLStatement SELECT_ALL = new SQLStatement("SELECT * FROM categories");
 
         SQLStatement CREATE_CATEGORIES_TABLE = new SQLStatement("""
-        CREATE TABLE IF NOT EXISTS categories (id TEXT PRIMARY KEY, name TEXT)
+        CREATE TABLE IF NOT EXISTS categories (name TEXT PRIMARY KEY, name TEXT)
         """);
 
         SQLStatement INSERT_CATEGORY = new SQLStatement("""
-                INSERT INTO categories (id, name) VALUES (?, ?)
+                INSERT INTO categories (name, name) VALUES (?, ?)
                 """)
                 .addStringArgument()
                 .addStringArgument();
 
-        SQLStatement SELECT_CATEGORY = new SQLStatement("SELECT * FROM categories WHERE id = ?")
+        SQLStatement SELECT_CATEGORY = new SQLStatement("SELECT * FROM categories WHERE name = ?")
                 .addStringArgument();
 
         ResultTransformer<Category> TRANSFORMER = set ->   {
                 var name = set.getString("name");
-                var id = set.getString("id");
+                var id = set.getString("name");
                 if(name == null) return null;
                 return new Category(id, name);
         };
 
-        SQLStatement DELETE_CATEGORY = new SQLStatement("DELETE FROM categories WHERE id = ?")
+        SQLStatement DELETE_CATEGORY = new SQLStatement("DELETE FROM categories WHERE name = ?")
                 .addStringArgument();
     }
 }

@@ -21,7 +21,7 @@ class CreateSubCommand extends LiteralNode {
     public CreateSubCommand() {
         super("create");
         permission(Permissions.DIMENSION_CREATE);
-        var idArg = then(new WordArgument("id"));
+        var idArg = then(new WordArgument("name"));
         idArg.executor(this::createDimensionById);
 
         var categoryArg = then(new CategoryArgument("category"));
@@ -34,14 +34,14 @@ class CreateSubCommand extends LiteralNode {
     }
 
     private void createDimensionById(PluginContext context) throws CommandSyntaxException {
-        var id = context.getArgument("id", String.class);
+        var id = context.getArgument("name", String.class);
         createDimension(id, DimensionType.VOID, context);
     }
 
     private void createDimension(PluginContext context) throws CommandSyntaxException {
         Category category = context.getArgument("category", Category.class);
         String theme = context.getArgument("theme", String.class);
-        var id = Dimension.buildId(category, theme);
+        var id = Dimension.buildName(category, theme);
         createDimension(id, DimensionType.VOID, context);
     }
 
@@ -49,18 +49,21 @@ class CreateSubCommand extends LiteralNode {
         Category category = context.getArgument("category", Category.class);
         String theme = context.getArgument("theme", String.class);
         DimensionType type = context.getArgument("type", DimensionType.class);
-        var id = Dimension.buildId(category, theme);
+        var id = Dimension.buildName(category, theme);
         createDimension(id, type, context);
     }
 
-    private void createDimension(String id, DimensionType type, PluginContext context) throws CommandSyntaxException {
+    private void createDimension(String name, DimensionType type, PluginContext context) throws CommandSyntaxException {
         try {
-            if(context.plugin().dimensionCache().select(id) != null) throw CommandExceptions.VALUE_EXISTING.create(id);
-            Dimension dimension = Dimension.create(id, type, context.executor().getUniqueId());
+            if(context.plugin().dimensionCache().select(name) != null) throw CommandExceptions.VALUE_EXISTING.create(name);
+            var dimension = new Dimension(name, type, context.executor().getUniqueId());
+
+            dimension.create();
             context.plugin().dimensionCache().insert(dimension);
+
             context.plugin().languageManager().message()
                     .key(LanguageKeys.DIMENSION_CREATE_SUCCESS)
-                    .parsed("dimension",dimension.id())
+                    .parsed("dimension",dimension.name())
                     .parsed("type", dimension.type())
                     .build().send(context.sender());
 

@@ -6,8 +6,6 @@ import net.querz.nbt.tag.ListTag;
 import net.querz.nbt.tag.StringTag;
 import net.querz.nbt.tag.Tag;
 
-import java.util.Random;
-
 public interface LevelData {
 
     int NBT_VERSION = 4671;
@@ -101,7 +99,7 @@ public interface LevelData {
         data.putBoolean("hardcore", false);
         data.putBoolean("initialized", true);
         data.putLong("LastPlayed", System.currentTimeMillis());
-        data.putString("LevelName", dimension.id());
+        data.putString("LevelName", dimension.name());
         data.putBoolean("raining", false);
         data.putInt("rainTime", 0);
         data.putBoolean("thundering", false);

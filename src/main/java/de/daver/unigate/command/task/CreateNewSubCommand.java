@@ -32,9 +32,9 @@ public class CreateNewSubCommand extends LiteralNode {
         var category = context.getArgument("category", Category.class);
         var theme = context.getArgument("theme", String.class);
         var player = context.senderPlayer();
-        Dimension dimension = null;
+        Dimension dimension = new Dimension(category, theme, DimensionType.VOID, player.getUniqueId());
         try {
-            dimension = Dimension.create(category, theme, DimensionType.VOID, player.getUniqueId());
+            dimension.create();
             context.plugin().dimensionCache().insert(dimension);
         } catch (IOException e) {
             context.plugin().logger().error("Failed to create dimension", e);
@@ -51,7 +51,7 @@ public class CreateNewSubCommand extends LiteralNode {
             context.plugin().languageManager().message()
                     .key(LanguageKeys.TASK_CREATE_NEW)
                     .parsed("task", id)
-                    .parsed("dimension", dimension.id())
+                    .parsed("dimension", dimension.name())
                     .build().send(player);
         } catch (SQLException e) {
             context.plugin().logger().error("Failed to create task {}", task.id(), e);

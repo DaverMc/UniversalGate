@@ -44,8 +44,8 @@ public class InfoSubCommand extends LiteralNode {
         String lastLoaded = formatter.format(LocalDateTime.now());
         context.plugin().languageManager().message()
                 .key(LanguageKeys.DIMENSION_INFO)
-                .parsed("id", dimension.id())
-                .parsed("name", dimension.id())
+                .parsed("name", dimension.name())
+                .parsed("name", dimension.name())
                 .parsed("category", dimension.category())
                 .parsed("type", dimension.type().name())
                 .parsed("state", dimension.meta().state().name())

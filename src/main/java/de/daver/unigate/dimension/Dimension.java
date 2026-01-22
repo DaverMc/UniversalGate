@@ -15,28 +15,74 @@ import java.nio.file.Files;
 import java.util.Random;
 import java.util.UUID;
 
-public record Dimension(String id, DimensionType type, DimensionStats stats, DimensionMeta meta, long seed) {
+public class Dimension {
 
     private static final String SEPARATOR = "-";
 
-    public static Dimension create(Category category, String theme, DimensionType type, UUID creator) throws IOException {
-        return create(buildId(category, theme), type, creator);
+    private final UUID id;
+    private final DimensionType type;
+    private final DimensionStats stats;
+    private final DimensionMeta meta;
+    private final long seed;
+
+    private String name;
+
+    public Dimension(UUID id, String name, DimensionType type, DimensionStats stats, DimensionMeta meta, long seed) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.stats = stats;
+        this.meta = meta;
+        this.seed = seed;
     }
 
-    public static Dimension create(String id, DimensionType type, UUID creator) throws IOException {
-        var stats = new DimensionStats(creator);
-        var dimension = new Dimension(id, type, stats, new DimensionMeta(), new Random().nextLong());
-        createLevelDatFile(dimension);
-        dimension.load();
-        setGameRules(dimension);
-        dimension.unload(true);
-        return dimension;
+    public Dimension(Category category, String theme, DimensionType type, UUID creator) {
+        this(buildName(category, theme), type, creator);
     }
 
-    private static void setGameRules(Dimension dimension) {
-        if(dimension.type() == DimensionType.OVERWORLD) return;
-        var world = Bukkit.getWorld(dimension.id());
-        world.setDifficulty(Difficulty.PEACEFUL);
+    public Dimension(String name, DimensionType type, UUID creator) {
+        this(UUID.randomUUID(), name, type, new DimensionStats(creator), new DimensionMeta(), new Random().nextLong());
+    }
+
+    public UUID id() {
+        return this.id;
+    }
+
+    public DimensionType type() {
+        return this.type;
+    }
+
+    public DimensionStats stats() {
+        return this.stats;
+    }
+
+    public DimensionMeta meta() {
+        return this.meta;
+    }
+
+    public long seed() {
+        return this.seed;
+    }
+
+    public String name() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void create() throws IOException {
+        createLevelDatFile();
+        load();
+        setGameRules();
+        unload(true);
+    }
+
+    //TODO REMOVE Later move the Gamerules into VoidGenerator
+    private void setGameRules() {
+        if(type() == DimensionType.OVERWORLD) return;
+        var world = Bukkit.getWorld(name());
 
         world.setGameRule(GameRules.ADVANCE_TIME, false);
         world.setGameRule(GameRules.ADVANCE_WEATHER, false);
@@ -44,46 +90,45 @@ public record Dimension(String id, DimensionType type, DimensionStats stats, Dim
         world.setGameRule(GameRules.COMMAND_BLOCKS_WORK, false);
         world.setGameRule(GameRules.SHOW_ADVANCEMENT_MESSAGES, false);
         world.setGameRule(GameRules.SHOW_DEATH_MESSAGES, false);
-
     }
 
-    private static void createLevelDatFile(Dimension dimension) throws IOException {
-        var worldFolder = Bukkit.getWorldContainer().toPath().resolve(dimension.id());
+    private void createLevelDatFile() throws IOException {
+        var worldFolder = Bukkit.getWorldContainer().toPath().resolve(name());
         Files.createDirectories(worldFolder);
-        var dimensionTag = LevelData.create(dimension);
+        var dimensionTag = LevelData.create(this);
         File levelDatFile =  worldFolder.resolve( "level.dat").toFile();
         if(!levelDatFile.createNewFile()) return;
         NBTUtil.write(dimensionTag, levelDatFile, true);
     }
 
-    public static String buildId(Category category, String theme) {
+    public static String buildName(Category category, String theme) {
         if(!theme.matches("[a-zA-Z0-9_]+")) throw new IllegalArgumentException("Theme contains illegal characters! Please only use a-Z, 0-9, _");
         return category.id() + SEPARATOR + theme;
     }
 
     public void delete() throws IOException {
         unload(false);
-        FileUtils.deleteDir(Bukkit.getWorldContainer().toPath().resolve(id));
+        FileUtils.deleteDir(Bukkit.getWorldContainer().toPath().resolve(name));
     }
 
     public void load() {
         if(meta.state() != DimensionState.ACTIVE) return;
-        Bukkit.createWorld(new WorldCreator(id));
+        Bukkit.createWorld(new WorldCreator(name));
         meta.state(DimensionState.LOADED);
     }
 
     public void unload(boolean save) {
         if(meta.state() != DimensionState.LOADED) return;
-        var bukkitWorld = Bukkit.getWorld(id);
+        var bukkitWorld = Bukkit.getWorld(name);
         if(bukkitWorld == DimensionCache.getServerMainWorld()) throw new IllegalStateException("Cannot unload main world!");
         bukkitWorld.getPlayers().forEach(this::kick);
-        Bukkit.unloadWorld(id, save);
+        Bukkit.unloadWorld(name, save);
         meta.state(DimensionState.ACTIVE);
         meta.setLastLoaded();
     }
 
     public void kick(Player player) {
-        var world = Bukkit.getWorld(id);
+        var world = Bukkit.getWorld(name);
         if(world == null) return;
         var worldHub = Bukkit.getWorld("world");
         player.teleport(worldHub.getSpawnLocation());
@@ -93,7 +138,7 @@ public record Dimension(String id, DimensionType type, DimensionStats stats, Dim
         if(meta.state() == DimensionState.ARCHIVED) return false;
         if(meta.state() == DimensionState.ACTIVE) load();
         if(!canEnter(player)) return false;
-        player.teleport(Bukkit.getWorld(id).getSpawnLocation());
+        player.teleport(Bukkit.getWorld(name).getSpawnLocation());
         return true;
     }
 
@@ -105,6 +150,6 @@ public record Dimension(String id, DimensionType type, DimensionStats stats, Dim
     }
 
     public String category() {
-        return id.split(SEPARATOR)[0];
+        return name.split(SEPARATOR)[0];
     }
 }

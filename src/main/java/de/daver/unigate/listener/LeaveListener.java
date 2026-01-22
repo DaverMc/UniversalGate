@@ -32,7 +32,7 @@ public class LeaveListener extends PluginEventListener {
         try {
             plugin().dimensionCache().update(dimension);
         } catch (SQLException exception) {
-            plugin().logger().error("Failed to update dimension {}", dimension.id(), exception);
+            plugin().logger().error("Failed to update dimension {}", dimension.name(), exception);
         }
     }
 

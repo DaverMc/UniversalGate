@@ -26,8 +26,8 @@ class CreateSubCommand extends LiteralNode {
     }
 
     public void createCategory(PluginContext context) throws CommandSyntaxException {
-        String name = context.getArgument("name", String.class);
         String id = context.getArgument("id", String.class);
+        String name = context.getArgument("name", String.class);
         try {
             var plugin = context.plugin();
             var category = plugin.categoryCache().get(name.toLowerCase());

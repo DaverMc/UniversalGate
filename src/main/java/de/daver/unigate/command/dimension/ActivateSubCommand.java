@@ -26,16 +26,16 @@ public class ActivateSubCommand extends LiteralNode {
     }
 
     void activateDimension(PluginContext context) throws CommandSyntaxException {
-        var id = context.getArgument("dimension", String.class);
+        var name = context.getArgument("dimension", String.class);
         try {
-            if(!context.plugin().dimensionCache().activate(id)) throw CommandExceptions.VALUE_NOT_EXISTING.create(id);
+            if(!context.plugin().dimensionCache().activate(name)) throw CommandExceptions.VALUE_NOT_EXISTING.create(name);
 
             context.plugin().languageManager().message()
-                    .parsed("dimension", id)
+                    .parsed("dimension", name)
                     .key(LanguageKeys.DIMENSION_ACTIVATE)
                     .build().send(context.sender());
         } catch (SQLException e) {
-            context.plugin().logger().error("Failed to archive dimension {}", id, e);
+            context.plugin().logger().error("Failed to archive dimension {}", name, e);
             throw CommandExceptions.DATABASE_EXCEPTION.create();
         }
     }

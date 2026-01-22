@@ -7,7 +7,6 @@ import de.daver.unigate.core.command.CommandExceptions;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.dimension.Dimension;
-import de.daver.unigate.dimension.DimensionState;
 
 import java.sql.SQLException;
 
@@ -24,11 +23,11 @@ public class ArchiveSubCommand extends LiteralNode {
         try {
             context.plugin().dimensionCache().archive(dimension);
             context.plugin().languageManager().message()
-                    .parsed("dimension", dimension.id())
+                    .parsed("dimension", dimension.name())
                     .key(LanguageKeys.DIMENSION_ARCHIVE)
                     .build().send(context.sender());
         } catch (SQLException e) {
-            context.plugin().logger().error("Failed to archive dimension {}", dimension.id(), e);
+            context.plugin().logger().error("Failed to archive dimension {}", dimension.name(), e);
             throw CommandExceptions.DATABASE_EXCEPTION.create();
         }
     }

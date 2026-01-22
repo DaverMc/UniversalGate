@@ -20,11 +20,11 @@ class TeleportSubCommand extends LiteralNode {
         Dimension dimension = context.getArgument("dimension", Dimension.class);
         if(dimension.enter(context.senderPlayer())) context.plugin().languageManager().message()
                 .key(LanguageKeys.DIMENSION_ENTER_SUCCESS)
-                .parsed("dimension", dimension.id())
+                .parsed("dimension", dimension.name())
                 .build().send(context.sender());
         else context.plugin().languageManager().message()
                 .key(LanguageKeys.DIMENSION_ENTER_FAILED)
-                .parsed("dimension", dimension.id())
+                .parsed("dimension", dimension.name())
                 .build().send(context.sender());
 
     }

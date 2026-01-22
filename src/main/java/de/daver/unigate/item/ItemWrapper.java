@@ -42,6 +42,12 @@ public record ItemWrapper(UniversalGatePlugin plugin, ItemStack itemStack) {
     public ItemWrapper lore(int index, Component line) {
         return modifyMeta(meta -> {
             var lore = meta.lore();
+            if(line == null) {
+                if(lore == null || lore.size() <= index) return;
+                lore.remove(index);
+                meta.lore(lore);
+                return;
+            }
             if(lore == null) lore = new ArrayList<>();
             for(int i = lore.size(); i <= index; i++) lore.add(Component.empty());
             lore.set(index, line);

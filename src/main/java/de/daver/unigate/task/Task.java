@@ -7,13 +7,13 @@ public class Task {
     private final String id;
     private final UUID creator;
     private final TaskType type;
-    private final String dimensionId;
+    private final UUID dimensionId;
 
     private UUID executor;
     private TaskState state;
     private String description;
 
-    public Task(String id, UUID creator, TaskType type, TaskState state, String dimensionId) {
+    public Task(String id, UUID creator, TaskType type, TaskState state, UUID dimensionId) {
         this.id = id;
         this.creator = creator;
         this.executor = null;
@@ -38,7 +38,7 @@ public class Task {
         return this.state;
     }
 
-    public String dimensionId() {
+    public UUID dimensionId() {
         return this.dimensionId;
     }
 

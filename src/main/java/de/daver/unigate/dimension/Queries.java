@@ -15,12 +15,13 @@ interface Queries {
 
     SQLStatement SELECT_ARCHIVED = new SQLStatement("SELECT * FROM dimensions WHERE state = 'ARCHIVED'");
 
-    SQLStatement SELECT_ARCHIVED_DIMENSION = new SQLStatement("SELECT * FROM dimensions WHERE state = 'ARCHIVED' AND id = ?")
+    SQLStatement SELECT_ARCHIVED_DIMENSION = new SQLStatement("SELECT * FROM dimensions WHERE state = 'ARCHIVED' AND name = ?")
             .addStringArgument();
 
     SQLStatement CREATE_DIMENSIONS_TABLE = new SQLStatement("""
                 CREATE TABLE IF NOT EXISTS dimensions (
                 id TEXT PRIMARY KEY,
+                name TEXT,
                 type TEXT,
                 creation_time INTEGER,
                 creator TEXT,
@@ -29,12 +30,16 @@ interface Queries {
                 last_loaded INTEGER)
             """);
 
-    SQLStatement SELECT_DIMENSION = new SQLStatement("SELECT * FROM dimensions WHERE id = ?")
+    SQLStatement SELECT_DIMENSION = new SQLStatement("SELECT * FROM dimensions WHERE name = ?")
             .addStringArgument();
 
     ResultTransformer<Dimension> DIMENSION_TRANSFORMER = set -> {
-        String id = set.getString("id");
-        if (id == null) return null;
+        String idS = set.getString("id");
+        if (idS == null) return null;
+        UUID id = UUID.fromString(idS);
+
+        String name = set.getString("name");
+        if (name == null) return null;
 
         var typeString = set.getString("type");
         if (typeString == null) return null;
@@ -53,22 +58,17 @@ interface Queries {
         DimensionStats stats = new DimensionStats(UUID.fromString(uuidS), creationTime);
 
         DimensionMeta meta = new DimensionMeta(state, stopLagI == 1, lastLoaded);
-        return new Dimension(id, type, stats, meta, new Random().nextLong());
+        return new Dimension(id, name, type, stats, meta, new Random().nextLong());
     };
 
-    ResultTransformer<String> ID_TRANSFORMER = set -> set.getString("id");
+    ResultTransformer<String> NAME_TRANSFORMER = set -> set.getString("name");
 
     SQLStatement INSERT_DIMENSION = new SQLStatement("""
-                INSERT INTO dimensions (id, type, creation_time, creator, stop_lag, state, last_loaded)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-                ON CONFLICT(id) DO UPDATE SET
-                   type = excluded.type,
-                   creation_time = excluded.creation_time,
-                   creator = excluded.creator,
-                   stop_lag = excluded.stop_lag,
-                   state = excluded.state,
-                   last_loaded = excluded.last_loaded
-            """).addStringArgument()
+                INSERT INTO dimensions (id, name, type, creation_time, creator, stop_lag, state, last_loaded)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+              """)
+            .addConverted(UUID.class, SQLDataType.STRING, UUID::toString)
+            .addStringArgument()
             .addConverted(DimensionType.class, SQLDataType.STRING, DimensionType::name)
             .addLongArgument()
             .addConverted(UUID.class, SQLDataType.STRING, UUID::toString)
@@ -77,32 +77,34 @@ interface Queries {
             .addLongArgument();
 
     SQLStatement DELETE_DIMENSION = new SQLStatement("DELETE FROM dimensions WHERE id = ?")
-            .addStringArgument();
+            .addConverted(UUID.class, SQLDataType.STRING, UUID::toString);
 
     SQLStatement INSERT_ALLOWED = new SQLStatement("""
                 INSERT INTO allowed_dimensions (dimension, player) VALUES (?, ?)
-            """).addStringArgument()
+            """)
+            .addConverted(UUID.class, SQLDataType.STRING, UUID::toString)
             .addStringArgument();
 
     SQLStatement DELETE_ALLOWED = new SQLStatement("DELETE FROM allowed_dimensions WHERE dimension = ? AND player = ?")
-            .addStringArgument()
+            .addConverted(UUID.class, SQLDataType.STRING, UUID::toString)
             .addStringArgument();
 
     SQLStatement DELETE_DIMENSION_ALLOWED = new SQLStatement("DELETE FROM allowed_dimensions WHERE dimension = ?")
-            .addStringArgument();
+            .addConverted(UUID.class, SQLDataType.STRING, UUID::toString);
 
     SQLStatement CREATE_ALLOWED_TABLE = new SQLStatement("""
                 CREATE TABLE IF NOT EXISTS allowed_dimensions (dimension TEXT, player TEXT, PRIMARY KEY(dimension, player))
             """);
 
     SQLStatement SELECT_ALLOWED = new SQLStatement("SELECT * FROM allowed_dimensions WHERE dimension = ?")
-            .addStringArgument();
+            .addConverted(UUID.class, SQLDataType.STRING, UUID::toString);
 
-    SQLStatement UPDATE_DIMENSION_META = new SQLStatement("UPDATE dimensions SET stop_lag = ?, state = ?, last_loaded = ? WHERE id = ?")
+    SQLStatement UPDATE_DIMENSION_META = new SQLStatement("UPDATE dimensions SET name = ?, stop_lag = ?, state = ?, last_loaded = ? WHERE id = ?")
+            .addStringArgument()
             .addBooleanArgument()
             .addConverted(DimensionState.class, SQLDataType.STRING, DimensionState::name)
             .addLongArgument()
-            .addStringArgument();
+            .addConverted(UUID.class, SQLDataType.STRING, UUID::toString);
 
     ResultTransformer<UUID> ALLOWED_TRANSFORMER = set -> UUID.fromString(set.getString("player"));
 }

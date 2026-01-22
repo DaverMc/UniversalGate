@@ -40,7 +40,7 @@ public class AllowedRemoveSubCommand extends LiteralNode {
             context.plugin().languageManager().message()
                     .key(LanguageKeys.DIMENSION_ALLOWED_REMOVE_SUCCESS)
                     .parsed("player", PlayerFetcher.getPlayerName(uuid))
-                    .parsed("dimension", dimension.id())
+                    .parsed("dimension", dimension.name())
                     .build().send(context.sender());
         } catch (SQLException exception) {
             context.plugin().logger().error("Failed to remove player from allowed list", exception);

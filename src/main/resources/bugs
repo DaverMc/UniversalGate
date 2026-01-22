@@ -26,6 +26,8 @@
 + Item Benennen / Set Lore / Enchant(Glow)
 + Suggestions nur das was auch Permissions technisch erlaubt ist anzeigen
 + Archive und Activate Feature einbauen für ungenutzte Dimensionen
++ UUID für Dimensionen einführen vor allem im Bezug auf Tasks
++ Dimension Rename
 Armorstand Clone Armorstand fliegt irgendwo hin
 Languagesystem falls Sprache nicht vorhanden ist wirds nicht auf default umgeleitet
 Wenn das erstellen fehlschlägt, Dateien, oder Datenbankeinträge löschen

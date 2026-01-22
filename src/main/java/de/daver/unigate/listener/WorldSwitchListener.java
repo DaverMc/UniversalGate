@@ -27,7 +27,7 @@ public class WorldSwitchListener extends PluginEventListener {
         if(toDimension == null) return;
         var player = event.getPlayer();
         var invite = INVITES.remove(player.getUniqueId());
-        if(toDimension.id().equals(invite)) return;
+        if(toDimension.name().equals(invite)) return;
         if(toDimension.canEnter(event.getPlayer())) return;
         event.setCancelled(true);
     }
@@ -46,7 +46,7 @@ public class WorldSwitchListener extends PluginEventListener {
         try {
             plugin().dimensionCache().update(dimension);
         } catch (SQLException exception) {
-            plugin().logger().error("Failed to update dimension {}", dimension.id(), exception);
+            plugin().logger().error("Failed to update dimension {}", dimension.name(), exception);
         }
     }
 }

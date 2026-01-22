@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class DimensionCache {
 
-    private final Map<String, Dimension> active;
+    private final Map<UUID, Dimension> active;
     private final Set<String> archived;
     private final UniversalGatePlugin plugin;
 
@@ -39,13 +39,14 @@ public class DimensionCache {
     }
 
     private void loadArchived() throws SQLException {
-        var dimensionIds = plugin.sqlExecutor().query(Queries.SELECT_ARCHIVED, ResultTransformer.asList(Queries.ID_TRANSFORMER));
+        var dimensionIds = plugin.sqlExecutor().query(Queries.SELECT_ARCHIVED, ResultTransformer.asList(Queries.NAME_TRANSFORMER));
         this.archived.addAll(dimensionIds);
     }
 
     public void insert(Dimension dimension) throws SQLException {
         plugin.sqlExecutor().execute(Queries.INSERT_DIMENSION,
                 dimension.id(),
+                dimension.name(),
                 dimension.type(),
                 dimension.stats().creationTime(),
                 dimension.stats().creator(),
@@ -63,19 +64,22 @@ public class DimensionCache {
         active.remove(dimension.id());
     }
 
-    public Dimension select(String id) throws SQLException {
-        var dimension = getActive(id);
+    public Dimension select(String name) throws SQLException {
+        var dimension = getActive(name);
         if(dimension != null) return dimension;
-        dimension = plugin.sqlExecutor().query(Queries.SELECT_DIMENSION, Queries.DIMENSION_TRANSFORMER, id);
+        dimension = plugin.sqlExecutor().query(Queries.SELECT_DIMENSION, Queries.DIMENSION_TRANSFORMER, name);
         if(dimension == null) return null;
-        active.put(id, dimension);
-        var allowedUsers = plugin.sqlExecutor().query(Queries.SELECT_ALLOWED, ResultTransformer.asSet(Queries.ALLOWED_TRANSFORMER), id);
+        active.put(dimension.id(), dimension);
+        var allowedUsers = plugin.sqlExecutor().query(Queries.SELECT_ALLOWED, ResultTransformer.asSet(Queries.ALLOWED_TRANSFORMER), dimension.id());
         dimension.meta().allowedPlayers().addAll(allowedUsers);
         return dimension;
     }
 
-    public Dimension getActive(String id) {
-        return active.get(id);
+    public Dimension getActive(String name) {
+        return active.values().stream()
+                .filter(dimension -> dimension.name().equalsIgnoreCase(name))
+                .findFirst()
+                .orElse(null);
     }
 
     public List<Dimension> getAll() throws SQLException {
@@ -97,7 +101,7 @@ public class DimensionCache {
     }
 
     public void update(Dimension dimension) throws SQLException {
-        plugin.sqlExecutor().execute(Queries.UPDATE_DIMENSION_META, dimension.meta().stopLag(), dimension.meta().state(), dimension.meta().lastLoaded(), dimension.id());
+        plugin.sqlExecutor().execute(Queries.UPDATE_DIMENSION_META, dimension.name(), dimension.meta().stopLag(), dimension.meta().state(), dimension.meta().lastLoaded(), dimension.id());
     }
 
     public void archive(Dimension dimension) throws SQLException {
@@ -105,17 +109,17 @@ public class DimensionCache {
         dimension.meta().state(DimensionState.ARCHIVED);
         update(dimension);
         active.remove(dimension.id());
-        archived.add(dimension.id());
+        archived.add(dimension.name());
     }
 
-    public boolean activate(String id) throws SQLException {
-        var dimension = plugin.sqlExecutor().query(Queries.SELECT_ARCHIVED_DIMENSION, Queries.DIMENSION_TRANSFORMER, id);
+    public boolean activate(String name) throws SQLException {
+        var dimension = plugin.sqlExecutor().query(Queries.SELECT_ARCHIVED_DIMENSION, Queries.DIMENSION_TRANSFORMER, name);
         if(dimension == null) return false;
 
-        var allowedUsers = plugin.sqlExecutor().query(Queries.SELECT_ALLOWED, ResultTransformer.asSet(Queries.ALLOWED_TRANSFORMER), id);
+        var allowedUsers = plugin.sqlExecutor().query(Queries.SELECT_ALLOWED, ResultTransformer.asSet(Queries.ALLOWED_TRANSFORMER), name);
         dimension.meta().allowedPlayers().addAll(allowedUsers);
         active.put(dimension.id(), dimension);
-        archived.remove(dimension.id());
+        archived.remove(dimension.name());
 
         dimension.meta().state(DimensionState.ACTIVE);
         update(dimension);

@@ -40,7 +40,7 @@ public class ListSubCommand extends LiteralNode {
 
         for(var task : tasks) {
             context.plugin().languageManager().message().key(LanguageKeys.TASK_LIST_ENTRY)
-                    .parsed("id", task.id())
+                    .parsed("name", task.id())
                     .parsed("action", task.type().name())
                     .build().send(player);
         }

@@ -24,7 +24,7 @@ public class AllowedSubCommand extends LiteralNode {
         var allowedPlayers = dimension.meta().allowedPlayers();
         context.plugin().languageManager().message()
                 .key(LanguageKeys.DIMENSION_ALLOWED_LIST_HEADER)
-                .parsed("dimension", dimension.id())
+                .parsed("dimension", dimension.name())
                 .parsed("players", allowedPlayers.size())
                 .build().send(context.sender());
 

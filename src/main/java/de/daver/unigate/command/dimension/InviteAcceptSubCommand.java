@@ -22,7 +22,7 @@ public class InviteAcceptSubCommand extends LiteralNode {
         dimension.enter(player);
         context.plugin().languageManager().message()
                 .key(LanguageKeys.DIMENSION_INVITE_ACCEPT)
-                .parsed("dimension", dimension.id())
+                .parsed("dimension", dimension.name())
                 .build().send(context.sender());
     }
 }

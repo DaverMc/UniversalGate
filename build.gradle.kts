@@ -1,6 +1,5 @@
 import net.minecrell.pluginyml.paper.PaperPluginDescription
 
-
 plugins {
     kotlin("jvm") version "1.9.22"
     alias(libs.plugins.shadow)
@@ -8,7 +7,7 @@ plugins {
 }
 
 group = "de.daver.unigate"
-version = "1.3.3"
+version = "1.4.0"
 
 repositories {
     mavenCentral()

@@ -33,17 +33,17 @@ public class InviteSubCommand extends LiteralNode {
         var dimensionId = player.getWorld().getName();
         var dimension = context.plugin().dimensionCache().getActive(dimensionId);
         if(dimension == null) throw CommandExceptions.VALUE_NOT_EXISTING.create(dimensionId);
-        WorldSwitchListener.INVITES.put(target, dimension.id());
+        WorldSwitchListener.INVITES.put(target, dimension.name());
         context.plugin().languageManager().message()
                 .key(LanguageKeys.DIMENSION_INVITE_SEND)
                 .parsed("target", PlayerFetcher.getPlayerName(target))
-                .parsed("dimension", dimension.id())
+                .parsed("dimension", dimension.name())
                 .build().send(context.sender());
 
         context.plugin().languageManager().message()
                 .key(LanguageKeys.DIMENSION_INVITE_RECEIVE)
                 .parsed("sender", player.getName())
-                .parsed("dimension", dimension.id())
+                .parsed("dimension", dimension.name())
                 .build().send(targetPlayer);
     }
 

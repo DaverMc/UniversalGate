@@ -269,6 +269,10 @@ public class UniversalGatePlugin extends JavaPlugin {
         return getDataPath().resolve("statue_pose");
     }
 
+    public Path worldContainer() {
+        return getServer().getWorldContainer().toPath();
+    }
+
     public static UniversalGatePlugin getInstance() {
         return instance;
     }
