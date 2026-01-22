@@ -8,7 +8,6 @@ import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 
 import java.io.IOException;
-import java.util.Locale;
 
 public class ReloadSubCommand extends LiteralNode {
 

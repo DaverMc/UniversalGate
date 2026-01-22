@@ -16,6 +16,8 @@ import de.daver.unigate.core.util.PlayerFetcher;
 import de.daver.unigate.core.util.TabList;
 import de.daver.unigate.dimension.DimensionCache;
 import de.daver.unigate.listener.*;
+import de.daver.unigate.statue.dialog.ConfirmDialogAction;
+import de.daver.unigate.statue.dialog.DeleteDialogAction;
 import de.daver.unigate.statue.itemlistener.*;
 import de.daver.unigate.task.TaskCache;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
@@ -24,7 +26,6 @@ import net.luckperms.api.event.node.NodeAddEvent;
 import net.luckperms.api.node.NodeType;
 import net.luckperms.api.node.types.InheritanceNode;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 
@@ -49,6 +50,7 @@ public class UniversalGatePlugin extends JavaPlugin {
     private TaskCache taskCache;
     private StatueInteractListener statueInteractListener;
     private ItemInteractListener itemInteractListener;
+    private DialogClickListener dialogClickListener;
 
     @Override
     public void onDisable() {
@@ -64,6 +66,7 @@ public class UniversalGatePlugin extends JavaPlugin {
         registerCommands();
         registerListeners();
         registerItemListener();
+        registerDialogActions();
         setUpTabList();
     }
 
@@ -98,15 +101,22 @@ public class UniversalGatePlugin extends JavaPlugin {
         new JoinListener(this).register();
         new ChatListener(this).register();
         new StopLagListener(this).register();
+
         this.serverPingListener = new ServerPingListener(this);
-        serverPingListener.register();
+        this.serverPingListener.register();
+
         new LeaveListener(this).register();
         new PortalListener(this).register();
+
         this.itemInteractListener = new ItemInteractListener(this);
-        itemInteractListener.register();
+        this.itemInteractListener.register();
+
         this.statueInteractListener = new StatueInteractListener(this);
-        statueInteractListener.register();
-        new StatueDialogClickListener(this).register();
+        this.statueInteractListener.register();
+
+        this.dialogClickListener = new DialogClickListener(this);
+        this.dialogClickListener.register();
+
         new BlockPlaceBreakListener(this).register();
         new CustomInventoryHolderListener(this).register();
     }
@@ -122,6 +132,11 @@ public class UniversalGatePlugin extends JavaPlugin {
         registry.register(PositionItemListener.ID, new PositionItemListener());
         registry.register(SettingsItemListener.ID, new SettingsItemListener());
         registry.register(InventoryItemListener.ID, new InventoryItemListener());
+    }
+
+    private void registerDialogActions() {
+        dialogClickListener.register(new ConfirmDialogAction());
+        dialogClickListener.register(new DeleteDialogAction());
     }
 
     private void initializeSQL() {

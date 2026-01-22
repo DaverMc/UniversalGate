@@ -6,7 +6,6 @@ import de.daver.unigate.core.lang.LanguageKey;
 import de.daver.unigate.item.ItemWrapper;
 import de.daver.unigate.statue.Statue;
 import de.daver.unigate.statue.itemlistener.*;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;

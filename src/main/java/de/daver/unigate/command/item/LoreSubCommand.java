@@ -13,7 +13,6 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 
-import java.util.Arrays;
 import java.util.stream.Stream;
 
 public class LoreSubCommand extends LiteralNode {

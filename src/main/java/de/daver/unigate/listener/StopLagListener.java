@@ -4,7 +4,6 @@ import de.daver.unigate.UniversalGatePlugin;
 import org.bukkit.Material;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.type.Bed;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Minecart;
 import org.bukkit.event.Cancellable;

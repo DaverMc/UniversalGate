@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import java.util.Comparator;
 import java.util.function.Function;
 
 

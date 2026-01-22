@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
+import java.util.UUID;
 
 class CreateSubCommand extends LiteralNode {
 
@@ -20,19 +21,19 @@ class CreateSubCommand extends LiteralNode {
     protected CreateSubCommand() {
         super("create");
         permission(Permissions.CATEGORY_CREATE);
-        then(new WordArgument("id"))
+        then(new WordArgument("prefix"))
                 .then(new WordArgument("name"))
                 .executor(this::createCategory);
     }
 
     public void createCategory(PluginContext context) throws CommandSyntaxException {
-        String id = context.getArgument("id", String.class);
+        String prefix = context.getArgument("prefix", String.class);
         String name = context.getArgument("name", String.class);
         try {
             var plugin = context.plugin();
             var category = plugin.categoryCache().get(name.toLowerCase());
             if(category != null) throw CommandExceptions.VALUE_EXISTING.create(name);
-            category = new Category(id, name);
+            category = new Category(UUID.randomUUID(), name, prefix);
             plugin.categoryCache().put(category);
             plugin.languageManager().message()
                     .key(LanguageKeys.CATEGORY_CREATE_SUCCESS)

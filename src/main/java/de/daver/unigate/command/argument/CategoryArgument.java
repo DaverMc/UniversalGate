@@ -21,13 +21,9 @@ public class CategoryArgument extends ArgumentNode<Category> {
     private SuggestionProvider<Category> suggestions() {
         return context -> {
             var player = context.senderPlayer();
-            try {
-                return context.plugin().categoryCache().getAll()
-                        .stream()
-                        .filter(category -> player.hasPermission(Permissions.DIMENSION_ENTER_CATEGORY + category.id()));
-            } catch (SQLException exception) {
-                throw CommandExceptions.DATABASE_EXCEPTION.create();
-            }
+            return context.plugin().categoryCache().getAll()
+                    .stream()
+                    .filter(category -> player.hasPermission(Permissions.DIMENSION_ENTER_CATEGORY + category.id()));
         };
     }
 
@@ -39,18 +35,14 @@ public class CategoryArgument extends ArgumentNode<Category> {
 
         @Override
         protected Category deserialize(String value) throws CommandSyntaxException {
-            try {
-                var category = UniversalGatePlugin.getInstance().categoryCache().get(value);
-                if (category != null) return category;
-                throw CommandExceptions.VALUE_NOT_EXISTING.create(value);
-            } catch (SQLException exception) {
-                throw CommandExceptions.DATABASE_EXCEPTION.create();
-            }
+            var category = UniversalGatePlugin.getInstance().categoryCache().get(value);
+            if (category != null) return category;
+            throw CommandExceptions.VALUE_NOT_EXISTING.create(value);
         }
 
         @Override
         public String serialize(Category value) {
-            return value.id();
+            return value.name();
         }
     }
 

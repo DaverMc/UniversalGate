@@ -3,7 +3,6 @@ package de.daver.unigate.listener;
 import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.item.ItemAction;
 import de.daver.unigate.item.ItemActionListener;
-import de.daver.unigate.item.ItemWrapper;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
