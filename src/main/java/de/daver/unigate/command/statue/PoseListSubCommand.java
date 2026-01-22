@@ -17,6 +17,8 @@ public class PoseListSubCommand extends LiteralNode {
 
     void listFileNames(PluginContext context) {
         try {
+            context.plugin().languageManager().message()
+                    .key(LanguageKeys.STATUE_POSE_LIST_HEADER).build().send(context.sender());
             Files.list(context.plugin().poseDir())
                     .forEach(path -> listPoseFile(path, context));
         } catch (IOException e) {

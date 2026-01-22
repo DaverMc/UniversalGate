@@ -16,7 +16,11 @@ public class DimensionArgument extends ArgumentNode<Dimension> {
     }
 
     private SuggestionProvider<Dimension> suggestions() {
-        return context -> context.plugin().dimensionCache().getActive().stream();
+        return context -> {
+            var player = context.senderPlayer();
+            return context.plugin().dimensionCache().getActive().stream()
+                    .filter(dimension -> dimension.canEnter(player));
+        };
     }
 
     public static class Type extends StringArgumentType<Dimension> {

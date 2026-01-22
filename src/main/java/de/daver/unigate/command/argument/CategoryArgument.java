@@ -1,6 +1,7 @@
 package de.daver.unigate.command.argument;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.category.Category;
 import de.daver.unigate.core.command.ArgumentNode;
@@ -19,8 +20,11 @@ public class CategoryArgument extends ArgumentNode<Category> {
 
     private SuggestionProvider<Category> suggestions() {
         return context -> {
+            var player = context.senderPlayer();
             try {
-                return context.plugin().categoryCache().getAll().stream();
+                return context.plugin().categoryCache().getAll()
+                        .stream()
+                        .filter(category -> player.hasPermission(Permissions.DIMENSION_ENTER_CATEGORY + category.id()));
             } catch (SQLException exception) {
                 throw CommandExceptions.DATABASE_EXCEPTION.create();
             }

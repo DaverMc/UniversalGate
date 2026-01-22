@@ -5,7 +5,7 @@
 + Natürliches Entity Spawning disablen
 + Advancements ausschalten
 + Stoplag Toggle Command
-- Wenn Spieler von der Map leavt wird sie nicht geunloaded
++ Wenn Spieler von der Map leavt wird sie nicht geunloaded
 + Creative Items Debug Stick hinzufügen
 + Bone Meal deaktivieren
 + Portale deaktivieren
@@ -15,17 +15,17 @@
 + Minecarts Bewegung deaktivieren
 + GameMode Creative
 + Armorstand kann nicht platziert werden
-/ Reopen Task Command fehlt
-/ Import und Export Ordner werden nicht neu erstellt
++ Reopen Task Command fehlt
++ Import und Export Ordner werden nicht neu erstellt
 + TabList sortieren
-/ Armorstand Tool programmieren
++ Armorstand Tool programmieren
 + Void-Welten können nicht erstellt/geladen werden
-/ Statue Pose Save/List/Load füllen
-Armorstand cannot be rotated
-Item Benennen / Set Lore / Enchant(Glow)
++ Statue Pose Save/List/Load füllen
++ TabList Header und Footer werden nicht aktualisiert wenn ein spieler neu joint oder leaved
++ Armorstand cannot be rotated
++ Item Benennen / Set Lore / Enchant(Glow)
++ Suggestions nur das was auch Permissions technisch erlaubt ist anzeigen
 Message Channels
 Wenn das erstellen fehlschlägt, Dateien, oder Datenbankeinträge löschen
-Command Suggestions nur das was auch Permissions technisch erlaubt ist anzeigen
-TabList Header und Footer werden nicht aktualisiert wenn ein spieler neu joint oder leaved
 (Portalblöcke in Custom Items)
 (Feuer Item in Custom Items)

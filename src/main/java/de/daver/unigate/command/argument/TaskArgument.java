@@ -7,6 +7,7 @@ import de.daver.unigate.core.command.CommandExceptions;
 import de.daver.unigate.core.command.SuggestionProvider;
 import de.daver.unigate.core.command.argument.StringArgumentType;
 import de.daver.unigate.task.Task;
+import org.bukkit.entity.Player;
 
 public class TaskArgument extends ArgumentNode<Task> {
 
@@ -16,7 +17,18 @@ public class TaskArgument extends ArgumentNode<Task> {
     }
 
     SuggestionProvider<Task> suggestionProvider() {
-        return context -> context.plugin().taskCache().getTasks().stream();
+        return context -> {
+            var player = context.senderPlayer();
+
+            return context.plugin().taskCache().getTasks().stream()
+                    .filter(task -> filterPermitted(task, player, context.plugin()));
+        };
+    }
+
+    private boolean filterPermitted(Task task, Player player, UniversalGatePlugin plugin) {
+        var dimension = plugin.dimensionCache().getActive(task.id());
+        if(dimension == null) return false;
+        return dimension.enter(player);
     }
 
     static class Type extends StringArgumentType<Task> {
