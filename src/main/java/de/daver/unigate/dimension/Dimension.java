@@ -23,7 +23,10 @@ public record Dimension(String id, DimensionType type, DimensionStats stats, Dim
     private static final String SEPARATOR = "-";
 
     public static Dimension create(Category category, String theme, DimensionType type, UUID creator) throws IOException {
-        var id = buildId(category, theme);
+        return create(buildId(category, theme), type, creator);
+    }
+
+    public static Dimension create(String id, DimensionType type, UUID creator) throws IOException {
         var stats = new DimensionStats(creator);
         var dimension = new Dimension(id, type, stats, new DimensionMeta(), new Random().nextLong());
         createLevelDatFile(dimension);

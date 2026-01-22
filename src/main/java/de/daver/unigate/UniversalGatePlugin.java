@@ -24,6 +24,7 @@ import net.luckperms.api.event.node.NodeAddEvent;
 import net.luckperms.api.node.NodeType;
 import net.luckperms.api.node.types.InheritanceNode;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 
@@ -267,6 +268,10 @@ public class UniversalGatePlugin extends JavaPlugin {
 
     public Path poseDir() {
         return getDataPath().resolve("statue_pose");
+    }
+
+    public World getMainWorld() {
+        return Bukkit.getWorlds().getFirst();
     }
 
     public static UniversalGatePlugin getInstance() {

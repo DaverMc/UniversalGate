@@ -27,7 +27,7 @@ public abstract class StatuePoseEditorListener implements ItemActionListener {
 
         switch (context.action()) {
             case LEFT_CLICK, RIGHT_CLICK, SHIFT_LEFT_CLICK, SHIFT_RIGHT_CLICK -> move(statue, amount, mode, context);
-            case SHIFT_DROP -> nexMode(mode, item, context);
+            case DROP, SHIFT_DROP -> nexMode(mode, item, context);
         }
     }
 

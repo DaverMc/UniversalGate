@@ -2,6 +2,7 @@ package de.daver.unigate.command.util;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import org.bukkit.Bukkit;
@@ -16,19 +17,15 @@ public class HubCommand extends LiteralNode {
     }
 
     void teleportToHub(PluginContext context) throws CommandSyntaxException {
-        teleport(context.senderPlayer());
+        teleport(context.senderPlayer(), context.plugin());
 
         context.plugin().languageManager().message()
                 .key(LanguageKeys.COMMAND_HUB)
                 .build().send(context.senderPlayer());
     }
 
-    public static void teleport(Player player) {
-        player.teleport(getMainWorld().getSpawnLocation());
-    }
-
-    private static World getMainWorld() {
-        return Bukkit.getWorlds().get(0);
+    public static void teleport(Player player, UniversalGatePlugin plugin) {
+        player.teleport(plugin.getMainWorld().getSpawnLocation());
     }
 
 }

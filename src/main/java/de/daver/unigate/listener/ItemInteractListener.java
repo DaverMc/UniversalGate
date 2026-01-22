@@ -16,15 +16,19 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ItemInteractListener extends PluginEventListener {
 
     private final Map<String, ItemActionListener> listeners;
+    private final Set<UUID> ignoreLeftClick;
 
     public ItemInteractListener(UniversalGatePlugin plugin) {
         super(plugin);
         this.listeners = new ConcurrentHashMap<>();
+        this.ignoreLeftClick = ConcurrentHashMap.newKeySet();
     }
 
     public void register(String id, ItemActionListener interactableItem) {
@@ -38,6 +42,7 @@ public class ItemInteractListener extends PluginEventListener {
         if (item == null || item.getType() == Material.AIR) return;
 
         Action action = event.getAction();
+        if(action.isLeftClick() && ignoreLeftClick.remove(event.getPlayer().getUniqueId())) return;
         var itemAction = ItemAction.fromClick(action.isLeftClick(), event.getPlayer().isSneaking());
         execute(item, itemAction, event.getPlayer());
 }
@@ -46,7 +51,10 @@ public class ItemInteractListener extends PluginEventListener {
     public void onDrop(PlayerDropItemEvent event) {
         var item = event.getItemDrop().getItemStack();
         var itemAction = ItemAction.fromDrop(event.getPlayer().isSneaking());
-        if(execute(item, itemAction, event.getPlayer())) event.setCancelled(true);
+        if(execute(item, itemAction, event.getPlayer())) {
+            ignoreLeftClick.add(event.getPlayer().getUniqueId());
+            event.setCancelled(true);
+        }
     }
 
     private boolean execute(ItemStack item, ItemAction action, Player player) {

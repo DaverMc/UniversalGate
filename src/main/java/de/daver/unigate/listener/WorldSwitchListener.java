@@ -2,6 +2,7 @@ package de.daver.unigate.listener;
 
 import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.dimension.Dimension;
+import de.daver.unigate.dimension.DimensionCache;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
@@ -36,9 +37,11 @@ public class WorldSwitchListener extends PluginEventListener {
         event.getPlayer().setGameMode(GameMode.CREATIVE);
 
         var from = event.getFrom();
+        if(from == plugin().getMainWorld()) return;
         if(from.getPlayerCount() > 0) return;
         var dimension = plugin().dimensionCache().getActive(from.getName());
         if(dimension == null) return;
+
         dimension.unload(true);
         try {
             plugin().dimensionCache().update(dimension);
