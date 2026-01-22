@@ -85,4 +85,17 @@ class PoseBridges {
             return armorStand.getRightLegPose();
         }
     }
+
+    static class Empty implements PoseBridge {
+
+        @Override
+        public void apply(EulerAngle angle, ArmorStand armorStand) {
+
+        }
+
+        @Override
+        public EulerAngle loadPose(ArmorStand armorStand) {
+            return null;
+        }
+    }
 }

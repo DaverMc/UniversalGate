@@ -27,12 +27,12 @@ public record ItemWrapper(UniversalGatePlugin plugin, ItemStack itemStack) {
         return modifyMeta(meta -> meta.displayName(displayName));
     }
 
-    public ItemWrapper lore(Function<UniversalGatePlugin, Component> loreSupplier) {
+    public ItemWrapper lore(Function<UniversalGatePlugin, List<Component>> loreSupplier) {
         return lore(loreSupplier.apply(plugin));
     }
 
-    public ItemWrapper lore(Component lore) {
-        return modifyMeta(meta -> meta.lore(List.of(lore)));
+    public ItemWrapper lore(List<Component> lore) {
+        return modifyMeta(meta -> meta.lore(lore));
     }
 
     public ItemWrapper clickAction(String actionId) {

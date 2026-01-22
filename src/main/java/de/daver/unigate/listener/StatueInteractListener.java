@@ -6,6 +6,7 @@ import de.daver.unigate.core.lang.LanguageKey;
 import de.daver.unigate.item.ItemWrapper;
 import de.daver.unigate.statue.Statue;
 import de.daver.unigate.statue.itemlistener.*;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -116,7 +117,8 @@ public class StatueInteractListener extends PluginEventListener {
                 .displayName(plugin -> plugin.languageManager().message()
                         .key(name).build().get(player))
                 .lore(plugin -> plugin.languageManager().message()
-                        .key(LanguageKeys.ITEM_STATUE_EDITOR_LORE_X).build().get(player))
+                        .key(LanguageKeys.ITEM_STATUE_EDITOR_LORE_X)
+                        .build().lines(player))
                 .mode(AXIS_X)
                 .clickAction(actionId)
                 .itemStack();

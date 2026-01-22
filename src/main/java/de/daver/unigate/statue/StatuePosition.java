@@ -6,13 +6,21 @@ import org.bukkit.entity.ArmorStand;
 
 public class StatuePosition extends Vector3D {
 
-    private final ArmorStand stand;
+    private final Statue statue;
     private float yaw;
 
-    public StatuePosition(ArmorStand stand) {
+    public StatuePosition(Statue statue) {
         super();
-        this.stand = stand;
-        this.yaw = 0.0f;
+        this.statue = statue;
+        load(statue.getEntity());
+    }
+
+    private void load(ArmorStand stand) {
+        var location = stand.getLocation();
+        addX(location.getX());
+        addY(location.getY());
+        addZ(location.getZ());
+        addYaw(location.getYaw());
     }
 
     public void setYaw(float yaw) {
@@ -28,9 +36,22 @@ public class StatuePosition extends Vector3D {
     }
 
     public void update() {
-        var world = this.stand.getLocation().getWorld();
+        var stand = this.statue.getEntity();
+        if(stand == null) return;
+        update(stand);
+    }
+
+    void update(ArmorStand stand) {
+        var world = stand.getLocation().getWorld();
         var newLocation = new Location(world, x(), y(), z(), yaw(), 0.0f);
-        this.stand.teleport(newLocation);
+        stand.teleport(newLocation);
+    }
+
+    public void set(StatuePosition other) {
+        setX(other.x());
+        setY(other.y());
+        setZ(other.z());
+        setYaw(other.yaw());
     }
 
 }

@@ -5,6 +5,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import de.daver.unigate.category.CategoryCache;
 import de.daver.unigate.command.category.CategoryCommand;
 import de.daver.unigate.command.dimension.DimensionCommand;
+import de.daver.unigate.command.item.ItemCommand;
 import de.daver.unigate.command.lang.LanguageCommand;
 import de.daver.unigate.command.statue.StatueCommand;
 import de.daver.unigate.command.task.TaskCommand;
@@ -88,6 +89,7 @@ public class UniversalGatePlugin extends JavaPlugin {
             dispatcher.register(new TaskCommand().build());
             dispatcher.register(new HubCommand().build());
             dispatcher.register(new StatueCommand().build());
+            dispatcher.register(new ItemCommand().build());
         });
     }
 
@@ -266,6 +268,7 @@ public class UniversalGatePlugin extends JavaPlugin {
     public Path poseDir() {
         return getDataPath().resolve("statue_pose");
     }
+
     public static UniversalGatePlugin getInstance() {
         return instance;
     }

@@ -27,7 +27,7 @@ public abstract class StatuePoseEditorListener implements ItemActionListener {
 
         switch (context.action()) {
             case LEFT_CLICK, RIGHT_CLICK, SHIFT_LEFT_CLICK, SHIFT_RIGHT_CLICK -> move(statue, amount, mode, context);
-            case DROP, SHIFT_DROP -> nexMode(mode, item, context);
+            case SHIFT_DROP -> nexMode(mode, item, context);
         }
     }
 
@@ -65,6 +65,17 @@ public abstract class StatuePoseEditorListener implements ItemActionListener {
                 .key(LanguageKeys.STATUE_TOOLS_CHANGE_AXIS)
                 .parsed("axis", axis)
                 .build().send(context.player());
+
+        var key = switch (mode) {
+            case AXIS_X -> LanguageKeys.ITEM_STATUE_EDITOR_LORE_X;
+            case AXIS_Y -> LanguageKeys.ITEM_STATUE_EDITOR_LORE_Y;
+            case AXIS_Z -> LanguageKeys.ITEM_STATUE_EDITOR_LORE_Z;
+            default -> throw new IllegalStateException("Unexpected value: " + mode);
+        };
+
+        item.lore(context.plugin().languageManager().message()
+                .key(key)
+                .build().lines(context.player()));
     }
 
 }

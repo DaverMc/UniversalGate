@@ -30,17 +30,6 @@ public class StatueAttributes {
         if(stand.isCustomNameVisible()) this.name = stand.customName();
     }
 
-    void apply(ArmorStand stand) {
-        stand.setSmall(this.small);
-        stand.setBasePlate(this.basePlate);
-        stand.setVisible(this.visible);
-        stand.setArms(this.arms);
-        stand.setGlowing(this.glowing);
-        if(name == null) return;
-        stand.setCustomNameVisible(true);
-        stand.customName(this.name);
-    }
-
     public boolean isSmall() {
         return this.small;
     }
@@ -97,6 +86,17 @@ public class StatueAttributes {
     public void update() {
         var stand = this.statue.getEntity();
         if(stand == null) return;
-        apply(stand);
+        update(stand);
+    }
+
+    void update(ArmorStand stand) {
+        stand.setSmall(this.small);
+        stand.setBasePlate(this.basePlate);
+        stand.setVisible(this.visible);
+        stand.setArms(this.arms);
+        stand.setGlowing(this.glowing);
+        if(name == null) return;
+        stand.setCustomNameVisible(true);
+        stand.customName(this.name);
     }
 }

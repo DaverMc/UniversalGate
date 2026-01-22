@@ -30,15 +30,7 @@ public class StatueEquipment {
         this.offHand = equip.getItemInOffHand();
     }
 
-    void apply(ArmorStand stand) {
-        var entityEquip = stand.getEquipment();
-        entityEquip.setHelmet(this.helmet, true);
-        entityEquip.setChestplate(this.chestPlate, true);
-        entityEquip.setLeggings(this.leggings, true);
-        entityEquip.setBoots(this.boots, true);
-        entityEquip.setItemInMainHand(this.mainHand, true);
-        entityEquip.setItemInOffHand(this.offHand, true);
-    }
+
 
     public ItemStack mainHand() {
         return this.mainHand;
@@ -89,9 +81,19 @@ public class StatueEquipment {
         this.boots = item;
     }
 
-    public void show() {
+    public void update() {
         ArmorStand stand = statue.getEntity();
         if (stand == null) return;
-        apply(stand);
+        update(stand);
+    }
+
+    void update(ArmorStand stand) {
+        var entityEquip = stand.getEquipment();
+        entityEquip.setHelmet(this.helmet, true);
+        entityEquip.setChestplate(this.chestPlate, true);
+        entityEquip.setLeggings(this.leggings, true);
+        entityEquip.setBoots(this.boots, true);
+        entityEquip.setItemInMainHand(this.mainHand, true);
+        entityEquip.setItemInOffHand(this.offHand, true);
     }
 }

@@ -69,7 +69,7 @@ public class StatueInventoryGui implements InventoryHolder {
         equip.setBoots(boots);
         equip.setMainHand(mainHand);
         equip.setOffHand(offHand);
-        equip.show();
+        equip.update();
     }
 
     @Override

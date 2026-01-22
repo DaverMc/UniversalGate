@@ -1,17 +1,19 @@
 package de.daver.unigate.statue;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Location;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.util.EulerAngle;
 
-import java.util.function.Consumer;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.UUID;
 
 public class Statue {
 
-    private final ArmorStand stand;
+    private final UUID entityId;
+    private final String worldName;
+
     private final StatuePose headPose;
     private final StatuePose bodyPose;
     private final StatuePose leftArmPose;
@@ -23,7 +25,8 @@ public class Statue {
     private final StatueAttributes attributes;
 
     public Statue(ArmorStand stand) {
-        this.stand = stand;
+        this.entityId = stand.getUniqueId();
+        this.worldName = stand.getWorld().getName();
         stand.setGravity(false);
         stand.setInvulnerable(true);
         stand.setDisabledSlots(EquipmentSlot.values());
@@ -34,11 +37,9 @@ public class Statue {
         this.rightArmPose = new StatuePose(this, new PoseBridges.RightArm());
         this.leftLegPose = new StatuePose(this, new PoseBridges.LeftLeg());
         this.rightLegPose = new StatuePose(this, new PoseBridges.RightLeg());
-        this.position = new StatuePosition(stand);
+        this.position = new StatuePosition(this);
         this.equipment = new StatueEquipment(this);
         this.attributes = new StatueAttributes(this);
-
-
     }
 
     public StatuePose head() {
@@ -78,95 +79,106 @@ public class Statue {
     }
 
     public ArmorStand getEntity() {
-        var stand = this.stand;
+        var world = Bukkit.getWorld(this.worldName);
+        if(world == null) return null;
+        var entity = world.getEntity(this.entityId);
+        if(!(entity instanceof ArmorStand stand)) return null;
         if(!stand.isValid()) return null;
-        return this.stand;
+        return stand;
     }
 
     public void delete() {
+        var stand = getEntity();
+        if(stand == null) return;
         stand.remove();
     }
 
     public void copyAttributes(Statue other) {
-        var target = other.stand;
+        var otherAttributes = other.attributes();
+        otherAttributes.setArms(attributes.hasArms());
+        otherAttributes.setBasePlate(attributes.hasBasePlate());
+        otherAttributes.setGlowing(attributes.isGlowing());
+        otherAttributes.setSmall(attributes.isSmall());
+        otherAttributes.setVisible(attributes.isVisible());
+        otherAttributes.setName(attributes.name());
 
-        target.setGravity(stand.hasGravity());
-        target.setArms(stand.hasArms());
-        target.setBasePlate(stand.hasBasePlate());
-        target.setSmall(stand.isSmall());
-        target.setVisible(stand.isVisible());
-        target.setGlowing(stand.isGlowing());
-        target.customName(stand.customName());
-        target.setCustomNameVisible(stand.isCustomNameVisible());
+        var otherEquipment = other.equipment();
+        otherEquipment.setBoots(equipment.boots());
+        otherEquipment.setChestPlate(equipment.chestPlate());
+        otherEquipment.setHelmet(equipment.helmet());
+        otherEquipment.setLeggings(equipment.leggings());
+        otherEquipment.setMainHand(equipment.mainHand());
+        otherEquipment.setOffHand(equipment.offHand());
 
-        target.setHeadPose(stand.getHeadPose());
-        target.setBodyPose(stand.getBodyPose());
-        target.setLeftArmPose(stand.getLeftArmPose());
-        target.setRightArmPose(stand.getRightArmPose());
-        target.setLeftLegPose(stand.getLeftLegPose());
-        target.setRightLegPose(stand.getRightLegPose());
+        other.position().set(position());
+        other.head().set(head());
+        other.body().set(body());
+        other.leftArm().set(leftArm());
+        other.rightArm().set(rightArm());
+        other.leftLeg().set(leftLeg());
+        other.rightLeg().set(rightLeg());
 
-        target.getEquipment().setHelmet(stand.getEquipment().getHelmet());
-        target.getEquipment().setChestplate(stand.getEquipment().getChestplate());
-        target.getEquipment().setLeggings(stand.getEquipment().getLeggings());
-        target.getEquipment().setBoots(stand.getEquipment().getBoots());
-        target.getEquipment().setItemInMainHand(stand.getEquipment().getItemInMainHand());
-        target.getEquipment().setItemInOffHand(stand.getEquipment().getItemInOffHand());
+        other.update();
     }
 
-    public boolean small() {
-        return stand.isSmall();
+    public void update() {
+        var entity = getEntity();
+        if(entity == null) return;
+        position.update(entity);
+        equipment.update(entity);
+        attributes.update(entity);
+
+        headPose.update(entity);
+        bodyPose.update(entity);
+        leftArmPose.update(entity);
+        rightArmPose.update(entity);
+        leftLegPose.update(entity);
+        rightLegPose.update(entity);
     }
 
-    public boolean visible() {
-        return stand.isVisible();
+    public void parseToFile(Path path) throws IOException {
+        if (path.getParent() != null) Files.createDirectories(path.getParent());
+        Files.writeString(path, parsePose());
     }
 
-    public boolean glowing() {
-        return stand.isGlowing();
+    public void loadFromFile(Path path) throws IOException {
+        var pose = Files.readString(path);
+        unparsePose(pose);
     }
 
-    public boolean arms() {
-        return stand.hasArms();
+    public void unparsePose(String parsed) {
+        var values = parsed.split(";");
+
+        int i = 0;
+        i = unparsePose(headPose, i, values);
+        i = unparsePose(bodyPose, i, values);
+        i = unparsePose(leftArmPose, i, values);
+        i = unparsePose(rightArmPose, i, values);
+        i = unparsePose(leftLegPose, i, values);
+        i = unparsePose(rightLegPose, i, values);
+
+        update();
     }
 
-    public boolean basePlate() {
-        return stand.hasBasePlate();
+    private int unparsePose(StatuePose pose, int startIndex, String[] values) {
+        double x = Double.parseDouble(values[startIndex]);
+        double y = Double.parseDouble(values[startIndex + 1]);
+        double z = Double.parseDouble(values[startIndex + 2]);
+        pose.set(new StatuePose(this, x, y, z));
+        return startIndex + 3;
     }
 
-    public boolean gravity() {
-        return stand.hasGravity();
+    public String parsePose() {
+        return String.join("",
+                parsePose(headPose),
+                parsePose(bodyPose),
+                parsePose(leftArmPose),
+                parsePose(rightArmPose),
+                parsePose(leftLegPose),
+                parsePose(rightLegPose));
     }
 
-    public boolean nameVisible() {
-        return stand.isCustomNameVisible();
-    }
-
-    public void small(boolean small) {
-        stand.setSmall(small);
-    }
-
-    public void visible(boolean visible) {
-        stand.setVisible(visible);
-    }
-
-    public void glowing(boolean glowing) {
-        stand.setGlowing(glowing);
-    }
-
-    public void arms(boolean arms) {
-        stand.setArms(arms);
-    }
-
-    public void basePlate(boolean basePlate) {
-        stand.setBasePlate(basePlate);
-    }
-
-    public void gravity(boolean gravity) {
-        stand.setGravity(gravity);
-    }
-
-    public void nameVisible(boolean visible) {
-        stand.setCustomNameVisible(visible);
+    private String parsePose(StatuePose pose) {
+        return pose.x() + ";" + pose.y() + ";" + pose.z() + ";";
     }
 }
