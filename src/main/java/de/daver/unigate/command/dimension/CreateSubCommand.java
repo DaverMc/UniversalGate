@@ -22,31 +22,25 @@ class CreateSubCommand extends LiteralNode {
         super("create");
         permission(Permissions.DIMENSION_CREATE);
         then(new CategoryArgument("category"))
-                .executor(this::createDimension)
                 .then(new WordArgument("name"))
-                .executor(this::createDimensionById)
+                .executor(this::createDimension)
                 .then(new EnumArgument<>("type", DimensionType.class))
                 .executor(this::createCustomDimension);
-    }
-
-    private void createDimensionById(PluginContext context) throws CommandSyntaxException {
-        var id = context.getArgument("name", String.class);
-        createDimension(id, DimensionType.VOID, context);
     }
 
     private void createDimension(PluginContext context) throws CommandSyntaxException {
         Category category = context.getArgument("category", Category.class);
         String theme = context.getArgument("name", String.class);
-        var id = Dimension.buildName(category, theme);
-        createDimension(id, DimensionType.VOID, context);
+        var name = Dimension.buildName(category, theme);
+        createDimension(name, DimensionType.VOID, context);
     }
 
     private void createCustomDimension(PluginContext context) throws CommandSyntaxException {
         Category category = context.getArgument("category", Category.class);
         String theme = context.getArgument("name", String.class);
         DimensionType type = context.getArgument("type", DimensionType.class);
-        var id = Dimension.buildName(category, theme);
-        createDimension(id, type, context);
+        var name = Dimension.buildName(category, theme);
+        createDimension(name, type, context);
     }
 
     private void createDimension(String name, DimensionType type, PluginContext context) throws CommandSyntaxException {

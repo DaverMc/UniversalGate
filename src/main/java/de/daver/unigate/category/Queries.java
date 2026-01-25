@@ -21,9 +21,6 @@ interface Queries {
             .addStringArgument()
             .addStringArgument();
 
-    SQLStatement SELECT_CATEGORY = new SQLStatement("SELECT * FROM categories WHERE id = ?")
-            .addConverted(UUID.class, SQLDataType.STRING, UUID::toString);
-
     SQLStatement DELETE_CATEGORY = new SQLStatement("DELETE FROM categories WHERE id = ?")
             .addConverted(UUID.class, SQLDataType.STRING, UUID::toString);
 

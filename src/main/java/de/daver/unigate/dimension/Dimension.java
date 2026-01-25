@@ -105,7 +105,8 @@ public class Dimension {
 
     public static String buildName(Category category, String theme) {
         if(!theme.matches("[a-zA-Z0-9_]+")) throw new IllegalArgumentException("Theme contains illegal characters! Please only use a-Z, 0-9, _");
-        return category.id() + SEPARATOR + theme;
+        if(category.prefix() == null || category.prefix().isBlank()) return theme;
+        return category.prefix() + SEPARATOR + theme;
     }
 
     public void delete() throws IOException {
@@ -122,7 +123,7 @@ public class Dimension {
     public void unload(boolean save) {
         if(meta.state() != DimensionState.LOADED) return;
         var bukkitWorld = Bukkit.getWorld(name);
-        if(bukkitWorld != DimensionCache.getServerMainWorld()) return;
+        if(bukkitWorld == DimensionCache.getServerMainWorld()) return;
         bukkitWorld.getPlayers().forEach(this::kick);
         Bukkit.unloadWorld(name, save);
         meta.state(DimensionState.ACTIVE);

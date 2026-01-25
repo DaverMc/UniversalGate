@@ -36,7 +36,7 @@ public class CategoryCache {
     }
 
     public void put(Category category) throws SQLException {
-        plugin.sqlExecutor().execute(Queries.INSERT_CATEGORY, category.id(), category.name());
+        plugin.sqlExecutor().execute(Queries.INSERT_CATEGORY, category.id(), category.name(), category.prefix());
         cache.put(category.id(), category);
     }
 
