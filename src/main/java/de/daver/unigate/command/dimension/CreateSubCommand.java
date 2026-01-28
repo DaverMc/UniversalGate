@@ -26,6 +26,7 @@ class CreateSubCommand extends LiteralNode {
                 .executor(this::createDimension)
                 .then(new EnumArgument<>("type", DimensionType.class))
                 .executor(this::createCustomDimension);
+
     }
 
     private void createDimension(PluginContext context) throws CommandSyntaxException {

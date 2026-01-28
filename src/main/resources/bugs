@@ -31,6 +31,8 @@
 + Armorstand Clone Armorstand fliegt irgendwo hin
 + Languagesystem falls Sprache nicht vorhanden ist wirds nicht auf default umgeleitet
 In der Dimension List sieht man nicht welche maps aktuell geladen sind
+Wenn ich eine zwei große Pflanze platziere geht immer der untere teil kaputt
+Von Kategorie Prefix zu Kategorie Namen parsen für z.B. dimension info
 Wenn das erstellen fehlschlägt, Dateien, oder Datenbankeinträge löschen
 (Message Channels)
 (Portalblöcke in Custom Items)
