@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Set;
 import java.util.zip.GZIPOutputStream;
 
 public class FileUtils {
@@ -50,20 +51,20 @@ public class FileUtils {
         }
 
         @Override
-        public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+        public @NonNull FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
             Path targetDir = target.resolve(source.relativize(dir));
             Files.createDirectories(targetDir);
             return FileVisitResult.CONTINUE;
         }
 
         @Override
-        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+        public @NonNull FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
             Files.copy(file, target.resolve(source.relativize(file)), StandardCopyOption.REPLACE_EXISTING);
             return FileVisitResult.CONTINUE;
         }
     }
 
-    public static void compressDirectory(Path source, Path target) throws IOException {
+    public static void compressDirectory(Path source, Path target, Set<Path> allowedEntries) throws IOException {
         // Erstelle Zielordner falls nötig
         if (target.getParent() != null) Files.createDirectories(target.getParent());
 
@@ -74,7 +75,7 @@ public class FileUtils {
 
             tOut.setLongFileMode(TarArchiveOutputStream.LONGFILE_GNU);
 
-            Files.walkFileTree(source, new CompressVisitor(source, tOut));
+            Files.walkFileTree(source, new CompressVisitor(source, tOut, allowedEntries));
 
             tOut.finish();
         }
@@ -83,23 +84,36 @@ public class FileUtils {
     public static class CompressVisitor extends SimpleFileVisitor<Path> {
         private final Path source;
         private final TarArchiveOutputStream tarOut;
+        private final Set<Path> allowedEntries;
 
-        public CompressVisitor(Path source, TarArchiveOutputStream tarOut) {
+        public CompressVisitor(Path source, TarArchiveOutputStream tarOut, Set<Path> allowedEntries) {
             this.source = source;
             this.tarOut = tarOut;
+            this.allowedEntries = allowedEntries;
         }
 
         @Override
-        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-            // Relativer Pfad für den Eintrag im Archiv (z.B. "world/level.dat")
-            String entryName = source.relativize(file).toString();
-            TarArchiveEntry entry = new TarArchiveEntry(file.toFile(), entryName);
+        public @NonNull FileVisitResult visitFile(@NonNull Path path, @NonNull BasicFileAttributes attrs) throws IOException {
+            Path relativized = source.relativize(path);
+            if(!isAllowed(relativized)) return FileVisitResult.CONTINUE;
+            String entryName = relativized.toString();
+            TarArchiveEntry entry = new TarArchiveEntry(path.toFile(), entryName);
 
             tarOut.putArchiveEntry(entry);
-            Files.copy(file, tarOut); // Schreibt den Dateiinhalt in das Archiv
+            Files.copy(path, tarOut);
             tarOut.closeArchiveEntry();
 
             return FileVisitResult.CONTINUE;
+        }
+
+        private boolean isAllowed(Path path) {
+            if(allowedEntries.isEmpty()) return true;
+
+            for(var entry : allowedEntries) {
+                if(path.startsWith(entry)) return true;
+            }
+
+            return false;
         }
     }
 

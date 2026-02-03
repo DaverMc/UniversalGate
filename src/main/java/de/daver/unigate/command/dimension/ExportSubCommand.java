@@ -9,12 +9,22 @@ import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.core.command.argument.WordArgument;
 import de.daver.unigate.core.util.FileUtils;
+import de.daver.unigate.core.util.PathUtil;
 import de.daver.unigate.dimension.Dimension;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.sql.SQLException;
+import java.util.Set;
 
 public class ExportSubCommand extends LiteralNode {
+
+
+    private static final Set<Path> allowedEntries = Set.of(PathUtil.paths(
+            "level.dat",
+            "region",
+            "entities"
+            ));
 
     protected ExportSubCommand() {
         super("export");
@@ -41,7 +51,7 @@ public class ExportSubCommand extends LiteralNode {
         var target = context.plugin().exportDir().resolve(dimension.name() + "_" + tag + ".tar.gz");
 
         try {
-            FileUtils.compressDirectory(source, target);
+            FileUtils.compressDirectory(source, target, allowedEntries);
         } catch (IOException exception) {
             context.plugin().logger().error("Could not export dimension {}", dimension.name(), exception);
             throw CommandExceptions.FILE_EXCEPTION.create();
