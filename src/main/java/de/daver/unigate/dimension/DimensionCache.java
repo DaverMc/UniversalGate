@@ -116,7 +116,7 @@ public class DimensionCache {
         var dimension = plugin.sqlExecutor().query(Queries.SELECT_ARCHIVED_DIMENSION, Queries.DIMENSION_TRANSFORMER, name);
         if(dimension == null) return false;
 
-        var allowedUsers = plugin.sqlExecutor().query(Queries.SELECT_ALLOWED, ResultTransformer.asSet(Queries.ALLOWED_TRANSFORMER), name);
+        var allowedUsers = plugin.sqlExecutor().query(Queries.SELECT_ALLOWED, ResultTransformer.asSet(Queries.ALLOWED_TRANSFORMER), dimension.id());
         dimension.meta().allowedPlayers().addAll(allowedUsers);
         active.put(dimension.id(), dimension);
         archived.remove(dimension.name());

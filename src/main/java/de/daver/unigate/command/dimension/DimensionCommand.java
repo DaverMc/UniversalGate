@@ -7,7 +7,7 @@ import de.daver.unigate.core.command.PluginContext;
 public class DimensionCommand extends LiteralNode {
 
     public DimensionCommand() {
-        super("dimension");
+        super("dimension", "world", "welt");
         executor(this::showSubCommands);
         then(new CreateSubCommand());
         then(new DeleteSubCommand());

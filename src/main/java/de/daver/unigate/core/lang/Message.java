@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 public interface Message {
 
@@ -64,6 +65,10 @@ public interface Message {
 
         default Builder component(String key, ComponentLike component) {
             return tagResolver(TagResolver.resolver(Placeholder.component(key, component)));
+        }
+
+        default <T extends Enum<T>> Builder entry(String key, T value, Function<T, Component> serializer) {
+            return component(key, serializer.apply(value));
         }
 
     }

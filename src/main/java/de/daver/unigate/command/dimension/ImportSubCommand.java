@@ -30,7 +30,7 @@ public class ImportSubCommand extends LiteralNode {
                 .then(new CategoryArgument("category"))
                 .then(new WordArgument("theme"))
                 .executor(this::importDimension)
-                .then(new EnumArgument<>("action", DimensionType.class))
+                .then(new EnumArgument<>("type", DimensionType.class))
                 .executor(this::importDimensionCustom);
     }
 
@@ -39,7 +39,7 @@ public class ImportSubCommand extends LiteralNode {
     }
 
     void importDimensionCustom(PluginContext context) throws CommandSyntaxException{
-        var type = context.getArgument("action", DimensionType.class);
+        var type = context.getArgument("type", DimensionType.class);
         importDimension(context, type);
     }
 
