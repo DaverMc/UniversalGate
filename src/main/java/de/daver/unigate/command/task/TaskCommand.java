@@ -5,7 +5,7 @@ import de.daver.unigate.core.command.LiteralNode;
 public class TaskCommand extends LiteralNode {
 
     public TaskCommand() {
-        super("task");
+        super("task", "Access the Task system");
         then(new ListSubCommand());
         then(new InfoSubCommand());
         then(new AcceptSubCommand());

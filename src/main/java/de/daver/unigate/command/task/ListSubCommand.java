@@ -14,7 +14,7 @@ import java.util.Collection;
 public class ListSubCommand extends LiteralNode {
 
     protected ListSubCommand() {
-        super("list");
+        super("list", "Lists all tasks");
         permission(Permissions.TASK_LIST);
         executor(this::listTasks);
         then(new EnumArgument<>("state", TaskState.class))

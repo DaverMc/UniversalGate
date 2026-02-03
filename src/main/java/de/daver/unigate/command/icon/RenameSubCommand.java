@@ -1,4 +1,4 @@
-package de.daver.unigate.command.item;
+package de.daver.unigate.command.icon;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
@@ -14,7 +14,7 @@ import org.bukkit.Material;
 public class RenameSubCommand extends LiteralNode {
 
     protected RenameSubCommand() {
-        super("rename");
+        super("rename", "Renames the Icon in your Main Hand");
         permission(Permissions.COMMAND_ICON_RENAME);
         then(new TextArgument("name"))
                 .executor(this::renameItem);

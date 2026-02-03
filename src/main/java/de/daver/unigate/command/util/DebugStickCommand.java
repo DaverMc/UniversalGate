@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 public class DebugStickCommand extends LiteralNode {
 
     public DebugStickCommand() {
-        super("debugstick");
+        super("debugstick", "Gives you a debug stick", "ds");
         permission(Permissions.COMMAND_DEBUG_STICK);
         executor(this::giveDebugStick);
     }

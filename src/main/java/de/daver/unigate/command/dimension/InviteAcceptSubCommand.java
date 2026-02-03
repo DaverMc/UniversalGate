@@ -10,7 +10,7 @@ import de.daver.unigate.listener.WorldSwitchListener;
 public class InviteAcceptSubCommand extends LiteralNode {
 
     protected InviteAcceptSubCommand() {
-        super("accept");
+        super("accept", "Accepts a Dimension Invite");
         permission(Permissions.DIMENSION_INVITE_ACCEPT);
         executor(this::accept);
     }

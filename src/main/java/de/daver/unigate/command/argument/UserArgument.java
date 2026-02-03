@@ -1,6 +1,5 @@
 package de.daver.unigate.command.argument;
 
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.core.command.ArgumentNode;
 import de.daver.unigate.core.command.SuggestionProvider;
 import de.daver.unigate.core.command.argument.StringArgumentType;
@@ -29,7 +28,7 @@ public class UserArgument extends ArgumentNode<UUID> {
         }
 
         @Override
-        protected UUID deserialize(String value) throws CommandSyntaxException {
+        protected UUID deserialize(String value) {
             var player = Bukkit.getPlayer(value);
             if(player != null) return player.getUniqueId();
             return PlayerFetcher.getPlayerUUID(value);

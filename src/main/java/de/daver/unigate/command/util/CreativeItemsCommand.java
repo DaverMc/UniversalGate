@@ -18,7 +18,7 @@ import org.bukkit.inventory.meta.BlockDataMeta;
 public class CreativeItemsCommand extends LiteralNode {
 
     public CreativeItemsCommand() {
-        super("creativeitems");
+        super("creativeitems", "Opens the Creative Items inventory", "citems");
         permission(Permissions.COMMAND_CREATIVE_ITEMS);
         executor(this::openCreativeItemsInv);
     }

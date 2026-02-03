@@ -11,7 +11,7 @@ import de.daver.unigate.core.command.argument.NumberArgument;
 public class SpeedCommand extends LiteralNode {
 
     public SpeedCommand() {
-        super("speed");
+        super("speed", "Sets the speed of the player from 1-10");
         permission(Permissions.COMMAND_SPEED);
         executor(this::resetSpeed);
         then(new NumberArgument<>("speed", IntegerArgumentType.integer(1, 10), Integer.class))

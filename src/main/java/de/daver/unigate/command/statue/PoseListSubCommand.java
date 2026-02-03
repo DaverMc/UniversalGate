@@ -11,7 +11,7 @@ import java.nio.file.Path;
 public class PoseListSubCommand extends LiteralNode {
 
     protected PoseListSubCommand() {
-        super("list");
+        super("list", "Lists all available poses");
         executor(this::listFileNames);
     }
 

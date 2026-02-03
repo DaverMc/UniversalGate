@@ -5,7 +5,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import de.daver.unigate.category.CategoryCache;
 import de.daver.unigate.command.category.CategoryCommand;
 import de.daver.unigate.command.dimension.DimensionCommand;
-import de.daver.unigate.command.item.ItemCommand;
+import de.daver.unigate.command.icon.IconCommand;
 import de.daver.unigate.command.lang.LanguageCommand;
 import de.daver.unigate.command.statue.StatueCommand;
 import de.daver.unigate.command.task.TaskCommand;
@@ -81,18 +81,18 @@ public class UniversalGatePlugin extends JavaPlugin {
 
     private void registerCommands() {
         getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, lifecycleEvent -> {
-            var dispatcher = lifecycleEvent.registrar().getDispatcher();
-            dispatcher.register(new DimensionCommand().build());
-            dispatcher.register(new CategoryCommand().build());
-            dispatcher.register(new LanguageCommand().build());
-            dispatcher.register(new SpeedCommand().build());
-            dispatcher.register(new CreativeItemsCommand().build());
-            dispatcher.register(new DebugStickCommand().build());
-            dispatcher.register(new NightVisionCommand().build());
-            dispatcher.register(new TaskCommand().build());
-            dispatcher.register(new HubCommand().build());
-            dispatcher.register(new StatueCommand().build());
-            dispatcher.register(new ItemCommand().build());
+            var registry = lifecycleEvent.registrar();
+            new DimensionCommand().register(registry);
+            new CategoryCommand().register(registry);
+            new LanguageCommand().register(registry);
+            new SpeedCommand().register(registry);
+            new CreativeItemsCommand().register(registry);
+            new DebugStickCommand().register(registry);
+            new NightVisionCommand().register(registry);
+            new TaskCommand().register(registry);
+            new HubCommand().register(registry);
+            new StatueCommand().register(registry);
+            new IconCommand().register(registry);
         });
     }
 

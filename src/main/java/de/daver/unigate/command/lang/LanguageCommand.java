@@ -5,7 +5,7 @@ import de.daver.unigate.core.command.LiteralNode;
 public class LanguageCommand extends LiteralNode {
 
     public LanguageCommand() {
-        super("language");
+        super("language", "Access the Language system", "lang");
         then(new ReloadSubCommand());
     }
 }

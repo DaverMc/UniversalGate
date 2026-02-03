@@ -1,7 +1,5 @@
 package de.daver.unigate.core.command;
 
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
-
 public class CompoundExcecutor implements Executor {
 
     private final Executor[] executors;
@@ -15,7 +13,7 @@ public class CompoundExcecutor implements Executor {
     }
 
     @Override
-    public void execute(PluginContext context) throws CommandSyntaxException {
+    public void execute(PluginContext context) throws Exception {
         for(Executor executor : executors) if(executor != null) executor.execute(context);
     }
 }

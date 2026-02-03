@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 public class HubCommand extends LiteralNode {
 
     public HubCommand() {
-        super("hub");
+        super("hub", "Teleports you to the server's hub");
         executor(this::teleportToHub);
     }
 

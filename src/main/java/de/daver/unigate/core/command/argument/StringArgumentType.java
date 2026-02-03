@@ -35,7 +35,7 @@ public abstract class StringArgumentType<T> implements CustomArgumentType.Conver
         return this.type;
     }
 
-    protected abstract T deserialize(String value) throws CommandSyntaxException;
+    protected abstract T deserialize(String value);
 
     public abstract static class Word<T> extends StringArgumentType<T> {
 

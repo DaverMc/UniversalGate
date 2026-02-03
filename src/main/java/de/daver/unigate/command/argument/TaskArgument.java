@@ -1,9 +1,7 @@
 package de.daver.unigate.command.argument;
 
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.core.command.ArgumentNode;
-import de.daver.unigate.core.command.CommandExceptions;
 import de.daver.unigate.core.command.SuggestionProvider;
 import de.daver.unigate.core.command.argument.StringArgumentType;
 import de.daver.unigate.task.Task;
@@ -38,10 +36,8 @@ public class TaskArgument extends ArgumentNode<Task> {
         }
 
         @Override
-        protected Task deserialize(String value) throws CommandSyntaxException {
-            var task = UniversalGatePlugin.getInstance().taskCache().get(value);
-            if(task != null) return task;
-            throw CommandExceptions.VALUE_NOT_EXISTING.create(value);
+        protected Task deserialize(String value) {
+            return UniversalGatePlugin.getInstance().taskCache().get(value);
         }
 
         @Override

@@ -8,7 +8,7 @@ import de.daver.unigate.core.command.PluginContext;
 public class ListSubCommand extends LiteralNode {
 
     protected ListSubCommand() {
-        super("list");
+        super("list", "Lists all categories");
         permission(Permissions.CATEGORY_LIST);
         executor(this::listCategories);
     }

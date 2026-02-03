@@ -1,11 +1,9 @@
 package de.daver.unigate.command.dimension;
 
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.Permissions;
 import de.daver.unigate.category.Category;
 import de.daver.unigate.command.argument.CategoryArgument;
-import de.daver.unigate.core.command.CommandExceptions;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.core.command.argument.EnumArgument;
@@ -15,15 +13,15 @@ import de.daver.unigate.dimension.Dimension;
 import de.daver.unigate.dimension.DimensionType;
 
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.SQLException;
 import java.util.stream.Stream;
 
 public class ImportSubCommand extends LiteralNode {
 
     public ImportSubCommand() {
-        super("import");
+        super("import", "Imports a Dimension from a file");
         permission(Permissions.DIMENSION_IMPORT);
         then(new WordArgument("file"))
                 .suggestions(this::files)
@@ -34,16 +32,16 @@ public class ImportSubCommand extends LiteralNode {
                 .executor(this::importDimensionCustom);
     }
 
-    void importDimension(PluginContext context) throws CommandSyntaxException{
+    void importDimension(PluginContext context) throws Exception{
         importDimension(context, DimensionType.VOID);
     }
 
-    void importDimensionCustom(PluginContext context) throws CommandSyntaxException{
+    void importDimensionCustom(PluginContext context) throws Exception{
         var type = context.getArgument("type", DimensionType.class);
         importDimension(context, type);
     }
 
-    void importDimension(PluginContext context, DimensionType type) throws CommandSyntaxException {
+    void importDimension(PluginContext context, DimensionType type) throws Exception {
         String file = context.getArgument("file", String.class);
         Category category = context.getArgument("category", Category.class);
         String theme = context.getArgument("theme", String.class);
@@ -53,29 +51,20 @@ public class ImportSubCommand extends LiteralNode {
 
         var worldContainer = context.plugin().getServer().getWorldContainer().toPath();
         var newDir = worldContainer.resolve(Dimension.buildName(category, theme));
-        if(Files.exists(newDir)) throw CommandExceptions.VALUE_EXISTING.create(id);
+        if(Files.exists(newDir))
+            throw new FileAlreadyExistsException(id);
 
-        try {
-            var source = context.plugin().importDir().resolve(file);
-            FileUtils.copyContents(source, newDir);
-            var dimension = new Dimension(category, theme, type ,creator.getUniqueId());
-            dimension.create();
-            context.plugin().dimensionCache().insert(dimension);
-            context.plugin().languageManager().message()
-                    .key(LanguageKeys.DIMENSION_IMPORT_SUCCESS)
-                    .parsed("dimension", dimension.name())
-                    .parsed("source", file)
-                    .build().send(context.sender());
-        } catch (IOException exception) {
-            context.plugin().logger().error("Could not import dimension {}", id, exception);
-            throw CommandExceptions.FILE_EXCEPTION.create();
-        } catch (SQLException exception) {
-            context.plugin().logger().error("Could not insert dimension {}", id, exception);
-            throw CommandExceptions.DATABASE_EXCEPTION.create();
-        }
-
+        var source = context.plugin().importDir().resolve(file);
+        FileUtils.copyContents(source, newDir);
+        var dimension = new Dimension(category, theme, type ,creator.getUniqueId());
+        dimension.create();
+        context.plugin().dimensionCache().insert(dimension);
+        context.plugin().languageManager().message()
+                .key(LanguageKeys.DIMENSION_IMPORT_SUCCESS)
+                .parsed("dimension", dimension.name())
+                .parsed("source", file)
+                .build().send(context.sender());
     }
-
 
 
     Stream<String> files(PluginContext context) {

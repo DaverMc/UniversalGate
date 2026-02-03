@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 public class InfoSubCommand extends LiteralNode {
 
     protected InfoSubCommand() {
-        super("info");
+        super("info", "Shows information about a Dimension");
         permission(Permissions.DIMENSION_INFO);
         var dimension = new DimensionArgument("dimension");
         executor(this::showLocalInfo);

@@ -13,7 +13,7 @@ import org.bukkit.potion.PotionEffectType;
 public class NightVisionCommand extends LiteralNode {
 
     public NightVisionCommand() {
-        super("nightvision");
+        super("nightvision", "Toggles Night Vision", "nv", "vision", "gamma");
         permission(Permissions.COMMAND_NIGHT_VISION);
         executor(this::toggleVision);
     }

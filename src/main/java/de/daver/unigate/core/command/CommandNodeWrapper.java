@@ -2,26 +2,30 @@ package de.daver.unigate.core.command;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.LiteralMessage;
-import com.mojang.brigadier.Message;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class CommandNodeWrapper<BUILDER extends ArgumentBuilder<CommandSourceStack, BUILDER>,
-        SELF extends CommandNodeWrapper<BUILDER, SELF>> {
+        SELF extends CommandNodeWrapper<BUILDER, SELF>>  {
 
+    private static final DynamicCommandExceptionType EXCEPTION = new DynamicCommandExceptionType(s -> new LiteralMessage("Error: " + s));
+
+    protected final String name;
     protected final Collection<CommandNodeWrapper<?, ?>> children;
     protected final BUILDER builder;
 
     protected Executor executor = null;
 
-    protected CommandNodeWrapper(BUILDER builder) {
-        this.builder = builder;
+    protected CommandNodeWrapper(String name, Function<String, BUILDER> builder) {
+        this.name = name;
+        this.builder = builder.apply(name);
         this.children = new ArrayList<>();
     }
 
@@ -50,7 +54,7 @@ public class CommandNodeWrapper<BUILDER extends ArgumentBuilder<CommandSourceSta
         return (SELF) this;
     }
 
-    public BUILDER build() {
+    public BUILDER builder() {
         buildExecutor();
         buildChildren();
         return builder;
@@ -59,27 +63,21 @@ public class CommandNodeWrapper<BUILDER extends ArgumentBuilder<CommandSourceSta
     private void buildExecutor() {
         if(executor == null) return;
         builder.executes(context -> {
+            PluginContext contextWrapper = PluginContext.wrap(context);
             try {
-                PluginContext contextWrapper = PluginContext.wrap(context);
                 executor.execute(contextWrapper);
             } catch (CommandSyntaxException e) {
                 throw e;
             } catch (Exception e) {
-                throw createCommandException(e);
+                contextWrapper.plugin().logger().error("Error while executing command", e);
+                throw EXCEPTION.create(e.getMessage());
             }
             return Command.SINGLE_SUCCESS;
         });
     }
 
-
-
-    private CommandSyntaxException createCommandException(Exception exception) {
-        Message errorMessage = new LiteralMessage("Internal command error: " + exception.getMessage());
-        return new CommandSyntaxException(new SimpleCommandExceptionType(errorMessage), errorMessage);
-    }
-
     private void buildChildren() {
-        children.forEach(c -> builder.then(c.build()));
+        children.forEach(c -> builder.then(c.builder()));
     }
 
 }

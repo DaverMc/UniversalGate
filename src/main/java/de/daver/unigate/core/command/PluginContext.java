@@ -1,7 +1,6 @@
 package de.daver.unigate.core.command;
 
 import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.UniversalGatePlugin;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.command.CommandSender;
@@ -18,14 +17,14 @@ public record PluginContext(UniversalGatePlugin plugin, CommandContext<CommandSo
         return brigadier.getSource().getSender();
     }
 
-    public Player senderPlayer() throws CommandSyntaxException {
+    public Player senderPlayer() {
         var sender = sender();
 
         if(sender instanceof Player player)  {
             return player;
-        } else {
-            throw CommandExceptions.NOT_A_PLAYER.create(sender.getName());
         }
+
+        throw new IllegalStateException("Sender is not a player!");
     }
 
     public Entity executor() {

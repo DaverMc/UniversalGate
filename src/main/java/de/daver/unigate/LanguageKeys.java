@@ -4,6 +4,8 @@ import de.daver.unigate.core.lang.LanguageKey;
 
 public enum LanguageKeys implements LanguageKey {
 
+    COMMAND_SUB_COMMAND_HEADER("command.sub-command.header", "name", "description"),
+    COMMAND_SUB_COMMAND_ENTRY("command.sub-command.entry", "name", "description"),
     DIMENSION_RENAMED("dimension.renamed", "old", "new"),
     DIMENSION_ACTIVATE("dimension.activate", "dimension"),
     DIMENSION_ARCHIVE("dimension.archive", "dimension"),
@@ -13,7 +15,6 @@ public enum LanguageKeys implements LanguageKey {
     STATUE_POSE_LIST_ENTRY("statue.pose.list.entry", "pose"),
     STATUE_POSE_LOAD_SUCCESS("statue.pose.load.success", "pose"),
     STATUE_POSE_SAVE_SUCCESS("statue.pose.save.success", "pose"),
-    STATUE_COMMAND_HELP("statue.command.help"),
     DIALOG_STATUE_SETTINGS_TITLE("dialog.statue.settings.title"),
     DIALOG_STATUE_SETTINGS_DISPLAY_NAME("dialog.statue.settings.display-name"),
     DIALOG_STATUE_SETTINGS_SMALL("dialog.statue.settings.small"),
@@ -57,7 +58,6 @@ public enum LanguageKeys implements LanguageKey {
     TASK_NO_EXECUTOR("task.no.executor", "task"),
     TASK_CANCEL_SUCCESS("task.cancel.success", "task"),
     TASK_NOT_IN_WORK("task.not.in.work", "task"),
-    TASK_NOT_OPEN("task.not.open", "task"),
     TASK_ACCEPT_SUCCESS("task.accept.success", "task"),
     TASK_APPROVE_SUCCESS("task.approve.success", "task"),
     TASK_DECLINE_CONFIRM( "task.decline.confirm", "task"),
@@ -103,7 +103,6 @@ public enum LanguageKeys implements LanguageKey {
     CATEGORY_LIST_ENTRY("category.list.entry", "category", "name"),
     CATEGORY_LIST_HEADER("category.list.header", "categories"),
     CATEGORY_DELETE_SUCCESS("category.delete.success", "category"),
-    CATEGORY_COMMAND_HELP("category.command.help"),
     CATEGORY_CREATE_SUCCESS("category.create.success", "category"),
     CHAT_FORMAT("chat.format", "prefix", "player", "suffix", "message"),
     EVENT_JOIN("event.join"),
@@ -114,7 +113,6 @@ public enum LanguageKeys implements LanguageKey {
     DIMENSION_CREATE_SUCCESS("dimension.create.success", "dimension", "action"),
     DIMENSION_DELETE_SUCCESS("dimension.delete.success", "dimension"),
     DIMENSION_DELETE_CONFIRM("dimension.delete.confirm", "dimension"),
-    DIMENSION_COMMAND_HELP("dimension.command.help"),
     SPEED_SET("speed.set", "speed"),
     DIMENSION_KICK_SUCCESS("dimension.kick.success", "target", "dimension");
 

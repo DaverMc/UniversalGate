@@ -11,16 +11,19 @@ public class ArgumentNode<T> extends CommandNodeWrapper<
         ArgumentNode<T>> {
 
     private final ArgumentSerializer<T> serializer;
-    private final String name;
     private final Class<T> typeClass;
     private SuggestionProvider<T> suggestionsProvider;
     private boolean suggestionsOnly;
 
     public ArgumentNode(String name, ArgumentType<T> type, ArgumentSerializer<T> serializer, Class<T> typeClass) {
-        super(RequiredArgumentBuilder.argument(name, type));
-        this.name = name;
+        super(name, n -> RequiredArgumentBuilder.argument(n, type));
         this.serializer = serializer;
         this.typeClass = typeClass;
+        executor(this::defaultExecutor);
+    }
+
+    void defaultExecutor(PluginContext context) throws Exception {
+        throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherUnknownCommand().create();
     }
 
     public ArgumentNode(String name, StringArgumentType<T> type) {
@@ -38,10 +41,10 @@ public class ArgumentNode<T> extends CommandNodeWrapper<
     }
 
     @Override
-    public RequiredArgumentBuilder<CommandSourceStack, T> build() {
+    public RequiredArgumentBuilder<CommandSourceStack, T> builder() {
         buildSuggestions();
         buildSuggestionsOnly();
-        return super.build();
+        return super.builder();
     }
 
 

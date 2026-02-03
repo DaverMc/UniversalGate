@@ -8,7 +8,7 @@ import de.daver.unigate.core.command.PluginContext;
 public class DeselectSubCommand extends LiteralNode {
 
     protected DeselectSubCommand() {
-        super("deselect");
+        super("deselect", "Deselects the currently selected Statue");
         executor(this::removeSelectedStatue);
     }
 

@@ -11,7 +11,7 @@ import de.daver.unigate.dimension.Dimension;
 class TeleportSubCommand extends LiteralNode {
 
     protected TeleportSubCommand() {
-        super("teleport");
+        super("teleport", "Teleports to a dimension");
         permission(Permissions.DIMENSION_TELEPORT);
         var dimensionArgument = then(new DimensionArgument("dimension"));
         dimensionArgument.executor(this::teleport);

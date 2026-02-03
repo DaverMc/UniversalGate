@@ -35,6 +35,7 @@ In der Dimension List sieht man nicht welche maps aktuell geladen sind
 Wenn ich eine zwei große Pflanze platziere geht immer der untere teil kaputt
 Von Kategorie Prefix zu Kategorie Namen parsen für z.B. dimension info
 Wenn das erstellen fehlschlägt, Dateien, oder Datenbankeinträge löschen
+Archivierte Welten sollen als .tar.gz in einem Ordner gespeichert werden sodass der WorldContainer cleaner ist
 (Message Channels)
 (Portalblöcke in Custom Items)
 (Feuer Item in Custom Items)

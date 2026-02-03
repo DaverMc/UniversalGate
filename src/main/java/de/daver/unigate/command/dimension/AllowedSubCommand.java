@@ -11,7 +11,7 @@ import de.daver.unigate.dimension.Dimension;
 public class AllowedSubCommand extends LiteralNode {
 
     protected AllowedSubCommand() {
-        super("allowed");
+        super("allowed", "Access the allowed list of a dimension");
         permission(Permissions.DIMENSION_ALLOWED);
         var dimensionArg = new DimensionArgument("dimension");
         then(dimensionArg).executor(this::listAllowed);

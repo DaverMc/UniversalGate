@@ -1,6 +1,5 @@
 package de.daver.unigate.core.command.argument;
 
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.core.command.ArgumentNode;
 import de.daver.unigate.core.command.SuggestionProvider;
 
@@ -33,7 +32,7 @@ public class ConfirmArgument extends ArgumentNode<Boolean> {
         }
 
         @Override
-        protected Boolean deserialize(String value) throws CommandSyntaxException {
+        protected Boolean deserialize(String value) {
             return value.equalsIgnoreCase(confirm);
         }
 

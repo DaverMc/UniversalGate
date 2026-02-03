@@ -12,7 +12,7 @@ import org.bukkit.entity.ArmorStand;
 public class CloneSubCommand extends LiteralNode {
 
     protected CloneSubCommand() {
-        super("clone");
+        super("clone", "Clones the selected statue");
         permission(Permissions.STATUE_CLONE);
         executor(this::cloneStatue);
     }

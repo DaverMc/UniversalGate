@@ -1,6 +1,5 @@
 package de.daver.unigate.core.command.argument;
 
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.core.command.ArgumentNode;
 import de.daver.unigate.core.command.SuggestionProvider;
 
@@ -23,7 +22,7 @@ public class EnumArgument<E extends Enum<E>> extends ArgumentNode<E> {
         }
 
         @Override
-        protected E deserialize(String value) throws CommandSyntaxException {
+        protected E deserialize(String value) {
             return Enum.valueOf(getType(), value);
         }
 

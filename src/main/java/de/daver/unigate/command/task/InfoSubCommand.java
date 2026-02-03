@@ -12,7 +12,7 @@ import de.daver.unigate.task.Task;
 public class InfoSubCommand extends LiteralNode {
 
     protected InfoSubCommand() {
-        super("info");
+        super("info", "Shows information about a task");
         permission(Permissions.TASK_INFO);
         then(new TaskArgument("task"))
                 .executor(this::showInfo);
