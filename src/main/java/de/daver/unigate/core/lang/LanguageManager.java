@@ -29,7 +29,7 @@ public class LanguageManager {
         this.languageDirectory = languageDirectory;
     }
 
-    public Message.Builder message() {
+    public MessageBuilder message() {
         return new RecordMessageBuilder(this);
     }
 

@@ -42,11 +42,15 @@ public class InfoSubCommand extends LiteralNode {
         var formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy  HH:mm");
         String creationDate = formatter.format(localDateTime);
         String lastLoaded = formatter.format(LocalDateTime.now());
+
+        String categoryPrefix = dimension.category();
+        var category = context.plugin().categoryCache().getByPrefix(categoryPrefix);
+
         context.plugin().languageManager().message()
                 .key(LanguageKeys.DIMENSION_INFO)
+                .parsed("id", dimension.id())
                 .parsed("name", dimension.name())
-                .parsed("name", dimension.name())
-                .parsed("category", dimension.category())
+                .parsed("category", category.name())
                 .parsed("type", dimension.type().name())
                 .parsed("state", dimension.meta().state().name())
                 .parsed("stoplag", dimension.meta().stopLag() ? "true" : "false")

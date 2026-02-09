@@ -16,9 +16,10 @@ public class ReloadSubCommand extends LiteralNode {
     public void reload(PluginContext context) throws Exception {
         var plugin = context.plugin();
 
-        plugin.languageManager().load();
-        plugin.languageManager().message().key(LanguageKeys.LANGUAGE_RELOAD)
-                .build().send(context.sender());
+        plugin.languageManager().loadAll(LanguageKeys.class);
+        plugin.languageManager()
+                .message(LanguageKeys.LANGUAGE_RELOAD)
+                .send(context.sender());
         plugin.serverPingListener().reload();
     }
 }

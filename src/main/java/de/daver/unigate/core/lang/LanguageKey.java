@@ -6,4 +6,6 @@ public interface LanguageKey {
 
     String[] argNames();
 
+    String defaultMessage();
+
 }

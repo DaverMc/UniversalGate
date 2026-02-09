@@ -4,6 +4,8 @@ import de.daver.unigate.core.lang.LanguageKey;
 
 public enum LanguageKeys implements LanguageKey {
 
+    GENERIC_ENABLED("generic.enabled"),
+    GENERIC_DISABLED("generic.disabled"),
     COMMAND_SUB_COMMAND_HEADER("command.sub-command.header", "name", "description"),
     COMMAND_SUB_COMMAND_ENTRY("command.sub-command.entry", "name", "description"),
     DIMENSION_RENAMED("dimension.renamed", "old", "new"),
@@ -133,4 +135,13 @@ public enum LanguageKeys implements LanguageKey {
     public String[] argNames() {
         return this.argNames;
     }
+
+    @Override
+    public String defaultMessage() {
+        StringBuilder builder = new StringBuilder("new:").append(key());
+        for(String argName : argNames()) builder.append("[").append("<").append(argName).append(">").append("]");
+        return builder.toString();
+    }
+
+
 }

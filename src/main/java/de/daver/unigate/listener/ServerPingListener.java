@@ -29,9 +29,9 @@ public class ServerPingListener extends PluginEventListener {
     }
 
     public void reload() {
-        this.motd = plugin().languageManager().message()
-                .key(LanguageKeys.SERVER_MOTD)
-                .build().get(plugin().languageManager().getDefaultLanguage());
+        this.motd = plugin().languageManager()
+                .message(LanguageKeys.SERVER_MOTD)
+                .getDefault();
         this.listedPlayers = new ArrayList<>();
         this.version = createVersion();
         createListedPlayers();
@@ -39,21 +39,22 @@ public class ServerPingListener extends PluginEventListener {
 
     private void createListedPlayers() {
         var languageManager = plugin().languageManager();
-        String raw = languageManager.getRawMessage(languageManager.getDefaultLanguage(), LanguageKeys.SERVER_LISTED_PLAYERS.key());
-        var miniMessage = MiniMessage.miniMessage();
-        var legacySerialier = LegacyComponentSerializer.legacySection();
-        Arrays.stream(raw.split(SEPRATOR))
-                .map(line -> legacySerialier.serialize(miniMessage.deserialize(line)))
+        var legacySerializer = LegacyComponentSerializer.legacySection();
+
+        languageManager.message(LanguageKeys.SERVER_LISTED_PLAYERS)
+                .getLines(null)
+                .stream()
+                .map(legacySerializer::serialize)
                 .map(serialized -> new PaperServerListPingEvent.ListedPlayerInfo(serialized, UUID.randomUUID()))
                 .forEach(listedPlayers::add);
     }
 
     private String createVersion() {
         var languageManager = plugin().languageManager();
-        String raw = languageManager.getRawMessage(languageManager.getDefaultLanguage(), LanguageKeys.SERVER_VERSION.key());
+        String raw = languageManager.getRawMessage(null, LanguageKeys.SERVER_VERSION.key());
         var miniMessage = MiniMessage.miniMessage();
-        var legacySerialier = LegacyComponentSerializer.legacySection();
-        return legacySerialier.serialize(miniMessage.deserialize(raw));
+        var legacySerializer = LegacyComponentSerializer.legacySection();
+        return legacySerializer.serialize(miniMessage.deserialize(raw));
     }
 
     @EventHandler

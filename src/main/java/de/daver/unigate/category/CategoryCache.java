@@ -35,6 +35,14 @@ public class CategoryCache {
                 .orElse(null);
     }
 
+    public Category getByPrefix(String prefix) {
+        return cache.values()
+                .stream()
+                .filter(c -> c.prefix().equalsIgnoreCase(prefix))
+                .findFirst()
+                .orElse(null);
+    }
+
     public void put(Category category) throws SQLException {
         plugin.sqlExecutor().execute(Queries.INSERT_CATEGORY, category.id(), category.name(), category.prefix());
         cache.put(category.id(), category);

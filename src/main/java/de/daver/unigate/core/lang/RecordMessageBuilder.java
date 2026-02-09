@@ -5,7 +5,7 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class RecordMessageBuilder implements Message.Builder {
+public final class RecordMessageBuilder implements MessageBuilder {
 
     private final List<TagResolver> placeholders = new ArrayList<>();
     private final LanguageManager languageManager;
@@ -15,11 +15,11 @@ public final class RecordMessageBuilder implements Message.Builder {
         this.languageManager = languageManager;
     }
 
-    public Message.Builder path(String path) {
+    public MessageBuilder path(String path) {
         this.path = path;
         return this;
     }
-    public Message.Builder tagResolver(TagResolver placeholder) {
+    public MessageBuilder tagResolver(TagResolver placeholder) {
         this.placeholders.add(placeholder);
         return this;
     }

@@ -11,6 +11,7 @@ import de.daver.unigate.command.statue.StatueCommand;
 import de.daver.unigate.command.task.TaskCommand;
 import de.daver.unigate.command.util.*;
 import de.daver.unigate.core.lang.LanguageManager;
+import de.daver.unigate.core.lang.neu.LanguagesCache;
 import de.daver.unigate.core.sql.SQLExecutor;
 import de.daver.unigate.core.util.PlayerFetcher;
 import de.daver.unigate.core.util.TabList;
@@ -42,7 +43,7 @@ public class UniversalGatePlugin extends JavaPlugin {
     private static UniversalGatePlugin instance;
 
     private TabList tabList;
-    private LanguageManager languageManager;
+    private LanguagesCache languageManager;
     private CategoryCache categoryCache;
     private DimensionCache dimensionCache;
     private SQLExecutor sqlExecutor;
@@ -71,9 +72,9 @@ public class UniversalGatePlugin extends JavaPlugin {
     }
 
     private void loadLanguages() {
-        languageManager = new LanguageManager(LanguageKeys.class, Locale.ENGLISH, getDataPath().resolve("lang"));
+        languageManager = new LanguagesCache(Locale.ENGLISH, getDataPath().resolve("lang"));
         try {
-            languageManager.load();
+            languageManager.loadAll(LanguageKeys.class);
         } catch (IOException e) {
             logger().error("Failed to load default language file", e);
         }
@@ -191,19 +192,21 @@ public class UniversalGatePlugin extends JavaPlugin {
 
     private void setUpTabList() {
         tabList = new TabList(this);
-        tabList.setFooterGetter((plugin, user) -> plugin.languageManager().message()
-                .key(LanguageKeys.TAB_LIST_FOOTER)
-                .parsed("players", getServer().getOnlinePlayers().size())
-                .build().get(user));
-        tabList.setHeaderGetter((plugin, user) -> plugin.languageManager().message()
-                .key(LanguageKeys.TAB_LIST_HEADER)
-                .build().get(user));
-        tabList.setNameGetter((plugin, user) -> plugin.languageManager().message()
-                .key(LanguageKeys.TAB_LIST_NAME)
-                .parsed("player", user.getName())
-                .parsed("prefix", PlayerFetcher.getPrefix(user))
-                .parsed("suffix", PlayerFetcher.getSuffix(user))
-                .build().get(user));
+        tabList.setFooterGetter((plugin, user) -> plugin.languageManager()
+                .message(LanguageKeys.TAB_LIST_FOOTER)
+                .argument("players", getServer().getOnlinePlayers().size())
+                .get(user));
+
+        tabList.setHeaderGetter((plugin, user) -> plugin.languageManager()
+                .message(LanguageKeys.TAB_LIST_HEADER)
+                .get(user));
+
+        tabList.setNameGetter((plugin, user) -> plugin.languageManager()
+                .message(LanguageKeys.TAB_LIST_NAME)
+                .argument("player", user.getName())
+                .argument("prefix", PlayerFetcher.getPrefix(user))
+                .argument("suffix", PlayerFetcher.getSuffix(user))
+                .get(user));
 
         tabList.setSorter(player -> {
             var api = LuckPermsProvider.get();
@@ -240,7 +243,7 @@ public class UniversalGatePlugin extends JavaPlugin {
         return getSLF4JLogger();
     }
 
-    public LanguageManager languageManager() {
+    public LanguagesCache languageManager() {
         return languageManager;
     }
 

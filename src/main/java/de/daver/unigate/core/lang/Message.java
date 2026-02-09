@@ -1,5 +1,6 @@
 package de.daver.unigate.core.lang;
 
+import de.daver.unigate.LanguageKeys;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -35,41 +36,6 @@ public interface Message {
         return Arrays.stream(serialized.split("<br>"))
                 .map(miniMessage::deserialize)
                 .toList();
-
-    }
-
-    sealed interface Builder permits RecordMessageBuilder {
-
-        Builder path(String key);
-
-        Builder tagResolver(TagResolver tagResolver);
-
-        Message build();
-
-        default Builder key(LanguageKey key) {
-            return path(key.key());
-        }
-
-        default Builder parsed(String key, String value) {
-            if(value == null) value = "";
-            return tagResolver(TagResolver.resolver(Placeholder.parsed(key, value)));
-        }
-
-        default Builder parsed(String key, Object value) {
-            return parsed(key, String.valueOf(value));
-        }
-
-        default Builder unparsed(String key, String value) {
-            return tagResolver(TagResolver.resolver(Placeholder.unparsed(key, value)));
-        }
-
-        default Builder component(String key, ComponentLike component) {
-            return tagResolver(TagResolver.resolver(Placeholder.component(key, component)));
-        }
-
-        default <T extends Enum<T>> Builder entry(String key, T value, Function<T, Component> serializer) {
-            return component(key, serializer.apply(value));
-        }
 
     }
 
