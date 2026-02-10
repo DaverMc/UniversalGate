@@ -21,7 +21,10 @@ public class StatueSettingsDialog {
         var lang = plugin.languageManager();
         var attributes = statue.attributes();
         var dialogBase = dialogBase(lang, player, attributes);
-        var dialogType = DialogType.multiAction(List.of(confirmChangesButton(lang, player), deleteStatueButton(lang, player))).build();
+        var dialogType = DialogType.multiAction(List.of(
+                confirmChangesButton(lang, player),
+                deleteStatueButton(lang, player)))
+                .build();
 
         return Dialog.create(builder -> builder.empty()
                 .base(dialogBase)
