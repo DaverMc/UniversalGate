@@ -1,5 +1,6 @@
-package de.daver.unigate.dimension;
+package de.daver.unigate.dimension.gen;
 
+import de.daver.unigate.dimension.Dimension;
 import net.querz.nbt.tag.CompoundTag;
 
 public interface DimensionGenerator {

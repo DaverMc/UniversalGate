@@ -1,6 +1,5 @@
-package de.daver.unigate.core.lang.neu;
+package de.daver.unigate.core.lang;
 
-import de.daver.unigate.core.lang.LanguageKey;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
 import java.io.IOException;

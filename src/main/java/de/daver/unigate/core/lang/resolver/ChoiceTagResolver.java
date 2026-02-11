@@ -1,4 +1,4 @@
-package de.daver.unigate.core.lang.neu.resolver;
+package de.daver.unigate.core.lang.resolver;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.Context;

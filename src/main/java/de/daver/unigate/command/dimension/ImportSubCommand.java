@@ -10,7 +10,7 @@ import de.daver.unigate.core.command.argument.EnumArgument;
 import de.daver.unigate.core.command.argument.WordArgument;
 import de.daver.unigate.core.util.FileUtils;
 import de.daver.unigate.dimension.Dimension;
-import de.daver.unigate.dimension.DimensionType;
+import de.daver.unigate.dimension.gen.DimensionType;
 
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;

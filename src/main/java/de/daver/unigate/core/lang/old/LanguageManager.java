@@ -1,5 +1,6 @@
-package de.daver.unigate.core.lang;
+package de.daver.unigate.core.lang.old;
 
+import de.daver.unigate.core.lang.LanguageKey;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
@@ -65,7 +66,7 @@ public class LanguageManager {
         for(LanguageKey key : (LanguageKey[]) enumArray) {
             if(properties.containsKey(key.key())) continue;
             StringBuilder builder = new StringBuilder("new:").append(key.key());
-            for(String argName : key.argNames()) builder.append("[").append("<").append(argName).append(">").append("]");
+            //for(String argName : key.argNames()) builder.append("[").append("<").append(argName).append(">").append("]");
             properties.put(key.key(), builder.toString());
             changed = true;
         }

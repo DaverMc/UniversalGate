@@ -1,7 +1,7 @@
 package de.daver.unigate.task;
 
 import de.daver.unigate.core.sql.ResultTransformer;
-import de.daver.unigate.core.sql.SQLDataType;
+import de.daver.unigate.core.sql.SQLDataSetter;
 import de.daver.unigate.core.sql.SQLStatement;
 
 import java.util.UUID;
@@ -26,11 +26,11 @@ interface Queries {
 
     SQLStatement INSERT = new SQLStatement("INSERT INTO tasks (name, creator, executor, state, action, dimension, description) VALUES (?, ?, ?, ?, ?, ?, ?)")
             .addStringArgument()
-            .addConverted(UUID.class, SQLDataType.STRING, UUID::toString)
+            .addConverted(UUID.class, SQLDataSetter.STRING, UUID::toString)
             .addStringArgument()
-            .addConverted(TaskType.class, SQLDataType.STRING, TaskType::name)
-            .addConverted(TaskState.class, SQLDataType.STRING, TaskState::name)
-            .addConverted(UUID.class, SQLDataType.STRING, UUID::toString)
+            .addConverted(TaskType.class, SQLDataSetter.STRING, TaskType::name)
+            .addConverted(TaskState.class, SQLDataSetter.STRING, TaskState::name)
+            .addConverted(UUID.class, SQLDataSetter.STRING, UUID::toString)
             .addStringArgument();
 
     ResultTransformer<Task> TRANSFORMER = set -> {

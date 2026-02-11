@@ -2,8 +2,7 @@ package de.daver.unigate.statue;
 
 import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.UniversalGatePlugin;
-import de.daver.unigate.core.lang.LanguageManager;
-import de.daver.unigate.core.lang.neu.LanguagesCache;
+import de.daver.unigate.core.lang.LanguagesCache;
 import io.papermc.paper.dialog.Dialog;
 import io.papermc.paper.registry.data.dialog.ActionButton;
 import io.papermc.paper.registry.data.dialog.DialogBase;

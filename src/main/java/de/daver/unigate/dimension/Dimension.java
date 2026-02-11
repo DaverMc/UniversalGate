@@ -3,6 +3,7 @@ package de.daver.unigate.dimension;
 import de.daver.unigate.Permissions;
 import de.daver.unigate.category.Category;
 import de.daver.unigate.core.util.FileUtils;
+import de.daver.unigate.dimension.gen.DimensionType;
 import de.daver.unigate.dimension.gen.LevelData;
 import net.querz.nbt.io.NBTUtil;
 import org.bukkit.Bukkit;

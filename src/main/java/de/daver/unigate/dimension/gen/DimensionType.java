@@ -1,8 +1,5 @@
-package de.daver.unigate.dimension;
+package de.daver.unigate.dimension.gen;
 
-
-import de.daver.unigate.dimension.gen.OverworldGenerator;
-import de.daver.unigate.dimension.gen.VoidGenerator;
 
 import java.util.Optional;
 

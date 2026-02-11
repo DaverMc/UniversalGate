@@ -6,6 +6,7 @@ import de.daver.unigate.Permissions;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.statue.Statue;
+import de.daver.unigate.statue.StatueService;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 
@@ -20,6 +21,8 @@ public class CloneSubCommand extends LiteralNode {
     void cloneStatue(PluginContext context) throws CommandSyntaxException {
         var player = context.senderPlayer();
         var statue = context.plugin().statueInteractListener().get(player);
+
+
         if(statue == null) {
             context.plugin().languageManager()
                     .message(LanguageKeys.STATUE_NOT_SELECTED)

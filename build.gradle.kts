@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "de.daver.unigate"
-version = "1.4.3"
+version = "1.5.0"
 
 repositories {
     mavenCentral()

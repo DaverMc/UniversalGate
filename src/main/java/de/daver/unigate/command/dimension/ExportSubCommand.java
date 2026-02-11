@@ -27,7 +27,8 @@ public class ExportSubCommand extends LiteralNode {
         permission(Permissions.DIMENSION_EXPORT);
         then(new DimensionArgument("dimension"))
                 .then(new WordArgument("tag"))
-                .executor(this::exportDimension);
+                .executor(this::exportDimension)
+                .then(new WordArgument("root-name"));
     }
 
     private void exportDimension(PluginContext context) throws Exception {
@@ -48,5 +49,22 @@ public class ExportSubCommand extends LiteralNode {
                 .argument("dimension", dimension.name())
                 .argument("tag", tag)
                 .send(context.sender());
+    }
+
+    private void exportDimension(PluginContext context, Dimension dimension, String tag, String rootName) throws Exception {
+        dimension.unload(true);
+        context.plugin().dimensionCache().update(dimension);
+        var worldContainer = context.plugin().getServer().getWorldContainer().toPath();
+        var source = worldContainer.resolve(dimension.name());
+        var target = context.plugin().exportDir().resolve(dimension.name() + "_" + tag + ".tar.gz");
+        FileUtils.compressDirectory(source, target, allowedEntries);
+
+
+        context.plugin().languageManager()
+                .message(LanguageKeys.DIMENSION_EXPORT_SUCCESS)
+                .argument("dimension", dimension.name())
+                .argument("tag", tag)
+                .send(context.sender());
+
     }
 }

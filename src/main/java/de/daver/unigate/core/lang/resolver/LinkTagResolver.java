@@ -1,7 +1,6 @@
-package de.daver.unigate.core.lang.neu.resolver;
+package de.daver.unigate.core.lang.resolver;
 
-import de.daver.unigate.core.lang.neu.LanguagesCache;
-import net.kyori.adventure.text.Component;
+import de.daver.unigate.core.lang.LanguagesCache;
 import net.kyori.adventure.text.minimessage.Context;
 import net.kyori.adventure.text.minimessage.ParsingException;
 import net.kyori.adventure.text.minimessage.tag.Tag;

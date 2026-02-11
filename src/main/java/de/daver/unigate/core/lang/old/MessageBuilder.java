@@ -1,6 +1,6 @@
-package de.daver.unigate.core.lang;
+package de.daver.unigate.core.lang.old;
 
-import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.core.lang.LanguageKey;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;

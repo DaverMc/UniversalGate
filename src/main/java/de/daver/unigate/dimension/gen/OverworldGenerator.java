@@ -1,7 +1,6 @@
 package de.daver.unigate.dimension.gen;
 
 import de.daver.unigate.dimension.Dimension;
-import de.daver.unigate.dimension.DimensionGenerator;
 import net.querz.nbt.tag.CompoundTag;
 
 public class OverworldGenerator implements DimensionGenerator {

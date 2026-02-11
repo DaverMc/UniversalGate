@@ -3,7 +3,7 @@ package de.daver.unigate.core.sql;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public interface ConvertedDataType<VALUE, NATIVE> extends SQLDataType<VALUE> {
+public interface ConvertedDataType<VALUE, NATIVE> extends SQLDataSetter<VALUE> {
 
     @Override
     default void set(VALUE value, PreparedStatement statement, int index) throws SQLException {
@@ -12,5 +12,5 @@ public interface ConvertedDataType<VALUE, NATIVE> extends SQLDataType<VALUE> {
 
     NATIVE convert(VALUE value);
 
-    SQLDataType<NATIVE> nativeType();
+    SQLDataSetter<NATIVE> nativeType();
 }

@@ -2,6 +2,7 @@ package de.daver.unigate;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import de.daver.unigate.bootstrap.CommandBootstrap;
 import de.daver.unigate.category.CategoryCache;
 import de.daver.unigate.command.category.CategoryCommand;
 import de.daver.unigate.command.dimension.DimensionCommand;
@@ -10,8 +11,7 @@ import de.daver.unigate.command.lang.LanguageCommand;
 import de.daver.unigate.command.statue.StatueCommand;
 import de.daver.unigate.command.task.TaskCommand;
 import de.daver.unigate.command.util.*;
-import de.daver.unigate.core.lang.LanguageManager;
-import de.daver.unigate.core.lang.neu.LanguagesCache;
+import de.daver.unigate.core.lang.LanguagesCache;
 import de.daver.unigate.core.sql.SQLExecutor;
 import de.daver.unigate.core.util.PlayerFetcher;
 import de.daver.unigate.core.util.TabList;
@@ -81,20 +81,8 @@ public class UniversalGatePlugin extends JavaPlugin {
     }
 
     private void registerCommands() {
-        getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, lifecycleEvent -> {
-            var registry = lifecycleEvent.registrar();
-            new DimensionCommand().register(registry);
-            new CategoryCommand().register(registry);
-            new LanguageCommand().register(registry);
-            new SpeedCommand().register(registry);
-            new CreativeItemsCommand().register(registry);
-            new DebugStickCommand().register(registry);
-            new NightVisionCommand().register(registry);
-            new TaskCommand().register(registry);
-            new HubCommand().register(registry);
-            new StatueCommand().register(registry);
-            new IconCommand().register(registry);
-        });
+        getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> CommandBootstrap.create(null).registerAll(event.registrar())); //TODO Null API
     }
 
     private void registerListeners() {
@@ -143,13 +131,14 @@ public class UniversalGatePlugin extends JavaPlugin {
     private void initializeSQL() {
         var config = createHikariConfig();
         var dataSource = new HikariDataSource(config);
+
         sqlExecutor = new SQLExecutor(dataSource);
 
         try {
             categoryCache = new CategoryCache(this);
             categoryCache.initialize();
-            dimensionCache = new DimensionCache(this);
-            dimensionCache.initialize();
+            dimensionCache = new DimensionCache();
+            dimensionCache.initialize(sqlExecutor);
             taskCache = new TaskCache(this);
             taskCache.initialize();
         } catch (SQLException e) {

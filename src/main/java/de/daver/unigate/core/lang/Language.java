@@ -1,6 +1,4 @@
-package de.daver.unigate.core.lang.neu;
-
-import de.daver.unigate.core.lang.LanguageKey;
+package de.daver.unigate.core.lang;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

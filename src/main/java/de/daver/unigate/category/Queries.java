@@ -1,7 +1,7 @@
 package de.daver.unigate.category;
 
 import de.daver.unigate.core.sql.ResultTransformer;
-import de.daver.unigate.core.sql.SQLDataType;
+import de.daver.unigate.core.sql.SQLDataSetter;
 import de.daver.unigate.core.sql.SQLStatement;
 
 import java.util.UUID;
@@ -17,12 +17,12 @@ interface Queries {
     SQLStatement INSERT_CATEGORY = new SQLStatement("""
             INSERT INTO categories (id, name, prefix) VALUES (?, ?, ?)
             """)
-            .addConverted(UUID.class, SQLDataType.STRING, UUID::toString)
+            .addConverted(UUID.class, SQLDataSetter.STRING, UUID::toString)
             .addStringArgument()
             .addStringArgument();
 
     SQLStatement DELETE_CATEGORY = new SQLStatement("DELETE FROM categories WHERE id = ?")
-            .addConverted(UUID.class, SQLDataType.STRING, UUID::toString);
+            .addConverted(UUID.class, SQLDataSetter.STRING, UUID::toString);
 
     ResultTransformer<Category> TRANSFORMER = set -> {
         var idS = set.getString("id");

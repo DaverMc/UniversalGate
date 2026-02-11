@@ -1,11 +1,12 @@
 package de.daver.unigate.command.dimension;
 
-import de.daver.unigate.core.command.LiteralNode;
+import de.daver.unigate.UniGateAPI;
+import de.daver.unigate.command.UniGateCommand;
 
-public class DimensionCommand extends LiteralNode {
+public class DimensionCommand extends UniGateCommand {
 
-    public DimensionCommand() {
-        super("dimension", "Access the Dimension system", "world", "welt", "w", "dim");
+    public DimensionCommand(UniGateAPI api) {
+        super(api, "dimension", "Access the Dimension system", "world", "welt", "w", "dim");
         then(new CreateSubCommand());
         then(new DeleteSubCommand());
         then(new ListSubCommand());

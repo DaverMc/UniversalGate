@@ -8,7 +8,7 @@ import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.core.command.argument.WordArgument;
 import de.daver.unigate.dimension.Dimension;
-import de.daver.unigate.dimension.DimensionType;
+import de.daver.unigate.dimension.gen.DimensionType;
 import de.daver.unigate.task.Task;
 import de.daver.unigate.task.TaskState;
 import de.daver.unigate.task.TaskType;

@@ -9,8 +9,8 @@ public record SQLExecutor(DataSource dataSource) {
         try (var connection = dataSource.getConnection();
              var prepStatement = connection.prepareStatement(statement.raw())) {
             var args = statement.arguments();
-            for (int i = 0; i < Math.min(values.length, args.size()); i++) {
-                var arg = args.get(i);
+            for (int i = 0; i < Math.min(values.length, args.length); i++) {
+                var arg = args[i];
                 arg.apply(prepStatement, values[i], i + 1);
             }
             return processor.process(prepStatement);

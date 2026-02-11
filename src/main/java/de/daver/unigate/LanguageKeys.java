@@ -132,14 +132,9 @@ public enum LanguageKeys implements LanguageKey {
     }
 
     @Override
-    public String[] argNames() {
-        return this.argNames;
-    }
-
-    @Override
     public String defaultMessage() {
         StringBuilder builder = new StringBuilder("new:").append(key());
-        for(String argName : argNames()) builder.append("[").append("<").append(argName).append(">").append("]");
+        for(String argName : argNames) builder.append("[").append("<").append(argName).append(">").append("]");
         return builder.toString();
     }
 

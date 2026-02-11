@@ -9,7 +9,7 @@ import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.core.command.argument.EnumArgument;
 import de.daver.unigate.core.command.argument.WordArgument;
 import de.daver.unigate.dimension.Dimension;
-import de.daver.unigate.dimension.DimensionType;
+import de.daver.unigate.dimension.gen.DimensionType;
 
 class CreateSubCommand extends LiteralNode {
 
