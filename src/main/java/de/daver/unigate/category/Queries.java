@@ -3,26 +3,34 @@ package de.daver.unigate.category;
 import de.daver.unigate.core.sql.ResultTransformer;
 import de.daver.unigate.core.sql.SQLDataSetter;
 import de.daver.unigate.core.sql.SQLStatement;
+import de.daver.unigate.core.sql.builder.*;
 
 import java.util.UUID;
 
 interface Queries {
 
-    SQLStatement SELECT_ALL = new SQLStatement("SELECT * FROM categories");
 
-    SQLStatement CREATE_CATEGORIES_TABLE = new SQLStatement("""
-            CREATE TABLE IF NOT EXISTS categories (id TEXT PRIMARY KEY, name TEXT, prefix TEXT)
-            """);
+    SQLStatement SELECT_ALL = SQLStatementBuilder.select("*")
+            .from("categories")
+            .build();
 
-    SQLStatement INSERT_CATEGORY = new SQLStatement("""
-            INSERT INTO categories (id, name, prefix) VALUES (?, ?, ?)
-            """)
-            .addConverted(UUID.class, SQLDataSetter.STRING, UUID::toString)
-            .addStringArgument()
-            .addStringArgument();
+    SQLStatement CREATE_CATEGORIES_TABLE = SQLStatementBuilder.create()
+            .table("categories")
+            .primaryKey("id", SQLiteColumnType.TEXT)
+            .column("prefix", SQLiteColumnType.TEXT)
+            .build();
 
-    SQLStatement DELETE_CATEGORY = new SQLStatement("DELETE FROM categories WHERE id = ?")
-            .addConverted(UUID.class, SQLDataSetter.STRING, UUID::toString);
+    SQLStatement INSERT_CATEGORY = SQLStatementBuilder.insert().into("categories")
+            .columns("id", "name", "prefix")
+            .argument(Arguments.toString(UUID.class))
+            .argument(Arguments.of(SQLDataType.STRING))
+            .argument(Arguments.of(SQLDataType.STRING))
+            .build();
+
+    SQLStatement DELETE_CATEGORY = SQLStatementBuilder.delete().from("categories")
+            .where("id = ?")
+            .argument(Arguments.toString(UUID.class))
+            .build();
 
     ResultTransformer<Category> TRANSFORMER = set -> {
         var idS = set.getString("id");
