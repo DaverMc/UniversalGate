@@ -24,10 +24,10 @@ public class LinkTagResolver implements TagResolver {
     @Override
     public @Nullable Tag resolve(@NotNull String name, @NotNull ArgumentQueue arguments, @NotNull Context ctx) throws ParsingException {
         if(!has(name)) return null;
-        if(arguments.hasNext()) return null;
+        if(!arguments.hasNext()) return null;
         String linkedKey = arguments.pop().value();
         String rawMessage = languagesCache.getRawMessage(locale, linkedKey);
-        return Tag.selfClosingInserting(ctx.deserialize(rawMessage));
+        return Tag.preProcessParsed(rawMessage);
     }
 
     @Override

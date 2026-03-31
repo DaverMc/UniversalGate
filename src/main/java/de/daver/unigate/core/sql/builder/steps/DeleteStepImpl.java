@@ -8,6 +8,7 @@ public class DeleteStepImpl extends StepBase<Step.DeleteStep> implements Step.De
 
     public DeleteStepImpl(StringBuilder builder, List<SQLArgument<?>> arguments) {
         super(builder, arguments);
+        builder.append("DELETE");
     }
 
     @Override

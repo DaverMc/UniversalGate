@@ -12,7 +12,6 @@ class FromStepImpl extends BuildableStepBase<Step.FromStep> implements Step.From
 
     @Override
     public WhereStep where(String condition) {
-        builder.append(" WHERE ").append(condition);
-        return new WhereStepImpl(builder, arguments);
+        return new WhereStepImpl(builder, arguments, condition);
     }
 }

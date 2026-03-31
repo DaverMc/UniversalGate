@@ -1,11 +1,12 @@
 package de.daver.unigate.dimension;
 
 import de.daver.unigate.core.sql.ResultTransformer;
-import de.daver.unigate.core.sql.SQLDataSetter;
 import de.daver.unigate.core.sql.SQLStatement;
-import de.daver.unigate.core.sql.builder.*;
+import de.daver.unigate.core.sql.builder.Arguments;
+import de.daver.unigate.core.sql.builder.SQLDataType;
+import de.daver.unigate.core.sql.builder.SQLStatementBuilder;
+import de.daver.unigate.core.sql.builder.SQLiteColumnType;
 import de.daver.unigate.dimension.gen.DimensionType;
-import org.codehaus.plexus.util.cli.Arg;
 
 import java.util.Random;
 import java.util.UUID;

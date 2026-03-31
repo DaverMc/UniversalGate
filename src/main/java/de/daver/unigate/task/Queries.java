@@ -1,10 +1,7 @@
 package de.daver.unigate.task;
 
 import de.daver.unigate.core.sql.ResultTransformer;
-import de.daver.unigate.core.sql.SQLArgument;
-import de.daver.unigate.core.sql.SQLDataSetter;
 import de.daver.unigate.core.sql.SQLStatement;
-import de.daver.unigate.core.sql.builder.ColumnType;
 import de.daver.unigate.core.sql.builder.SQLStatementBuilder;
 import de.daver.unigate.core.sql.builder.SQLiteColumnType;
 

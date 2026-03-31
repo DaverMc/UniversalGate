@@ -8,7 +8,7 @@ public class CreateStepImpl extends StepBase<Step.CreateStep> implements Step.Cr
 
     public CreateStepImpl(StringBuilder builder, List<SQLArgument<?>> arguments) {
         super(builder, arguments);
-        builder.append("CREATE ");
+        builder.append("CREATE");
     }
 
     @Override

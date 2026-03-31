@@ -8,7 +8,7 @@ public class InsertStepImpl extends StepBase<Step.InsertStep> implements Step.In
 
     public InsertStepImpl(StringBuilder builder, List<SQLArgument<?>> arguments) {
         super(builder, arguments);
-        builder.append("INSERT ");
+        builder.append("INSERT");
     }
 
     @Override

@@ -1,10 +1,8 @@
 package de.daver.unigate.core.command.argument;
 
-import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.core.command.ArgumentNode;
 import de.daver.unigate.core.command.PluginContext;
-import org.bukkit.command.CommandException;
 
 import java.io.IOException;
 import java.nio.file.Files;

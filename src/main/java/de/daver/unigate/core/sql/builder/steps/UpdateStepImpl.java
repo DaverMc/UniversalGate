@@ -13,6 +13,6 @@ public class UpdateStepImpl extends StepBase<Step.UpdateStep> implements Step.Up
 
     @Override
     public Buildable.SetStep set(String... columns) {
-        return new SetStepImpl(builder, arguments);
+        return new SetStepImpl(builder, arguments, columns);
     }
 }

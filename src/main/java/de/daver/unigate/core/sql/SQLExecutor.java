@@ -6,6 +6,7 @@ import java.sql.SQLException;
 public record SQLExecutor(DataSource dataSource) {
 
     private <T> T run(SQLStatement statement, PreparedStatementProcessor<T> processor, Object[] values) throws SQLException {
+        //System.out.println(statement.raw());
         try (var connection = dataSource.getConnection();
              var prepStatement = connection.prepareStatement(statement.raw())) {
             var args = statement.arguments();

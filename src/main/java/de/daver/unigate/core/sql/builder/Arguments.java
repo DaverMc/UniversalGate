@@ -4,7 +4,6 @@ import de.daver.unigate.core.sql.ConvertedDataType;
 import de.daver.unigate.core.sql.SQLArgument;
 import de.daver.unigate.core.sql.SQLDataSetter;
 
-import java.util.UUID;
 import java.util.function.Function;
 
 public class Arguments {

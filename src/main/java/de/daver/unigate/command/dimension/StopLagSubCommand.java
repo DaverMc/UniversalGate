@@ -5,8 +5,11 @@ import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.Permissions;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
+import de.daver.unigate.core.lang.LanguagesCache;
 import de.daver.unigate.dimension.Dimension;
 import org.bukkit.entity.Player;
+
+import java.sql.SQLException;
 
 public class StopLagSubCommand extends LiteralNode {
 
@@ -24,23 +27,25 @@ public class StopLagSubCommand extends LiteralNode {
             throw new IllegalArgumentException("This world is not a dimension!");
 
         var stopLag = dimension.meta().stopLag();
-        if(stopLag) enableStopLag(context, dimension, player);
-        else disableStopLag(context, dimension, player);
+        updateStoplag(context, dimension, !stopLag);
+
+        sendMessage(context, dimension, player,
+                stopLag ? LanguageKeys.DIMENSION_STOPLAG_DISABLE : LanguageKeys.DIMENSION_STOPLAG_ENABLE);
     }
 
-    private void enableStopLag(PluginContext context, Dimension dimension, Player player) {
-        dimension.meta().setStopLag(true);
+    private void sendMessage(PluginContext context, Dimension dimension, Player player, LanguageKeys key) {
         context.plugin().languageManager()
-                .message(LanguageKeys.DIMENSION_STOPLAG_ENABLE)
+                .message(key)
                 .argument("dimension", dimension.name())
                 .send(player);
     }
 
-    private void disableStopLag(PluginContext context, Dimension dimension, Player player) {
-        dimension.meta().setStopLag(false);
-        context.plugin().languageManager()
-                .message(LanguageKeys.DIMENSION_STOPLAG_DISABLE)
-                .argument("dimension", dimension.name())
-                .send(player);
+    private void updateStoplag(PluginContext context, Dimension dimension, boolean stopLag) {
+        dimension.meta().setStopLag(stopLag);
+        try {
+            context.plugin().dimensionCache().update(dimension);
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
     }
 }

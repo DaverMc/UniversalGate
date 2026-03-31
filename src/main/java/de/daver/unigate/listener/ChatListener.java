@@ -16,9 +16,9 @@ public class ChatListener extends PluginEventListener {
     public void onChat(AsyncChatEvent event) {
         event.renderer((player, sourceDisplayName, message, viewer) -> plugin().languageManager()
                 .message(LanguageKeys.CHAT_FORMAT)
-                .argument("prefix", PlayerFetcher.getPrefix(player))
+                .text("prefix", PlayerFetcher.getPrefix(player))
                 .argument("player", player.getName())
-                .argument("suffix", PlayerFetcher.getSuffix(player))
+                .text("suffix", PlayerFetcher.getSuffix(player))
                 .component("message", message)
                 .get(player));
     }

@@ -4,13 +4,6 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import de.daver.unigate.bootstrap.CommandBootstrap;
 import de.daver.unigate.category.CategoryCache;
-import de.daver.unigate.command.category.CategoryCommand;
-import de.daver.unigate.command.dimension.DimensionCommand;
-import de.daver.unigate.command.icon.IconCommand;
-import de.daver.unigate.command.lang.LanguageCommand;
-import de.daver.unigate.command.statue.StatueCommand;
-import de.daver.unigate.command.task.TaskCommand;
-import de.daver.unigate.command.util.*;
 import de.daver.unigate.core.lang.LanguagesCache;
 import de.daver.unigate.core.sql.SQLExecutor;
 import de.daver.unigate.core.util.PlayerFetcher;
@@ -193,8 +186,8 @@ public class UniversalGatePlugin extends JavaPlugin {
         tabList.setNameGetter((plugin, user) -> plugin.languageManager()
                 .message(LanguageKeys.TAB_LIST_NAME)
                 .argument("player", user.getName())
-                .argument("prefix", PlayerFetcher.getPrefix(user))
-                .argument("suffix", PlayerFetcher.getSuffix(user))
+                .text("prefix", PlayerFetcher.getPrefix(user))
+                .text("suffix", PlayerFetcher.getSuffix(user))
                 .get(user));
 
         tabList.setSorter(player -> {

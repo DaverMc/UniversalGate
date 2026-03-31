@@ -6,7 +6,6 @@ import de.daver.unigate.Permissions;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.statue.Statue;
-import de.daver.unigate.statue.StatueService;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 

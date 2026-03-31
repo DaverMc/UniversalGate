@@ -1,24 +1,14 @@
 package de.daver.unigate;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 import de.daver.unigate.bootstrap.DatabaseBootstrap;
 import de.daver.unigate.bootstrap.DirectoryRegistry;
-import de.daver.unigate.category.CategoryCache;
 import de.daver.unigate.core.lang.LanguagesCache;
 import de.daver.unigate.core.sql.SQLExecutor;
 import de.daver.unigate.dimension.DimensionCache;
 import de.daver.unigate.statue.StatueService;
-import de.daver.unigate.task.TaskCache;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.sql.DataSource;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.sql.SQLException;
-import java.util.function.Consumer;
 
 public class UniGateAPIImpl implements UniGateAPI {
 

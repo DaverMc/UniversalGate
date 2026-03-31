@@ -1,7 +1,7 @@
 package de.daver.unigate.core.lang;
 
-import de.daver.unigate.core.lang.resolver.LinkTagResolver;
 import de.daver.unigate.core.lang.resolver.ChoiceTagResolver;
+import de.daver.unigate.core.lang.resolver.LinkTagResolver;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
