@@ -7,6 +7,7 @@ import de.daver.unigate.core.sql.builder.SQLDataType;
 import de.daver.unigate.core.sql.builder.SQLStatementBuilder;
 import de.daver.unigate.core.sql.builder.SQLiteColumnType;
 import de.daver.unigate.dimension.gen.DimensionType;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.Random;
 import java.util.UUID;
@@ -90,10 +91,16 @@ interface Queries {
              .build();
 
      SQLStatement UPDATE_DIMENSION_META = SQLStatementBuilder.update("dimensions")
-             .set("name", "stop_lag", "state", "last_loaded")
+             .set("name", "stop_lag")
              .where("id = ?")
              .argument(Arguments.of(SQLDataType.STRING))
              .argument(Arguments.of(SQLDataType.BOOL))
+             .argument(Arguments.toString(UUID.class))
+             .build();
+
+     SQLStatement UPDATE_DIMENSION_STATE = SQLStatementBuilder.update("dimensions")
+             .set("state", "last_loaded")
+             .where("id = ?")
              .argument(Arguments.enumName(DimensionState.class))
              .argument(Arguments.of(SQLDataType.LONG))
              .argument(Arguments.toString(UUID.class))

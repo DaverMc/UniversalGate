@@ -26,45 +26,23 @@ public class ExportSubCommand extends LiteralNode {
         super("export", "Export a dimension to a tar.gz archive");
         permission(Permissions.DIMENSION_EXPORT);
         then(new DimensionArgument("dimension"))
-                .then(new WordArgument("tag"))
-                .executor(this::exportDimension)
-                .then(new WordArgument("root-name"));
+                .executor(this::exportDimension);
     }
 
     private void exportDimension(PluginContext context) throws Exception {
         var dimension = context.getArgument("dimension", Dimension.class);
-        var tag = context.getArgument("tag", String.class);
 
         dimension.unload(true);
-        context.plugin().dimensionCache().update(dimension);
+        context.plugin().dimensionCache().updateState(dimension);
 
         var worldContainer = context.plugin().getServer().getWorldContainer().toPath();
         var source = worldContainer.resolve(dimension.name());
-        var target = context.plugin().exportDir().resolve(dimension.name() + "_" + tag + ".tar.gz");
+        var target = context.plugin().exportDir().resolve(dimension.name() + ".tar.gz");
         FileUtils.compressDirectory(source, target, allowedEntries);
-
 
         context.plugin().languageManager()
                 .message(LanguageKeys.DIMENSION_EXPORT_SUCCESS)
                 .argument("dimension", dimension.name())
-                .argument("tag", tag)
                 .send(context.sender());
-    }
-
-    private void exportDimension(PluginContext context, Dimension dimension, String tag, String rootName) throws Exception {
-        dimension.unload(true);
-        context.plugin().dimensionCache().update(dimension);
-        var worldContainer = context.plugin().getServer().getWorldContainer().toPath();
-        var source = worldContainer.resolve(dimension.name());
-        var target = context.plugin().exportDir().resolve(dimension.name() + "_" + tag + ".tar.gz");
-        FileUtils.compressDirectory(source, target, allowedEntries);
-
-
-        context.plugin().languageManager()
-                .message(LanguageKeys.DIMENSION_EXPORT_SUCCESS)
-                .argument("dimension", dimension.name())
-                .argument("tag", tag)
-                .send(context.sender());
-
     }
 }

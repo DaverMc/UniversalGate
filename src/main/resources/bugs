@@ -30,8 +30,7 @@
 + Dimension Rename
 + Armorstand Clone Armorstand fliegt irgendwo hin
 + Languagesystem falls Sprache nicht vorhanden ist wirds nicht auf default umgeleitet
-
-Export mit einem zusätzlichen Ordner als root und dieser Ordner soll bennenbar sein
++ Export mit einem zusätzlichen Ordner als root (und dieser Ordner soll bennenbar sein)
 Manchmal wird LOADED nicht zurück gesetzt.
 In der Dimension List sieht man nicht welche maps aktuell geladen sind
 Wenn ich eine zwei große Pflanze platziere geht immer der untere teil kaputt

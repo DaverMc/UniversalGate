@@ -43,10 +43,5 @@ public class WorldSwitchListener extends PluginEventListener {
         if(dimension == null) return;
 
         dimension.unload(true);
-        try {
-            plugin().dimensionCache().update(dimension);
-        } catch (SQLException exception) {
-            plugin().logger().error("Failed to update dimension {}", dimension.name(), exception);
-        }
     }
 }

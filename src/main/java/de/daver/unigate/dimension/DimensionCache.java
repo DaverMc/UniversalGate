@@ -102,13 +102,23 @@ public class DimensionCache {
     }
 
     public void update(Dimension dimension) throws SQLException {
-        sqlExecutor.execute(Queries.UPDATE_DIMENSION_META, dimension.name(), dimension.meta().stopLag(), dimension.meta().state(), dimension.meta().lastLoaded(), dimension.id());
+        sqlExecutor.execute(Queries.UPDATE_DIMENSION_META,
+                dimension.name(),
+                dimension.meta().stopLag(),
+                dimension.id());
+    }
+
+    public void updateState(Dimension dimension) throws SQLException {
+        sqlExecutor.execute(Queries.UPDATE_DIMENSION_STATE,
+                dimension.meta().state(),
+                dimension.meta().lastLoaded(),
+                dimension.id());
     }
 
     public void archive(Dimension dimension) throws SQLException {
         if(dimension.meta().state() == DimensionState.LOADED) dimension.unload(true);
         dimension.meta().state(DimensionState.ARCHIVED);
-        update(dimension);
+        updateState(dimension);
         active.remove(dimension.id());
         archived.add(dimension.name());
     }
@@ -123,7 +133,7 @@ public class DimensionCache {
         archived.remove(dimension.name());
 
         dimension.meta().state(DimensionState.ACTIVE);
-        update(dimension);
+        updateState(dimension);
         return true;
     }
 
