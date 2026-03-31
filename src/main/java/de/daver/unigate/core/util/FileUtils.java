@@ -97,11 +97,30 @@ public class FileUtils {
         public @NonNull FileVisitResult visitFile(@NonNull Path path, @NonNull BasicFileAttributes attrs) throws IOException {
             Path relativized = source.relativize(path);
             if(!isAllowed(relativized)) return FileVisitResult.CONTINUE;
-            String entryName = relativized.toString();
-            TarArchiveEntry entry = new TarArchiveEntry(path.toFile(), entryName);
 
+            String entryName = source.getFileName().toString() + "/" + relativized;
+
+            TarArchiveEntry entry = new TarArchiveEntry(path.toFile(), entryName);
             tarOut.putArchiveEntry(entry);
             Files.copy(path, tarOut);
+            tarOut.closeArchiveEntry();
+
+            return FileVisitResult.CONTINUE;
+        }
+
+        @Override
+        public @NonNull FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+            Path relativized = source.relativize(dir);
+            if(!isAllowed(relativized)) return FileVisitResult.CONTINUE;
+
+            // Erzeugt den Namen für den Ordner-Eintrag (muss auf / enden)
+            String entryName = source.getFileName().toString() + "/";
+            if (!relativized.toString().isEmpty()) {
+                entryName += relativized.toString().replace('\\', '/') + "/";
+            }
+
+            TarArchiveEntry entry = new TarArchiveEntry(dir.toFile(), entryName);
+            tarOut.putArchiveEntry(entry);
             tarOut.closeArchiveEntry();
 
             return FileVisitResult.CONTINUE;
