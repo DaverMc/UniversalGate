@@ -15,7 +15,7 @@ interface Queries {
             .build();
 
     SQLStatement CREATE_CATEGORIES_TABLE = SQLStatementBuilder.create()
-            .table("categories")
+            .table("IF NOT EXISTS categories") //TODO DIRTY FIX
             .primaryKey("id", SQLiteColumnType.TEXT)
             .column("prefix", SQLiteColumnType.TEXT)
             .build();

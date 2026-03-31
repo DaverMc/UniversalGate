@@ -15,8 +15,8 @@ public class SQLStatementBuilder {
         return new InsertStepImpl(new StringBuilder(), new ArrayList<>());
     }
 
-    public static Step.UpdateStep update() {
-        return new UpdateStepImpl(new StringBuilder(), new ArrayList<>());
+    public static Step.UpdateStep update(String tableName) {
+        return new UpdateStepImpl(tableName, new StringBuilder(), new ArrayList<>());
     }
 
     public static Step.DeleteStep delete() {

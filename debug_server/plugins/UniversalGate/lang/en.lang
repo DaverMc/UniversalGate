@@ -1,5 +1,3 @@
-#
-#Tue Feb 03 19:00:49 CET 2026
 border.default=<link\:chat.prefix> Set worldbord to <green>default</green>
 border.unlimited=<link\:chat.prefix> Set worldbord to <red>unlimited</red>
 category.create.success=<link\:chat.prefix> Successfully created <green><category></green>
@@ -53,6 +51,8 @@ dimension.stoplag.enable=<link\:chat.prefix> You have <green>enabled</green> sto
 event.join=<link\:chat.prefix>Welcome <aqua><player></aqua>
 event.leave=<link\:chat.prefix> <aqua><player></aqua> left the game
 event.portal.disabled=<link\:chat.prefix> Portals are <red>disabled</red>
+generic.disabled=new:generic.disabled
+generic.enabled=new:generic.enabled
 gui.creativeitems.title=<green> <b> Creative Item </b></green>
 gui.statue.inventory=<green> <b> Statue Items </b></green>
 item.light.air.title=<light_purple>Lighted Air [<level>]</light_purple>

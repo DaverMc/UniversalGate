@@ -6,8 +6,9 @@ import java.util.List;
 
 public class UpdateStepImpl extends StepBase<Step.UpdateStep> implements Step.UpdateStep {
 
-    public UpdateStepImpl(StringBuilder builder, List<SQLArgument<?>> arguments) {
+    public UpdateStepImpl(String tableName, StringBuilder builder, List<SQLArgument<?>> arguments) {
         super(builder, arguments);
+        builder.append("UPDATE ").append(tableName);
     }
 
     @Override

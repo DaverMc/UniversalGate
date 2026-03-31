@@ -1,37 +1,45 @@
 package de.daver.unigate.task;
 
 import de.daver.unigate.core.sql.ResultTransformer;
+import de.daver.unigate.core.sql.SQLArgument;
 import de.daver.unigate.core.sql.SQLDataSetter;
 import de.daver.unigate.core.sql.SQLStatement;
+import de.daver.unigate.core.sql.builder.ColumnType;
+import de.daver.unigate.core.sql.builder.SQLStatementBuilder;
+import de.daver.unigate.core.sql.builder.SQLiteColumnType;
 
 import java.util.UUID;
 
 interface Queries {
 
-    SQLStatement CREATE_TABLE = new SQLStatement("""
-            CREATE TABLE IF NOT EXISTS tasks (name TEXT PRIMARY KEY, creator TEXT, executor TEXT, state TEXT, action TEXT, dimension TEXT, description TEXT)
-            """);
+    SQLStatement CREATE_TABLE = SQLStatementBuilder.create()
+            .table("IF NOT EXISTS tasks") //TODO DIRTY FIX
+            .column("name", SQLiteColumnType.TEXT)
+            .column("creator", SQLiteColumnType.TEXT)
+            .column("executor", SQLiteColumnType.TEXT)
+            .column("state", SQLiteColumnType.TEXT)
+            .column("action", SQLiteColumnType.TEXT)
+            .column("dimension", SQLiteColumnType.TEXT)
+            .column("description", SQLiteColumnType.TEXT)
+            .build();
 
-    SQLStatement LOAD_ALL = new SQLStatement("SELECT * FROM tasks");
+    SQLStatement LOAD_ALL = SQLStatementBuilder.select("*")
+            .from("tasks")
+            .build();
 
-    SQLStatement DELETE = new SQLStatement("DELETE FROM tasks WHERE name = ?")
-            .addStringArgument();
+    SQLStatement DELETE = SQLStatementBuilder.delete()
+            .from("tasks").where("name = ?")
+            .build();
 
-    SQLStatement UPDATE = new SQLStatement("UPDATE tasks SET state = ?, executor = ?, description = ? WHERE name = ?")
-            .addStringArgument()
-            .addStringArgument()
-            .addStringArgument()
-            .addStringArgument();
+    SQLStatement UPDATE = SQLStatementBuilder.update("tasks")
+            .set("state", "executor", "description")
+            .where("name = ?")
+            .build();
 
-
-    SQLStatement INSERT = new SQLStatement("INSERT INTO tasks (name, creator, executor, state, action, dimension, description) VALUES (?, ?, ?, ?, ?, ?, ?)")
-            .addStringArgument()
-            .addConverted(UUID.class, SQLDataSetter.STRING, UUID::toString)
-            .addStringArgument()
-            .addConverted(TaskType.class, SQLDataSetter.STRING, TaskType::name)
-            .addConverted(TaskState.class, SQLDataSetter.STRING, TaskState::name)
-            .addConverted(UUID.class, SQLDataSetter.STRING, UUID::toString)
-            .addStringArgument();
+    SQLStatement INSERT = SQLStatementBuilder.insert()
+            .into("tasks")
+            .columns("name", "creator", "executor", "state", "action", "dimension", "description")
+            .build();
 
     ResultTransformer<Task> TRANSFORMER = set -> {
         var id = set.getString("name");

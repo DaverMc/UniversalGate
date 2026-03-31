@@ -35,10 +35,6 @@ public class UniGateAPIImpl implements UniGateAPI {
         this.database = createDatabase(plugin);
     }
 
-    private DirectoryRegistry createDirectories() {
-
-    }
-
     private SQLExecutor createDatabase(JavaPlugin plugin) throws IOException {
         var bootstrap = new DatabaseBootstrap();
         var file = bootstrap.createDatabaseFile(plugin, "database.db");

@@ -38,7 +38,7 @@ interface Queries {
              .build();
 
      SQLStatement CREATE_DIMENSIONS_TABLE = SQLStatementBuilder.create()
-             .table("dimensions")
+             .table("IF NOT EXISTS dimensions")  //TODO DIRTY FIX
              .primaryKey("id", SQLiteColumnType.TEXT)
              .column("name", SQLiteColumnType.TEXT)
              .column("type", SQLiteColumnType.TEXT)
@@ -50,7 +50,7 @@ interface Queries {
              .build();
 
      SQLStatement CREATE_ALLOWED_TABLE = SQLStatementBuilder.create()
-             .table("allowed_dimensions")
+             .table("IF NOT EXISTS allowed_dimensions")//TODO DIRTY FIX
              .primaryKey("dimension", SQLiteColumnType.TEXT)
              .primaryKey("player", SQLiteColumnType.TEXT)
              .build();
@@ -88,7 +88,7 @@ interface Queries {
              .argument(Arguments.toString(UUID.class))
              .build();
 
-     SQLStatement UPDATE_DIMENSION_META = SQLStatementBuilder.update()
+     SQLStatement UPDATE_DIMENSION_META = SQLStatementBuilder.update("dimensions")
              .set("name", "stop_lag", "state", "last_loaded")
              .where("id = ?")
              .argument(Arguments.of(SQLDataType.STRING))
