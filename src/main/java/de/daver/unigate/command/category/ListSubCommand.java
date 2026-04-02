@@ -25,7 +25,7 @@ public class ListSubCommand extends LiteralNode {
         for (var category : categories) context.plugin().languageManager()
                 .message(LanguageKeys.CATEGORY_LIST_ENTRY)
                 .argument("category", category.name())
-                .argument("name", category.id())
+                .argument("id", category.id())
                 .send(context.sender());
     }
 }
