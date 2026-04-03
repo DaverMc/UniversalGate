@@ -2,6 +2,7 @@ package de.daver.unigate.core.util;
 
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.cacheddata.CachedMetaData;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -17,6 +18,11 @@ public class PlayerFetcher {
     public static UUID getPlayerUUID(String name) {
         var user = LuckPermsProvider.get().getUserManager().getUser(name);
         return user == null ? null : user.getUniqueId();
+    }
+
+    public static UUID getSenderUUID(CommandSender sender) {
+        if(sender instanceof Player player) return player.getUniqueId();
+        else return null;
     }
 
     public static String getPrefix(Player player) {

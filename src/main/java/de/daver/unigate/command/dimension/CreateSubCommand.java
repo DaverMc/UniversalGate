@@ -8,6 +8,7 @@ import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.core.command.argument.EnumArgument;
 import de.daver.unigate.core.command.argument.WordArgument;
+import de.daver.unigate.core.util.PlayerFetcher;
 import de.daver.unigate.dimension.Dimension;
 import de.daver.unigate.dimension.gen.DimensionType;
 
@@ -42,6 +43,8 @@ class CreateSubCommand extends LiteralNode {
     private void createDimension(String name, DimensionType type, PluginContext context) throws Exception {
         if (context.plugin().dimensionCache().select(name) != null)
             throw new IllegalArgumentException("Dimension already exists " + name);
+
+        PlayerFetcher.getSenderUUID(context.sender());
 
         var dimension = new Dimension(name, type, context.executor().getUniqueId());
         dimension.create();

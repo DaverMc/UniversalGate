@@ -12,6 +12,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represents a TagResolver for MiniMessage
+ * <choice:[name]:{Message0:Message1:Message...}>
+ *
+ */
 public class ChoiceTagResolver implements TagResolver {
 
     private final String key;

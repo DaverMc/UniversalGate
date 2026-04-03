@@ -1,5 +1,5 @@
-border.default=<link:chat.prefix> Set worldbord to <green>default</green>
-border.unlimited=<link:chat.prefix> Set worldbord to <red>unlimited</red>
+border.default=<link:chat.prefix> Set world border to <green>default</green>
+border.unlimited=<link:chat.prefix> Set world border to <red>unlimited</red>
 category.create.success=<link:chat.prefix> Successfully created <green><category></green>
 category.delete.success=<link:chat.prefix> Successfully deleted <green><category></green>
 category.list.entry=<dark_gray>- <blue><category></blue> (<aqua><id></aqua>)
@@ -48,6 +48,7 @@ dimension.list.header=<link:chat.prefix> Found <light_purple><dimensions></light
 dimension.renamed=<link:chat.prefix> You have renamed <red><old></red> to <green><new></green>
 dimension.stoplag.disable=<link:chat.prefix> You have <red>disabled</red> stoplag for <aqua><dimension></aqua>
 dimension.stoplag.enable=<link:chat.prefix> You have <green>enabled</green> stoplag for <aqua><dimension></aqua>
+dimension.stoplag.success=<link:chat.prefix> You have <choice:enabled:<red>disabled</red>:<green>enabled</green>> stoplag for <light_purple><dimension></light_purple>
 event.join=<link:chat.prefix>Welcome <aqua><player></aqua>
 event.leave=<link:chat.prefix> <aqua><player></aqua> left the game
 event.portal.disabled=<link:chat.prefix> Portals are <red>disabled</red>

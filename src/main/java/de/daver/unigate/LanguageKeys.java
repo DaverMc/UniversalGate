@@ -75,6 +75,7 @@ public enum LanguageKeys implements LanguageKey {
     TASK_CREATE_CHANGE("task.create.change", "task", "dimension"),
     EVENT_PORTAL_DISABLED("event.portal.disabled"),
     EVENT_LEAVE("event.leave", "player"),
+    DIMENSION_STOPLAG_SUCCESS("dimension.stoplag.success", "dimension", "choice:enabled:false:true"),
     DIMENSION_STOPLAG_DISABLE("dimension.stoplag.disable", "dimension"),
     DIMENSION_STOPLAG_ENABLE("dimension.stoplag.enable", "dimension"),
     SERVER_VERSION("server.version"),
