@@ -1,6 +1,7 @@
 package de.daver.unigate.command.dimension;
 
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.category.Category;
 import de.daver.unigate.command.argument.CategoryArgument;
 import de.daver.unigate.command.argument.DimensionArgument;
@@ -15,6 +16,7 @@ public class RenameSubCommand extends LiteralNode {
 
     protected RenameSubCommand() {
         super("rename", "Renames a Dimension");
+        permission(Permissions.DIMENSION_RENAME);
         then(new DimensionArgument("dimension"))
                 .then(new CategoryArgument("category"))
                 .then(new WordArgument("theme"))

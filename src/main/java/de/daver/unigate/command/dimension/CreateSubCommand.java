@@ -11,6 +11,9 @@ import de.daver.unigate.core.command.argument.WordArgument;
 import de.daver.unigate.core.util.PlayerFetcher;
 import de.daver.unigate.dimension.Dimension;
 import de.daver.unigate.dimension.gen.DimensionType;
+import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 class CreateSubCommand extends LiteralNode {
 
@@ -44,9 +47,7 @@ class CreateSubCommand extends LiteralNode {
         if (context.plugin().dimensionCache().select(name) != null)
             throw new IllegalArgumentException("Dimension already exists " + name);
 
-        PlayerFetcher.getSenderUUID(context.sender());
-
-        var dimension = new Dimension(name, type, context.executor().getUniqueId());
+        var dimension = new Dimension(name, type, context.senderUUID());
         dimension.create();
         context.plugin().dimensionCache().insert(dimension);
 

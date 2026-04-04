@@ -20,21 +20,18 @@ public class PlayerFetcher {
         return user == null ? null : user.getUniqueId();
     }
 
-    public static UUID getSenderUUID(CommandSender sender) {
-        if(sender instanceof Player player) return player.getUniqueId();
-        else return null;
-    }
-
     public static String getPrefix(Player player) {
         var meta = getMeta(player);
         if(meta == null) return "";
-        return meta.getPrefix() != null ? meta.getPrefix() : "";
+        var prefix = meta.getPrefix();
+        return prefix != null ? prefix : "";
     }
 
     public static String getSuffix(Player player) {
         var meta = getMeta(player);
         if(meta == null) return "";
-        return meta.getSuffix() != null ? meta.getSuffix() : "";
+        var suffix = meta.getSuffix();
+        return suffix != null ? suffix : "";
     }
 
     private static CachedMetaData getMeta(Player player) {

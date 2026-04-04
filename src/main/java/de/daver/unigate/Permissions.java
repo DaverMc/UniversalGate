@@ -39,6 +39,9 @@ public interface Permissions {
     String DIMENSION_INVITE = DIMENSION + ".invite";
     String DIMENSION_INVITE_ACCEPT = DIMENSION_INVITE + ".accept";
     String DIMENSION_TELEPORT = DIMENSION + ".teleport";
+    String DIMENSION_ACTIVATE = DIMENSION + ".activate";
+    String DIMENSION_ARCHIVE = DIMENSION + ".archive";
+    String DIMENSION_RENAME = DIMENSION + ".rename";
 
     String TASK = PREFIX + "task";
     String TASK_ACCEPT = TASK + ".accept";

@@ -1,6 +1,7 @@
 package de.daver.unigate.command.dimension;
 
 import de.daver.unigate.LanguageKeys;
+import de.daver.unigate.Permissions;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.core.command.argument.WordArgument;
@@ -11,6 +12,7 @@ public class ActivateSubCommand extends LiteralNode {
 
     protected ActivateSubCommand() {
         super("activate", "Activates a Dimension, so it can edited again");
+        permission(Permissions.DIMENSION_ACTIVATE);
         then(new WordArgument("dimension"))
                 .suggestions(this::suggestArchivedDimensions)
                 .executor(this::activateDimension);
