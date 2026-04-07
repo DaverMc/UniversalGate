@@ -19,7 +19,8 @@ public class CategoryArgument extends ArgumentNode<Category> {
             var player = context.senderPlayer();
             return context.plugin().categoryCache().getAll()
                     .stream()
-                    .filter(category -> player.hasPermission(Permissions.DIMENSION_ENTER_CATEGORY + category.id()));
+                    .filter(category -> player.hasPermission(Permissions.DIMENSION_ENTER_ALL) ||
+                        player.hasPermission(Permissions.DIMENSION_ENTER_CATEGORY + category.id()));
         };
     }
 

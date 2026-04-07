@@ -44,10 +44,12 @@
 /build <player> fügt einen inviteten Spieler, wird entfernt sobald die welt wieder verlassen wird
 - UserArgument erweitern, dass wenn ein nicht vorgeschlagen Name eingegeben wird der OfflinePlayer gefetcht wird
 - /w chunkGen generiert die Chunks einer welt in einem radius
-Nether und End als Generators hinzufügen
+- Nether als Generators hinzufügen
 
+Man kann keine categorien zum erstellen von dimensionen verweden
 In der Dimension List sieht man nicht welche maps aktuell geladen sind
 Wenn ich eine zwei große Pflanze platziere geht immer der untere teil kaputt
+End DimensionGen
 
 === Features ===
 Die Dimensionsliste soll ein Argument haben womit nach Anfängen gesucht werden kann. Als Vorschläge sollen die Categorien kommen, aber man kann auch freitext benutzen

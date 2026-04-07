@@ -84,7 +84,12 @@ public class DimensionCache {
     }
 
     public List<Dimension> getAll() throws SQLException {
-        return sqlExecutor.query(Queries.SELECT_ALL, ResultTransformer.asList(Queries.DIMENSION_TRANSFORMER));
+        var queried = sqlExecutor.query(Queries.SELECT_ARCHIVED, ResultTransformer.asList(Queries.DIMENSION_TRANSFORMER));
+        active.values().forEach(dim -> {
+            queried.removeIf(d -> d.id().equals(dim.id()));
+            queried.add(dim);
+        });
+        return queried;
     }
 
     public Collection<Dimension> getActive() {
