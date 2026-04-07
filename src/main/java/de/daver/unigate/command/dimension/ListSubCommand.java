@@ -32,7 +32,9 @@ public class ListSubCommand extends LiteralNode {
 
     private void sendDimensionList(PluginContext context, String filter) throws Exception {
         final var player = context.senderPlayer();
-        Predicate<Dimension> predicate = filter == null ? dim -> true : dim -> dim.name().contains(filter);
+        Predicate<Dimension> predicate = filter == null ? dim -> true :
+                dim -> dim.name().toLowerCase()
+                        .contains(filter.toLowerCase());
 
         var dimensions = context.plugin().dimensionCache().getAll().stream()
                 .filter(dim -> dim.canEnter(player))

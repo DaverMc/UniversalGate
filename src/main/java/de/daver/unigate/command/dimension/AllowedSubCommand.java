@@ -9,10 +9,8 @@ public class AllowedSubCommand extends LiteralNode {
     protected AllowedSubCommand() {
         super("allowed", "Access the allowed list of a dimension");
         permission(Permissions.DIMENSION_ALLOWED);
-        var dimensionArg = new DimensionArgument("dimension");
-        then(dimensionArg)
-                .then(new AllowedAddSubCommand())
-                .then(new AllowedRemoveSubCommand())
-                .then(new AllowedListSubCommand());
+        then(new AllowedAddSubCommand());
+        then(new AllowedRemoveSubCommand());
+        then(new AllowedListSubCommand());
     }
 }

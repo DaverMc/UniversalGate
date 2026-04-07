@@ -19,7 +19,7 @@ public class AcceptInviteSubCommand extends LiteralNode {
         var player = context.senderPlayer();
         var invite = WorldSwitchListener.INVITES.remove(player.getUniqueId());
         var dimension = context.plugin().dimensionCache().getActive(invite);
-        dimension.enter(player);
+        dimension.enter(player, true);
         context.plugin().languageManager()
                 .message(LanguageKeys.DIMENSION_INVITE_ACCEPT)
                 .argument("dimension", dimension.name())

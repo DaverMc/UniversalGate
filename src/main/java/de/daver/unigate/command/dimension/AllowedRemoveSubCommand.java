@@ -2,6 +2,7 @@ package de.daver.unigate.command.dimension;
 
 import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.Permissions;
+import de.daver.unigate.command.argument.DimensionArgument;
 import de.daver.unigate.command.argument.UserArgument;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
@@ -16,9 +17,12 @@ public class AllowedRemoveSubCommand extends LiteralNode {
     protected AllowedRemoveSubCommand() {
         super("remove", "Removes a player from the allowed list");
         permission(Permissions.DIMENSION_ALLOWED_REMOVE);
+        executor(this::removeLocal);
         then(new UserArgument("user"))
                 .suggestions(suggestions())
-                .executor(this::removePlayer);
+                .executor(this::removeLocal)
+                .then(new DimensionArgument("dimension"))
+                .executor(this::removeGlobal);
     }
 
     SuggestionProvider<UUID> suggestions() {
@@ -28,9 +32,19 @@ public class AllowedRemoveSubCommand extends LiteralNode {
         };
     }
 
-    void removePlayer(PluginContext context) throws Exception {
+    private void removeLocal(PluginContext context) throws Exception {
+        var player = context.senderPlayer();
+        var dimension = context.plugin().dimensionCache().getActive(player.getWorld().getName());
+        removePlayer(context, dimension);
+    }
+
+    private void removeGlobal(PluginContext context) throws Exception {
+        var dimension = context.getArgument("dimension", Dimension.class);
+        removePlayer(context, dimension);
+    }
+
+    void removePlayer(PluginContext context, Dimension dimension) throws Exception {
         UUID uuid = context.getArgument("user", UUID.class);
-        Dimension dimension = context.getArgument("dimension", Dimension.class);
 
         if(!dimension.meta().allowedPlayers().contains(uuid))
                 throw new IllegalAccessException("Player is not allowed in this dimension");

@@ -2,6 +2,7 @@ package de.daver.unigate.command.dimension;
 
 import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.Permissions;
+import de.daver.unigate.command.argument.DimensionArgument;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.core.util.PlayerFetcher;
@@ -12,11 +13,23 @@ public class AllowedListSubCommand extends LiteralNode {
     protected AllowedListSubCommand() {
         super("list", "Lists all allowed players");
         permission(Permissions.DIMENSION_ALLOWED_LIST);
-        executor(this::listAllowed);
+        executor(this::listLocalAllowed);
+        then(new DimensionArgument("dimension"))
+                .executor(this::listGlobalAllowed);
     }
 
-    void listAllowed(PluginContext context) {
+    private void listLocalAllowed(PluginContext context) {
+        var player = context.senderPlayer();
+        var dimension = context.plugin().dimensionCache().getActive(player.getWorld().getName());
+        listAllowed(context, dimension);
+    }
+
+    private void listGlobalAllowed(PluginContext context) {
         var dimension = context.getArgument("dimension", Dimension.class);
+        listAllowed(context, dimension);
+    }
+
+    void listAllowed(PluginContext context, Dimension dimension) {
         var allowedPlayers = dimension.meta().allowedPlayers();
         context.plugin().languageManager()
                 .message(LanguageKeys.DIMENSION_ALLOWED_LIST_HEADER)

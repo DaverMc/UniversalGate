@@ -45,14 +45,22 @@
 - UserArgument erweitern, dass wenn ein nicht vorgeschlagen Name eingegeben wird der OfflinePlayer gefetcht wird
 - /w chunkGen generiert die Chunks einer welt in einem radius
 - Nether als Generators hinzufügen
+- Man kann keine categorien zum erstellen von dimensionen verweden
+- In der Dimension List sieht man nicht welche maps aktuell geladen sind
+- Dimension List filter ist nun nicht mehr Case-Sensitive
 
-Man kann keine categorien zum erstellen von dimensionen verweden
-In der Dimension List sieht man nicht welche maps aktuell geladen sind
 Wenn ich eine zwei große Pflanze platziere geht immer der untere teil kaputt
 End DimensionGen
 
+!Die default world macht komplett faxen mit allen commands
+SUFFIX entfernen
+Not allowed nachricht Name der Welt entfernen
+acceptInvite lässt einen nicht in die
+help command einbauen für die Commands speed,gamemode,nightvision
+allowed umbauen auf local zusätzlich umbauen
+
 === Features ===
-Die Dimensionsliste soll ein Argument haben womit nach Anfängen gesucht werden kann. Als Vorschläge sollen die Categorien kommen, aber man kann auch freitext benutzen
+- Die Dimensionsliste soll ein Argument haben womit nach Anfängen gesucht werden kann. Als Vorschläge sollen die Categorien kommen, aber man kann auch freitext benutzen
 Von Kategorie Prefix zu Kategorie Namen parsen für z.B. dimension info
 Wenn das erstellen fehlschlägt, Dateien, oder Datenbankeinträge löschen
 Archivierte Welten sollen als .tar.gz in einem Ordner gespeichert werden sodass der WorldContainer cleaner ist

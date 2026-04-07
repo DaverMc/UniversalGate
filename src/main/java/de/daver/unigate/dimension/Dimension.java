@@ -124,12 +124,16 @@ public class Dimension {
         player.teleport(worldHub.getSpawnLocation());
     }
 
-    public boolean enter(Player player) {
+    public boolean enter(Player player, boolean bypass) {
         if(meta.state() == DimensionState.ARCHIVED) return false;
         if(meta.state() == DimensionState.ACTIVE) load();
-        if(!canEnter(player)) return false;
+        if(!canEnter(player) || bypass) return false;
         player.teleport(Bukkit.getWorld(name).getSpawnLocation());
         return true;
+    }
+
+    public boolean enter(Player player) {
+        return enter(player, false);
     }
 
 
