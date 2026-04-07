@@ -1,6 +1,5 @@
 package de.daver.unigate.command.icon;
 
-import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.Permissions;
@@ -20,7 +19,7 @@ public class LoreSubCommand extends LiteralNode {
     protected LoreSubCommand() {
         super("lore", "Edits the lore of the icon in your hand");
         permission(Permissions.COMMAND_ICON_LORE);
-        then(new NumberArgument<>("index", IntegerArgumentType.integer(), Integer.class))
+        then(new NumberArgument<>("index",Integer.class, 0, 20))
                 .executor(this::deleteLoreLine)
                 .then(new TextArgument("lines"))
                 .suggestions(this::suggestExistingLine, true)

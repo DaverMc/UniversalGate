@@ -12,6 +12,8 @@ public interface Permissions {
     String COMMAND_ICON = COMMAND + ".icon";
     String COMMAND_ICON_RENAME = COMMAND_ICON + ".rename";
     String COMMAND_ICON_LORE = COMMAND_ICON + ".lore";
+    String COMMAND_GAMEMODE = COMMAND + ".gamemode";
+    String COMMAND_GAMEMODE_OTHER = COMMAND_GAMEMODE + ".other";
 
     String CATEGORY = PREFIX + "category";
     String CATEGORY_CREATE = CATEGORY + ".create";
@@ -28,6 +30,7 @@ public interface Permissions {
     String DIMENSION_ALLOWED = DIMENSION + ".allowed";
     String DIMENSION_ALLOWED_ADD = DIMENSION_ALLOWED + ".add";
     String DIMENSION_ALLOWED_REMOVE = DIMENSION_ALLOWED + ".remove";
+    String DIMENSION_ALLOWED_LIST = DIMENSION_ALLOWED + ".list";
     String DIMENSION_LIST = DIMENSION + ".list";
     String DIMENSION_INFO = DIMENSION + ".info";
     String DIMENSION_CREATE = DIMENSION + ".create";
@@ -42,6 +45,7 @@ public interface Permissions {
     String DIMENSION_ACTIVATE = DIMENSION + ".activate";
     String DIMENSION_ARCHIVE = DIMENSION + ".archive";
     String DIMENSION_RENAME = DIMENSION + ".rename";
+    String DIMENSION_GENERATECHUNKS = DIMENSION + ".generatechunks";
 
     String TASK = PREFIX + "task";
     String TASK_ACCEPT = TASK + ".accept";

@@ -4,6 +4,12 @@ import de.daver.unigate.core.lang.LanguageKey;
 
 public enum LanguageKeys implements LanguageKey {
 
+    DIMENSION_GENERATE_CHUNKS_STARTED("dimension.generate.chunks.started", "dimension", "radius"),
+    DIMENSION_GENERATE_CHUNKS_PROGRESS("dimension.generate.chunks.progress", "dimension", "radius", "progress"),
+    DIMENSION_GENERATE_CHUNKS_FINISHED("dimension.generate.chunks.finished", "dimension", "radius"),
+    COMMAND_GAMEMODE_OTHER_SENT("command.gamemode.other.sent","target", "mode"),
+    COMMAND_GAMEMODE_OTHER_RECEIVE("command.gamemode.other.receive", "mode"),
+    COMMAND_GAMEMODE_SELF("command.gamemode.self", "mode"),
     GENERIC_ENABLED("generic.enabled"),
     GENERIC_DISABLED("generic.disabled"),
     COMMAND_SUB_COMMAND_HEADER("command.sub-command.header", "name", "description"),
@@ -79,13 +85,9 @@ public enum LanguageKeys implements LanguageKey {
     EVENT_PORTAL_DISABLED("event.portal.disabled"),
     EVENT_LEAVE("event.leave", "player"),
     DIMENSION_STOPLAG_SUCCESS("dimension.stoplag.success", "dimension", "choice:enabled:false:true"),
-    DIMENSION_STOPLAG_DISABLE("dimension.stoplag.disable", "dimension"),
-    DIMENSION_STOPLAG_ENABLE("dimension.stoplag.enable", "dimension"),
     SERVER_VERSION("server.version"),
     SERVER_MOTD("server.motd"),
     SERVER_LISTED_PLAYERS("server.listed.players"),
-    BORDER_UNLIMITED("border.unlimited"),
-    BORDER_DEFAULT("border.default"),
     NIGHTVISION_ADD("nightvision.add"),
     NIGHTVISION_REMOVED("nightvision.removed"),
     ITEM_LIGHT_WATER_TITLE("item.light.water.title", "level"),

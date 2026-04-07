@@ -4,7 +4,6 @@ import com.mojang.brigadier.context.CommandContext;
 import de.daver.unigate.UniversalGatePlugin;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;

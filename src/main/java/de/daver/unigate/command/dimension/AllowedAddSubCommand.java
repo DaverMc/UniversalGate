@@ -22,8 +22,10 @@ public class AllowedAddSubCommand extends LiteralNode {
     void allowPlayer(PluginContext context) throws Exception {
         UUID uuid = context.getArgument("user", UUID.class);
         Dimension dimension = context.getArgument("dimension", Dimension.class);
+
         if(dimension.meta().allowedPlayers().contains(uuid))
             throw new IllegalArgumentException("Already contains player " + PlayerFetcher.getPlayerName(uuid));
+
         context.plugin().dimensionCache().allow(dimension, uuid);
         context.plugin().languageManager()
                 .message(LanguageKeys.DIMENSION_ALLOWED_ADD_SUCCESS)

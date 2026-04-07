@@ -39,11 +39,11 @@ public class ChoiceTagResolver implements TagResolver {
         List<String> options = new ArrayList<>();
         while (arguments.hasNext()) options.add(arguments.pop().value());
 
-        if(options.isEmpty() || index >= options.size())
+        if(options.isEmpty() || index >= options.size()) {
             return Tag.inserting(Component.text(providedKey));
+        }
 
         String message = options.get(index);
-
         return Tag.selfClosingInserting(ctx.deserialize(message));
     }
 

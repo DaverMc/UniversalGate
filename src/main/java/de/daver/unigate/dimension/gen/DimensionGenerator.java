@@ -16,15 +16,20 @@ public interface DimensionGenerator {
         return root;
     }
 
-    static CompoundTag createOverworldNBT(CompoundTag root) {
+    static CompoundTag createDimensionNBT(CompoundTag root, String dimension) {
         CompoundTag dimensions = new CompoundTag();
         root.put("dimensions", dimensions);
 
         CompoundTag overworld = new CompoundTag();
         dimensions.put("minecraft:overworld", overworld);
-        overworld.putString("type", "minecraft:overworld");
+        overworld.putString("type", dimension);
 
         return overworld;
     }
+
+    static CompoundTag createOverworldNBT(CompoundTag root) {
+        return createDimensionNBT(root, "minecraft:overworld");
+    }
+
 
 }

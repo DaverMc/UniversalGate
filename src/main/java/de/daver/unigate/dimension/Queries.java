@@ -7,7 +7,6 @@ import de.daver.unigate.core.sql.builder.SQLDataType;
 import de.daver.unigate.core.sql.builder.SQLStatementBuilder;
 import de.daver.unigate.core.sql.builder.SQLiteColumnType;
 import de.daver.unigate.dimension.gen.DimensionType;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.Random;
 import java.util.UUID;

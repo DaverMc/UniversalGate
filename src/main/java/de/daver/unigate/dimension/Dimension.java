@@ -78,21 +78,7 @@ public class Dimension {
     public void create() throws IOException {
         createLevelDatFile();
         load();
-        setGameRules();
         unload(true);
-    }
-
-    //TODO REMOVE Later move the Gamerules into VoidGenerator
-    private void setGameRules() {
-        if(type() == DimensionType.OVERWORLD) return;
-        var world = Bukkit.getWorld(name());
-
-        world.setGameRule(GameRules.ADVANCE_TIME, false);
-        world.setGameRule(GameRules.ADVANCE_WEATHER, false);
-        world.setGameRule(GameRules.RANDOM_TICK_SPEED, 0);
-        world.setGameRule(GameRules.COMMAND_BLOCKS_WORK, false);
-        world.setGameRule(GameRules.SHOW_ADVANCEMENT_MESSAGES, false);
-        world.setGameRule(GameRules.SHOW_DEATH_MESSAGES, false);
     }
 
     private void createLevelDatFile() throws IOException {

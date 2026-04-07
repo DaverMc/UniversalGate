@@ -14,11 +14,16 @@ public class ListSubCommand extends LiteralNode {
     }
 
     public void listDimensions(PluginContext context) throws Exception {
-        var dimensions = context.plugin().dimensionCache().getAll();
+        var player = context.senderPlayer();
+        //TODO Effizienter gestalten in der Zukunft als erst alles zu holen und dann auszusortieren
+        var dimensions = context.plugin().dimensionCache().getAll().stream()
+                .filter(dim -> dim.canEnter(player)).toList();
+
         context.plugin().languageManager()
                 .message(LanguageKeys.DIMENSION_LIST_HEADER)
                 .argument("dimensions", dimensions.size())
                 .send(context.sender());
+
         if(dimensions.isEmpty()) return;
 
         for (var dimension : dimensions) {

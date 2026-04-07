@@ -1,5 +1,6 @@
 package de.daver.unigate.listener;
 
+import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.dimension.Dimension;
 import de.daver.unigate.dimension.DimensionCache;
@@ -8,7 +9,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
-import java.sql.SQLException;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,7 +28,13 @@ public class WorldSwitchListener extends PluginEventListener {
         var player = event.getPlayer();
         var invite = INVITES.remove(player.getUniqueId());
         if(toDimension.name().equals(invite)) return;
-        if(toDimension.canEnter(event.getPlayer())) return;
+        if(toDimension.canEnter(player)) return;
+
+        plugin().languageManager()
+                .message(LanguageKeys.DIMENSION_ENTER_FAILED)
+                .argument("dimension", toDimension.name())
+                .send(player);
+
         event.setCancelled(true);
     }
 

@@ -22,10 +22,5 @@ class TeleportSubCommand extends LiteralNode {
                 .message(LanguageKeys.DIMENSION_ENTER_SUCCESS)
                 .argument("dimension", dimension.name())
                 .send(context.sender());
-        else context.plugin().languageManager()
-                .message(LanguageKeys.DIMENSION_ENTER_FAILED)
-                .argument("dimension", dimension.name())
-                .send(context.sender());
-
     }
 }

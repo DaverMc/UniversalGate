@@ -7,10 +7,10 @@ import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.listener.WorldSwitchListener;
 
-public class InviteAcceptSubCommand extends LiteralNode {
+public class AcceptInviteSubCommand extends LiteralNode {
 
-    protected InviteAcceptSubCommand() {
-        super("accept", "Accepts a Dimension Invite");
+    protected AcceptInviteSubCommand() {
+        super("acceptInvite", "Accepts a Dimension Invite");
         permission(Permissions.DIMENSION_INVITE_ACCEPT);
         executor(this::accept);
     }

@@ -18,7 +18,6 @@ public class InviteSubCommand extends LiteralNode {
         then(new UserArgument("target"))
                 .permission(Permissions.DIMENSION_INVITE)
                 .executor(this::invite);
-        then(new InviteAcceptSubCommand());
     }
 
     private void invite(PluginContext context) throws Exception {

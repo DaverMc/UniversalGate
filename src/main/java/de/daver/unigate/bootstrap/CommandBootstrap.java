@@ -43,6 +43,7 @@ public class CommandBootstrap {
                 .add(new TaskCommand())
                 .add(new HubCommand())
                 .add(new StatueCommand())
-                .add(new IconCommand());
+                .add(new IconCommand())
+                .add(new GamemodeCommand());
     }
 }

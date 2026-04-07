@@ -6,6 +6,8 @@ import java.util.Optional;
 public enum DimensionType {
 
     OVERWORLD(new OverworldGenerator()),
+    NETHER(new NetherGenerator()),
+    //THE_END(new TheEndGenerator()),
     VOID(new VoidGenerator());
 
 

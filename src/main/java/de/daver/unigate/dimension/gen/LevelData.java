@@ -5,6 +5,7 @@ import net.querz.nbt.tag.CompoundTag;
 import net.querz.nbt.tag.ListTag;
 import net.querz.nbt.tag.StringTag;
 import net.querz.nbt.tag.Tag;
+import org.bukkit.GameRules;
 
 public interface LevelData {
 
@@ -61,7 +62,14 @@ public interface LevelData {
     }
 
     static CompoundTag createGameRules(Dimension dimension) {
-        return new CompoundTag();
+        CompoundTag root = new CompoundTag();
+        root.putBoolean(GameRules.ADVANCE_TIME.getKey().toString(), false);
+        root.putBoolean(GameRules.ADVANCE_WEATHER.getKey().toString(), false);
+        root.putInt(GameRules.RANDOM_TICK_SPEED.getKey().toString(), 0);
+        root.putBoolean(GameRules.COMMAND_BLOCKS_WORK.getKey().toString(), false);
+        root.putBoolean(GameRules.SHOW_ADVANCEMENT_MESSAGES.getKey().toString(), false);
+        root.putBoolean(GameRules.SHOW_DEATH_MESSAGES.getKey().toString(), false);
+        return root;
     }
 
     static CompoundTag createSpawn(Dimension dimension) {

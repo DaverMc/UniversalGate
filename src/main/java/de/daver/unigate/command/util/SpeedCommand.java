@@ -14,7 +14,7 @@ public class SpeedCommand extends LiteralNode {
         super("speed", "Sets the speed of the player from 1-10");
         permission(Permissions.COMMAND_SPEED);
         executor(this::resetSpeed);
-        then(new NumberArgument<>("speed", IntegerArgumentType.integer(1, 10), Integer.class))
+        then(new NumberArgument<>("speed", Integer.class,1, 10))
                 .executor(this::setSpeed);
     }
 

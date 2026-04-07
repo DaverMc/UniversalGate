@@ -21,5 +21,7 @@ public class DimensionCommand extends UniGateCommand {
         then(new ArchiveSubCommand());
         then(new ActivateSubCommand());
         then(new RenameSubCommand());
+        then(new AcceptInviteSubCommand());
+        then(new GenerateChunksSubCommand());
     }
 }

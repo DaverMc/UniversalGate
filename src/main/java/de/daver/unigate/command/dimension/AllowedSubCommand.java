@@ -1,12 +1,8 @@
 package de.daver.unigate.command.dimension;
 
-import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.Permissions;
 import de.daver.unigate.command.argument.DimensionArgument;
 import de.daver.unigate.core.command.LiteralNode;
-import de.daver.unigate.core.command.PluginContext;
-import de.daver.unigate.core.util.PlayerFetcher;
-import de.daver.unigate.dimension.Dimension;
 
 public class AllowedSubCommand extends LiteralNode {
 
@@ -14,28 +10,9 @@ public class AllowedSubCommand extends LiteralNode {
         super("allowed", "Access the allowed list of a dimension");
         permission(Permissions.DIMENSION_ALLOWED);
         var dimensionArg = new DimensionArgument("dimension");
-        then(dimensionArg).executor(this::listAllowed);
-        dimensionArg.then(new AllowedAddSubCommand());
-        dimensionArg.then(new AllowedRemoveSubCommand());
-    }
-
-    void listAllowed(PluginContext context) {
-        var dimension = context.getArgument("dimension", Dimension.class);
-        var allowedPlayers = dimension.meta().allowedPlayers();
-        context.plugin().languageManager()
-                .message(LanguageKeys.DIMENSION_ALLOWED_LIST_HEADER)
-                .argument("dimension", dimension.name())
-                .argument("players", allowedPlayers.size())
-                .send(context.sender());
-
-        if(allowedPlayers.isEmpty()) return;
-        for(var uuid : allowedPlayers) {
-            var name = PlayerFetcher.getPlayerName(uuid);
-            if(name == null) name = uuid.toString();
-            context.plugin().languageManager()
-                    .message(LanguageKeys.DIMENSION_ALLOWED_LIST_ENTRY)
-                    .argument("player", name)
-                    .send(context.sender());
-        }
+        then(dimensionArg)
+                .then(new AllowedAddSubCommand())
+                .then(new AllowedRemoveSubCommand())
+                .then(new AllowedListSubCommand());
     }
 }

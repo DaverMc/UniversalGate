@@ -5,7 +5,6 @@ import de.daver.unigate.Permissions;
 import de.daver.unigate.command.argument.DimensionArgument;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
-import de.daver.unigate.core.command.argument.WordArgument;
 import de.daver.unigate.core.util.FileUtils;
 import de.daver.unigate.core.util.PathUtil;
 import de.daver.unigate.dimension.Dimension;
