@@ -42,10 +42,10 @@ public class PositionItemListener extends StatuePoseEditorListener {
                 .send(context.player());
 
         var key = switch (mode) {
-            case AXIS_X -> LanguageKeys.ITEM_STATUE_EDITOR_LORE_X;
-            case AXIS_Y -> LanguageKeys.ITEM_STATUE_EDITOR_LORE_Y;
-            case AXIS_Z -> LanguageKeys.ITEM_STATUE_EDITOR_LORE_Z;
-            case AXIS_ROTATION -> LanguageKeys.ITEM_STATUE_EDITOR_LORE_ROTATION;
+            case AXIS_X -> LanguageKeys.ITEM_STATUE_HEAD_LORE_X;
+            case AXIS_Y -> LanguageKeys.ITEM_STATUE_HEAD_LORE_Y;
+            case AXIS_Z -> LanguageKeys.ITEM_STATUE_HEAD_LORE_Z;
+            case AXIS_ROTATION -> LanguageKeys.ITEM_STATUE_HEAD_LORE_ROTATION;
             default -> throw new IllegalStateException("Unexpected value: " + mode);
         };
 

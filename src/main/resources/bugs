@@ -33,6 +33,19 @@
 + Export mit einem zusätzlichen Ordner als root (und dieser Ordner soll bennenbar sein)
 + Manchmal wird LOADED nicht zurück gesetzt.
 
+Localize Key bei Stoplag
+Nachricht wenn teleport abgebrochen wird
+Dimension List Command zeigt alle nicht nur die sichtbaren an
+/w acceptInvite statt dem komishcen
+/w allowed list statt /w allowed
+Eigenen /gamemode command womit man
+/w invite ist nur view only
+/build <player> fügt einen inviteten Spieler, wird entfernt sobald die welt wieder verlassen wird
+UserArgument erweitern, dass wenn ein nicht vorgeschlagen Name eingegeben wird der OfflinePlayer gefetcht wird
+/w chunkGen generiert die Chunks einer welt in einem radius
+Nether und End als Generators hinzufügen
+
+
 Die Dimensionsliste soll ein Argument haben womit nach Anfängen gesucht werden kann. Als Vorschläge sollen die Categorien kommen, aber man kann auch freitext benutzen
 In der Dimension List sieht man nicht welche maps aktuell geladen sind
 Wenn ich eine zwei große Pflanze platziere geht immer der untere teil kaputt
