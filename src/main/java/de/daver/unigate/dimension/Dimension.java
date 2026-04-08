@@ -120,15 +120,17 @@ public class Dimension {
     public void kick(Player player) {
         var world = Bukkit.getWorld(name);
         if(world == null) return;
-        var worldHub = Bukkit.getWorld("world");
+        var worldHub = DimensionCache.getServerMainWorld();
         player.teleport(worldHub.getSpawnLocation());
     }
 
     public boolean enter(Player player, boolean bypass) {
         if(meta.state() == DimensionState.ARCHIVED) return false;
         if(meta.state() == DimensionState.ACTIVE) load();
-        if(!canEnter(player) || bypass) return false;
-        player.teleport(Bukkit.getWorld(name).getSpawnLocation());
+        if(!canEnter(player) && !bypass) return false;
+        var world = Bukkit.getWorld(name);
+        if(world == null) return false;
+        player.teleport(world.getSpawnLocation());
         return true;
     }
 

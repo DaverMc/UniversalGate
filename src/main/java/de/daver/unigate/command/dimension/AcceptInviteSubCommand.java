@@ -17,7 +17,7 @@ public class AcceptInviteSubCommand extends LiteralNode {
 
     private void accept(PluginContext context) throws CommandSyntaxException {
         var player = context.senderPlayer();
-        var invite = WorldSwitchListener.INVITES.remove(player.getUniqueId());
+        var invite = WorldSwitchListener.INVITES.get(player.getUniqueId());
         var dimension = context.plugin().dimensionCache().getActive(invite);
         dimension.enter(player, true);
         context.plugin().languageManager()

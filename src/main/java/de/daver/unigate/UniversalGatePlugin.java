@@ -130,7 +130,7 @@ public class UniversalGatePlugin extends JavaPlugin {
         try {
             categoryCache = new CategoryCache(this);
             categoryCache.initialize();
-            dimensionCache = new DimensionCache();
+            dimensionCache = new DimensionCache(this);
             dimensionCache.initialize(sqlExecutor);
             taskCache = new TaskCache(this);
             taskCache.initialize();

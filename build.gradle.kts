@@ -1,4 +1,5 @@
 import net.minecrell.pluginyml.paper.PaperPluginDescription
+import org.jetbrains.kotlin.ir.backend.js.compile
 
 plugins {
     kotlin("jvm") version "1.9.22"
@@ -15,11 +16,13 @@ repositories {
         name = "paper"
     }
     maven("https://jitpack.io/")
+    maven("https://repo.codemc.io/repository/maven-public/")
 }
 
 dependencies {
     compileOnly(libs.paper.api)
     compileOnly(libs.luckPerms)
+
     implementation(libs.nbt)
     implementation(libs.hikariCP)
     implementation(libs.apache.compess)
@@ -31,6 +34,10 @@ paper {
 
     serverDependencies {
         register("LuckPerms") {
+            required = true
+            load = PaperPluginDescription.RelativeLoadOrder.BEFORE
+        }
+        register(name = "Chunky") {
             required = true
             load = PaperPluginDescription.RelativeLoadOrder.BEFORE
         }

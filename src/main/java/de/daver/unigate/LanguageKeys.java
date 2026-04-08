@@ -4,14 +4,12 @@ import de.daver.unigate.core.lang.LanguageKey;
 
 public enum LanguageKeys implements LanguageKey {
 
-    DIMENSION_GENERATE_CHUNKS_STARTED("dimension.generate.chunks.started", "dimension", "radius"),
+    DIMENSION_GENERATE_CHUNKS_STARTED("dimension.generate.chunks.started", "dimension", "chunks"),
     DIMENSION_GENERATE_CHUNKS_PROGRESS("dimension.generate.chunks.progress", "dimension", "radius", "progress"),
     DIMENSION_GENERATE_CHUNKS_FINISHED("dimension.generate.chunks.finished", "dimension", "radius"),
     COMMAND_GAMEMODE_OTHER_SENT("command.gamemode.other.sent","target", "mode"),
     COMMAND_GAMEMODE_OTHER_RECEIVE("command.gamemode.other.receive", "mode"),
     COMMAND_GAMEMODE_SELF("command.gamemode.self", "mode"),
-    GENERIC_ENABLED("generic.enabled"),
-    GENERIC_DISABLED("generic.disabled"),
     COMMAND_SUB_COMMAND_HEADER("command.sub-command.header", "name", "description"),
     COMMAND_SUB_COMMAND_ENTRY("command.sub-command.entry", "name", "description"),
     DIMENSION_RENAMED("dimension.renamed", "old", "new"),

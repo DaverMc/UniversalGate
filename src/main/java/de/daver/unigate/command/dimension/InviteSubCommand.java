@@ -15,8 +15,8 @@ public class InviteSubCommand extends LiteralNode {
 
     InviteSubCommand() {
         super("invite", "Sends an invite to another player to join your Dimension");
+        permission(Permissions.DIMENSION_INVITE);
         then(new UserArgument("target"))
-                .permission(Permissions.DIMENSION_INVITE)
                 .executor(this::invite);
     }
 

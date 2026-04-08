@@ -1,9 +1,12 @@
 package de.daver.unigate.dimension;
 
+import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.core.sql.ResultTransformer;
 import de.daver.unigate.core.sql.SQLExecutor;
+import de.daver.unigate.dimension.chunk.ChunkGenerationService;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -13,10 +16,12 @@ public class DimensionCache {
 
     private final Map<UUID, Dimension> active;
     private final Set<String> archived;
+    private final ChunkGenerationService chunkService;
 
     private SQLExecutor sqlExecutor;
 
-    public DimensionCache() {
+    public DimensionCache(UniversalGatePlugin plugin) {
+        this.chunkService = new ChunkGenerationService(plugin);
         this.active = new ConcurrentHashMap<>();
         this.archived = ConcurrentHashMap.newKeySet();
     }
@@ -148,5 +153,9 @@ public class DimensionCache {
 
     public Set<String> getArchived() {
         return archived;
+    }
+
+    public ChunkGenerationService chunkService() {
+        return chunkService;
     }
 }
