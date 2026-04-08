@@ -37,10 +37,6 @@ paper {
             required = true
             load = PaperPluginDescription.RelativeLoadOrder.BEFORE
         }
-        register(name = "Chunky") {
-            required = true
-            load = PaperPluginDescription.RelativeLoadOrder.BEFORE
-        }
     }
 }
 

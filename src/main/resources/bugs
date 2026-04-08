@@ -49,6 +49,7 @@
 - In der Dimension List sieht man nicht welche maps aktuell geladen sind
 - Dimension List filter ist nun nicht mehr Case-Sensitive
 
+Seed als Argument fürs erstellen von Dimension einbauen
 Wenn ich eine zwei große Pflanze platziere geht immer der untere teil kaputt
 End DimensionGen
 
@@ -68,4 +69,4 @@ Wenn das erstellen fehlschlägt, Dateien, oder Datenbankeinträge löschen
 Archivierte Welten sollen als .tar.gz in einem Ordner gespeichert werden sodass der WorldContainer cleaner ist
 (Message Channels)
 (Portalblöcke & Feuerblöcke in Custom Items)
-(DataPack Creator für zum Beispiel DeathRun Hindernisse)
+(DataPack Creator für zum Beispiel DeathRun Hindernisse oder Custom Biome)
