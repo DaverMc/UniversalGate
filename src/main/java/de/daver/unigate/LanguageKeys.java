@@ -4,7 +4,7 @@ import de.daver.unigate.core.lang.LanguageKey;
 
 public enum LanguageKeys implements LanguageKey {
 
-    COMMAND_BUILD_MODE_TARGET("command.build-mode.target", "target"),
+    COMMAND_BUILD_MODE_TARGET("command.build-mode.target", "choice:status"),
     COMMAND_BUILD_MODE_ADD("command.build-mode.add", "target"),
     COMMAND_BUILD_MODE_REMOVE("command.build-mode.remove", "target"),
     DIMENSION_GENERATE_CHUNKS_STARTED("dimension.generate.chunks.started", "dimension", "chunks"),
