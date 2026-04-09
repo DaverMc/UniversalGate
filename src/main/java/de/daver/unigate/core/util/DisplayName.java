@@ -44,12 +44,13 @@ public class DisplayName {
             return;
         }
         var display = isDisplayValid(entityId, player);
+
         if(display != null) {
             display.text(name);
 
-            if(!player.getPassengers().contains(display)) {
+            if(!player.getPassengers().contains(display))
                 player.addPassenger(display);
-            }
+
             return;
         }
 
@@ -80,7 +81,7 @@ public class DisplayName {
 
     private static void addOffset(TextDisplay entity) {
         var transformation = entity.getTransformation();
-        transformation.getTranslation().add(0f, 0.5f, 0f);
+        transformation.getTranslation().add(0f, 0.2f, 0f);
         entity.setTransformation(transformation);
     }
 

@@ -51,7 +51,7 @@ public class TabList {
         if(nameGetter != null) {
             var name = nameGetter.get(plugin, player);
             player.playerListName(name);
-            //displayName.updateDisplayName(player, name);
+            displayName.updateDisplayName(player, name);
         }
         if(sorter == null) return;
 
@@ -64,6 +64,7 @@ public class TabList {
 
         team = board.getTeam(teamName);
         if(team == null) team = board.registerNewTeam(teamName);
+        team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
         if(!team.hasEntry(player.getName())) team.addEntry(player.getName());
     }
 
