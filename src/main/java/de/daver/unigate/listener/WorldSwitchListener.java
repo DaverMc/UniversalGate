@@ -27,15 +27,12 @@ public class WorldSwitchListener extends PluginEventListener {
         var to = event.getTo().getWorld().getName();
         var toDimension = plugin().dimensionCache().getActive(to);
         var player = event.getPlayer();
-
         if(toDimension == null) return;
 
         var invite = INVITES.remove(player.getUniqueId());
-
         if(toDimension.name().equals(invite) || toDimension.canEnter(player)) return;
 
         event.setCancelled(true);
-
         plugin().languageManager()
                 .message(LanguageKeys.DIMENSION_ENTER_FAILED)
                 .send(player);
@@ -44,10 +41,6 @@ public class WorldSwitchListener extends PluginEventListener {
     @EventHandler
     public void postWorldSwitched(PlayerChangedWorldEvent event) {
         event.getPlayer().setGameMode(GameMode.CREATIVE);
-
-        Bukkit.getScheduler().runTaskLater(plugin(), () -> {
-            plugin().tabList().sendName(event.getPlayer());
-        }, 1L);
 
         var from = event.getFrom();
         if(from == DimensionCache.getServerMainWorld()) return;

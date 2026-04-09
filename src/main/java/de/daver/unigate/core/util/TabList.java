@@ -51,7 +51,7 @@ public class TabList {
         if(nameGetter != null) {
             var name = nameGetter.get(plugin, player);
             player.playerListName(name);
-            displayName.updateDisplayName(player, name);
+            //displayName.updateDisplayName(player, name);
         }
         if(sorter == null) return;
 

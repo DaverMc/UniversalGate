@@ -3,6 +3,7 @@ package de.daver.unigate.dimension;
 import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.core.sql.ResultTransformer;
 import de.daver.unigate.core.sql.SQLExecutor;
+import de.daver.unigate.core.util.DisplayName;
 import de.daver.unigate.dimension.chunk.ChunkGenerationService;
 import org.bukkit.Bukkit;
 import org.bukkit.World;

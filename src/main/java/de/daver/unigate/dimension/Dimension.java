@@ -5,10 +5,12 @@ import de.daver.unigate.category.Category;
 import de.daver.unigate.core.util.FileUtils;
 import de.daver.unigate.dimension.gen.DimensionType;
 import de.daver.unigate.dimension.gen.LevelData;
+import io.papermc.paper.entity.TeleportFlag;
 import net.querz.nbt.io.NBTUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -120,7 +122,7 @@ public class Dimension {
         var world = Bukkit.getWorld(name);
         if(world == null) return;
         var worldHub = DimensionCache.getServerMainWorld();
-        player.teleport(worldHub.getSpawnLocation());
+        player.teleport(worldHub.getSpawnLocation(), TeleportFlag.Relative.VELOCITY_ROTATION);
     }
 
     public boolean enter(Player player, boolean bypass) {
