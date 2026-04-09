@@ -48,17 +48,16 @@
 - Man kann keine categorien zum erstellen von dimensionen verweden
 - In der Dimension List sieht man nicht welche maps aktuell geladen sind
 - Dimension List filter ist nun nicht mehr Case-Sensitive
+- !Die default world macht komplett faxen mit allen commands
+- SUFFIX entfernen -> Geändert
+- eNot allowed nachricht Name der Welt entfernen
+- acceptInvite lässt einen nicht in die -> Schein Fixed
+-Seed als Argument fürs erstellen von Dimension einbauen
+- allowed umbauen auf local zusätzlich umbauen
 
-Seed als Argument fürs erstellen von Dimension einbauen
-Wenn ich eine zwei große Pflanze platziere geht immer der untere teil kaputt
+LuckPerms PlayerFetcher gegen eigenen playerFetcher tauschen
 End DimensionGen
-
-!Die default world macht komplett faxen mit allen commands
-SUFFIX entfernen
-Not allowed nachricht Name der Welt entfernen
-acceptInvite lässt einen nicht in die
 help command einbauen für die Commands speed,gamemode,nightvision
-allowed umbauen auf local zusätzlich umbauen
 
 === Features ===
 Generieren eines Chunks soll laufen ohne dass ein Spieler auf der Map sein muss

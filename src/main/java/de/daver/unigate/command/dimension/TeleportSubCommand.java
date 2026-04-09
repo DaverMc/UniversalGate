@@ -1,6 +1,5 @@
 package de.daver.unigate.command.dimension;
 
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.Permissions;
 import de.daver.unigate.command.argument.DimensionArgument;
@@ -13,10 +12,11 @@ class TeleportSubCommand extends LiteralNode {
     protected TeleportSubCommand() {
         super("teleport", "Teleports to a dimension");
         permission(Permissions.DIMENSION_TELEPORT);
-        var dimensionArgument = then(new DimensionArgument("dimension"));
-        dimensionArgument.executor(this::teleport);
+        then(new DimensionArgument("dimension"))
+                .executor(this::teleport);
     }
-    void teleport(PluginContext context) throws CommandSyntaxException {
+
+    void teleport(PluginContext context) {
         Dimension dimension = context.getArgument("dimension", Dimension.class);
         if(dimension.enter(context.senderPlayer())) context.plugin().languageManager()
                 .message(LanguageKeys.DIMENSION_ENTER_SUCCESS)

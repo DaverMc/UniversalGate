@@ -7,13 +7,16 @@ public interface DimensionGenerator {
 
     CompoundTag getNBT(Dimension dimension);
 
-    static CompoundTag createRootNBT(Dimension dimension) {
+    static CompoundTag createRootNBT(Dimension dimension, boolean generateFeatures) {
         CompoundTag root = new CompoundTag();
-
-        root.putBoolean("generate_features", false);
+        root.putBoolean("generate_features", generateFeatures);
         root.putBoolean("bonus_chest", false);
         root.putLong("seed", dimension.seed());
         return root;
+    }
+
+    static CompoundTag createRootNBT(Dimension dimension) {
+        return createRootNBT(dimension, false);
     }
 
     static CompoundTag createDimensionNBT(CompoundTag root, String dimension) {

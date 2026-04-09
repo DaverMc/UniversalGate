@@ -1,5 +1,4 @@
 import net.minecrell.pluginyml.paper.PaperPluginDescription
-import org.jetbrains.kotlin.ir.backend.js.compile
 
 plugins {
     kotlin("jvm") version "1.9.22"
@@ -8,7 +7,7 @@ plugins {
 }
 
 group = "de.daver.unigate"
-version = "1.5.1"
+version = "1.5.2"
 
 repositories {
     mavenCentral()

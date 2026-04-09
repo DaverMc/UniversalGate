@@ -7,7 +7,6 @@ import de.daver.unigate.dimension.gen.DimensionType;
 import de.daver.unigate.dimension.gen.LevelData;
 import net.querz.nbt.io.NBTUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.GameRules;
 import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -40,11 +39,11 @@ public class Dimension {
     }
 
     public Dimension(Category category, String theme, DimensionType type, UUID creator) {
-        this(buildName(category, theme), type, creator);
+        this(buildName(category, theme), type, creator, new Random().nextLong());
     }
 
-    public Dimension(String name, DimensionType type, UUID creator) {
-        this(UUID.randomUUID(), name, type, new DimensionStats(creator), new DimensionMeta(), new Random().nextLong());
+    public Dimension(String name, DimensionType type, UUID creator, long seed) {
+        this(UUID.randomUUID(), name, type, new DimensionStats(creator), new DimensionMeta(), seed);
     }
 
     public UUID id() {
@@ -138,15 +137,14 @@ public class Dimension {
         return enter(player, false);
     }
 
-
     public boolean canEnter(@NotNull Player player) {
-        if(player.hasPermission(Permissions.DIMENSION_ENTER_ALL)) return true;
-        if(player.hasPermission(Permissions.DIMENSION_ENTER_CATEGORY + category())) return true;
-        return meta.allowedPlayers().contains(player.getUniqueId());
+        return player.hasPermission(Permissions.DIMENSION_ENTER_ALL) ||
+                player.hasPermission(Permissions.DIMENSION_ENTER_CATEGORY + categoryPrefix()) ||
+                meta.allowedPlayers().contains(player.getUniqueId());
     }
 
-    public String category() {
-        var parts = name.split(SEPARATOR);
+    public String categoryPrefix() {
+        var parts = name.split(SEPARATOR, 2);
         if(parts.length < 2) return "";
         return name.split(SEPARATOR)[0];
     }

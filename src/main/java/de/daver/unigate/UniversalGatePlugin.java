@@ -49,6 +49,7 @@ public class UniversalGatePlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         closeDatabaseConnection();
+        tabList().displayName().clearCache();
     }
 
     @Override
@@ -75,7 +76,8 @@ public class UniversalGatePlugin extends JavaPlugin {
 
     private void registerCommands() {
         getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> CommandBootstrap.create(null).registerAll(event.registrar())); //TODO Null API
+                event -> CommandBootstrap.create(null)
+                        .registerAll(event.registrar())); //TODO Null API
     }
 
     private void registerListeners() {
@@ -101,6 +103,7 @@ public class UniversalGatePlugin extends JavaPlugin {
 
         new BlockPlaceBreakListener(this).register();
         new CustomInventoryHolderListener(this).register();
+        new ViewerModeListener(this).register();
     }
 
     private void registerItemListener() {

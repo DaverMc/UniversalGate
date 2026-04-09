@@ -19,6 +19,8 @@ public class LeaveListener extends PluginEventListener {
     public void onLeave(PlayerQuitEvent event) {
         var player = event.getPlayer();
         event.quitMessage(null);
+        plugin().tabList().displayName().clearPlayer(player);
+
         for(var online : Bukkit.getOnlinePlayers()) {
             plugin().languageManager()
                     .message(LanguageKeys.EVENT_LEAVE)

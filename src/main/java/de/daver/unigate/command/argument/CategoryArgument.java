@@ -1,27 +1,25 @@
 package de.daver.unigate.command.argument;
 
-import de.daver.unigate.Permissions;
 import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.category.Category;
 import de.daver.unigate.core.command.ArgumentNode;
-import de.daver.unigate.core.command.SuggestionProvider;
+import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.core.command.argument.StringArgumentType;
+
+import java.util.stream.Stream;
 
 public class CategoryArgument extends ArgumentNode<Category> {
 
     public CategoryArgument(String name) {
         super(name, new Type());
-        suggestions(suggestions());
+        suggestions(CategoryArgument::senderCategories);
     }
 
-    private SuggestionProvider<Category> suggestions() {
-        return context -> {
-            var player = context.senderPlayer();
-            return context.plugin().categoryCache().getAll()
-                    .stream()
-                    .filter(category -> player.hasPermission(Permissions.DIMENSION_ENTER_ALL) ||
-                        player.hasPermission(Permissions.DIMENSION_ENTER_CATEGORY + category.id()));
-        };
+    public static Stream<Category> senderCategories(PluginContext context) {
+        var sender = context.sender();
+        return context.plugin().categoryCache().getAll()
+                .stream()
+                .filter(category -> category.canUse(sender));
     }
 
     public static class Type extends StringArgumentType<Category> {

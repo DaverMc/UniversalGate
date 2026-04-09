@@ -8,7 +8,7 @@ public class OverworldGenerator implements DimensionGenerator {
 
     @Override
     public CompoundTag getNBT(Dimension dimension) {
-        CompoundTag root = DimensionGenerator.createRootNBT(dimension);
+        CompoundTag root = DimensionGenerator.createRootNBT(dimension, true);
         CompoundTag overworld = DimensionGenerator.createOverworldNBT(root);
 
         CompoundTag generator = new CompoundTag();

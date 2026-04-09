@@ -14,6 +14,7 @@ public interface Permissions {
     String COMMAND_ICON_LORE = COMMAND_ICON + ".lore";
     String COMMAND_GAMEMODE = COMMAND + ".gamemode";
     String COMMAND_GAMEMODE_OTHER = COMMAND_GAMEMODE + ".other";
+    String COMMAND_BUILD_MODE = COMMAND + ".buildmode";
 
     String CATEGORY = PREFIX + "category";
     String CATEGORY_CREATE = CATEGORY + ".create";
@@ -27,6 +28,7 @@ public interface Permissions {
     String DIMENSION_ENTER = DIMENSION + ".enter";
     String DIMENSION_ENTER_ALL = DIMENSION_ENTER + ".all";
     String DIMENSION_ENTER_CATEGORY = DIMENSION_ENTER + ".category.";
+    String DIMENSION_MODE_VIEWER = DIMENSION + ".mode.viewer";
     String DIMENSION_ALLOWED = DIMENSION + ".allowed";
     String DIMENSION_ALLOWED_ADD = DIMENSION_ALLOWED + ".add";
     String DIMENSION_ALLOWED_REMOVE = DIMENSION_ALLOWED + ".remove";

@@ -30,8 +30,9 @@ public class InfoSubCommand extends LiteralNode {
     }
 
     void showLocalInfo(PluginContext context) throws CommandSyntaxException {
-        var dimension = context.plugin().dimensionCache().getActive(context.senderPlayer().getWorld().getName());
-        if(dimension == null) return;
+        var worldName = context.senderPlayer().getWorld().getName();
+        var dimension = context.plugin().dimensionCache().getActive(worldName);
+        if(dimension == null) throw new IllegalArgumentException("This world " + worldName + " is not a dimension!");
         showDimensionInfo(context, dimension);
     }
 
@@ -43,17 +44,17 @@ public class InfoSubCommand extends LiteralNode {
         String creationDate = formatter.format(localDateTime);
         String lastLoaded = formatter.format(LocalDateTime.now());
 
-        String categoryPrefix = dimension.category();
+        String categoryPrefix = dimension.categoryPrefix();
         var category = context.plugin().categoryCache().getByPrefix(categoryPrefix);
 
         context.plugin().languageManager()
                 .message(LanguageKeys.DIMENSION_INFO)
                 .argument("id", dimension.id())
                 .argument("name", dimension.name())
-                .argument("category", category.name())
+                .argument("category", category != null ? category.name() : "null")
                 .argument("type", dimension.type().name())
                 .argument("state", dimension.meta().state().name())
-                .argument("stoplag", dimension.meta().stopLag() ? "true" : "false")
+                .argument("stoplag", Boolean.toString(dimension.meta().stopLag()))
                 .argument("created", creationDate)
                 .argument("creator", creator)
                 .argument("last_loaded", lastLoaded)

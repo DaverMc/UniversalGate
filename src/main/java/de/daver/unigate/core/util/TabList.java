@@ -13,6 +13,8 @@ import java.util.function.Function;
 public class TabList {
 
     private final UniversalGatePlugin plugin;
+    private final DisplayName displayName;
+
 
     private ComponentGetter headerGetter = null;
     private ComponentGetter footerGetter = null;
@@ -21,6 +23,7 @@ public class TabList {
 
     public TabList(UniversalGatePlugin plugin) {
         this.plugin = plugin;
+        this.displayName = new DisplayName(plugin);
     }
 
     public void setHeaderGetter(ComponentGetter headerGetter) {
@@ -45,7 +48,11 @@ public class TabList {
     }
 
     public void sendName(Player player) {
-        if(nameGetter != null) player.playerListName(nameGetter.get(plugin, player));
+        if(nameGetter != null) {
+            var name = nameGetter.get(plugin, player);
+            player.playerListName(name);
+            //displayName.updateDisplayName(player, name);
+        }
         if(sorter == null) return;
 
         int priority = 9999 - sorter.apply(player);
@@ -63,6 +70,10 @@ public class TabList {
     public void sendHeaderFooter(Player player) {
         if(headerGetter != null) player.sendPlayerListHeader(headerGetter.get(plugin, player));
         if(footerGetter != null) player.sendPlayerListFooter(footerGetter.get(plugin, player));
+    }
+
+    public DisplayName displayName() {
+        return displayName;
     }
 
     public interface ComponentGetter {

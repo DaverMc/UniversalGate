@@ -16,9 +16,9 @@ public class AllowedAddSubCommand extends LiteralNode {
     protected AllowedAddSubCommand() {
         super("add", "Adds a player to the allowed list");
         permission(Permissions.DIMENSION_ALLOWED_ADD);
-        executor(this::addLocal);
-        then(new DimensionArgument("dimension"))
-                .then(new UserArgument("user"))
+        then(new UserArgument("user"))
+                .executor(this::addLocal)
+                .then(new DimensionArgument("dimension"))
                 .executor(this::addGlobal);
     }
 

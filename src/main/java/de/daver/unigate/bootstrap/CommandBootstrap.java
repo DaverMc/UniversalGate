@@ -44,6 +44,7 @@ public class CommandBootstrap {
                 .add(new HubCommand())
                 .add(new StatueCommand())
                 .add(new IconCommand())
+                .add(new BuildModeCommand(api))
                 .add(new GamemodeCommand());
     }
 }

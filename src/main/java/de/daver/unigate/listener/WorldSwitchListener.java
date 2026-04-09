@@ -23,19 +23,20 @@ public class WorldSwitchListener extends PluginEventListener {
 
     @EventHandler
     public void onWorldSwitch(PlayerTeleportEvent event) {
-        Dimension toDimension = plugin().dimensionCache().getActive(event.getTo().getWorld().getName());
+        var to = event.getTo().getWorld().getName();
+        var toDimension = plugin().dimensionCache().getActive(to);
         if(toDimension == null) return;
+
         var player = event.getPlayer();
         var invite = INVITES.remove(player.getUniqueId());
+
         if(toDimension.name().equals(invite)) return;
         if(toDimension.canEnter(player)) return;
+        event.setCancelled(true);
 
         plugin().languageManager()
                 .message(LanguageKeys.DIMENSION_ENTER_FAILED)
-                .argument("dimension", toDimension.name())
                 .send(player);
-
-        event.setCancelled(true);
     }
 
     @EventHandler
@@ -47,7 +48,6 @@ public class WorldSwitchListener extends PluginEventListener {
         if(from.getPlayerCount() > 0) return;
         var dimension = plugin().dimensionCache().getActive(from.getName());
         if(dimension == null) return;
-
         dimension.unload(true);
     }
 }
