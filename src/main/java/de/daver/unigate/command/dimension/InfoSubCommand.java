@@ -6,7 +6,7 @@ import de.daver.unigate.Permissions;
 import de.daver.unigate.command.argument.DimensionArgument;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
-import de.daver.unigate.core.util.PlayerFetcher;
+import de.daver.unigate.core.util.LuckPermsUtil;
 import de.daver.unigate.dimension.Dimension;
 
 import java.time.Instant;
@@ -37,7 +37,7 @@ public class InfoSubCommand extends LiteralNode {
     }
 
     void showDimensionInfo(PluginContext context, Dimension dimension) {
-        var creator = PlayerFetcher.getPlayerName(dimension.stats().creator());
+        var creator = context.plugin().userCache().getName(dimension.stats().creator());
         var instant = Instant.ofEpochMilli(dimension.stats().creationTime());
         var localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
         var formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy  HH:mm");

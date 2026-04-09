@@ -5,7 +5,7 @@ import de.daver.unigate.Permissions;
 import de.daver.unigate.command.argument.TaskArgument;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
-import de.daver.unigate.core.util.PlayerFetcher;
+import de.daver.unigate.core.util.LuckPermsUtil;
 import de.daver.unigate.task.Task;
 
 public class ExecutorRemoveSubCommand extends LiteralNode {
@@ -32,7 +32,7 @@ public class ExecutorRemoveSubCommand extends LiteralNode {
         context.plugin().languageManager()
                 .message(LanguageKeys.TASK_EXECUTOR_REMOVE)
                 .argument("task", task.id())
-                .argument("executor", PlayerFetcher.getPlayerName(executor))
+                .argument("executor", context.plugin().userCache().getName(executor))
                 .send(player);
 
     }

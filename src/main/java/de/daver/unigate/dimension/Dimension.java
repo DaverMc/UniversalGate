@@ -111,7 +111,10 @@ public class Dimension {
     public void unload(boolean save) {
         if(meta.state() != DimensionState.LOADED) return;
         var bukkitWorld = Bukkit.getWorld(name);
-        if(bukkitWorld == DimensionCache.getServerMainWorld()) return;
+        if(bukkitWorld == DimensionCache.getServerMainWorld()) {
+            meta.state(DimensionState.ACTIVE);
+            return;
+        }
         bukkitWorld.getPlayers().forEach(this::kick);
         Bukkit.unloadWorld(name, save);
         meta.state(DimensionState.ACTIVE);

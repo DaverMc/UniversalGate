@@ -6,7 +6,7 @@ import de.daver.unigate.Permissions;
 import de.daver.unigate.command.argument.UserArgument;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
-import de.daver.unigate.core.util.PlayerFetcher;
+import de.daver.unigate.core.util.LuckPermsUtil;
 import org.bukkit.Bukkit;
 
 import java.util.UUID;
@@ -25,13 +25,13 @@ public class KickSubCommand extends LiteralNode {
         var target = context.getArgument("player", UUID.class);
         var targetPlayer = Bukkit.getPlayer(target);
         if(targetPlayer == null)
-            throw new IllegalStateException("Player " + PlayerFetcher.getPlayerName(target) + " is not online!");
+            throw new IllegalStateException("Player " + context.plugin().userCache().getName(target) + " is not online!");
 
         var dimension = context.plugin().dimensionCache().getActive(player.getWorld().getName());
         dimension.kick(targetPlayer);
         context.plugin().languageManager()
                 .message(LanguageKeys.DIMENSION_KICK_SUCCESS)
-                .argument("target", PlayerFetcher.getPlayerName(target))
+                .argument("target", context.plugin().userCache().getName(target))
                 .argument("dimension", dimension.name())
                 .send(context.sender());
     }

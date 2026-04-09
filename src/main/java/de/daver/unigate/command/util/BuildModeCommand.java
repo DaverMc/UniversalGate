@@ -7,7 +7,7 @@ import de.daver.unigate.command.UniGateCommand;
 import de.daver.unigate.command.argument.UserArgument;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.core.lang.LanguageKey;
-import de.daver.unigate.core.util.PlayerFetcher;
+import de.daver.unigate.core.util.LuckPermsUtil;
 import de.daver.unigate.listener.ViewerModeListener;
 import org.bukkit.Bukkit;
 
@@ -39,14 +39,14 @@ public class BuildModeCommand extends UniGateCommand {
         }
 
         var targetPlayer = Bukkit.getPlayer(target);
-        if(targetPlayer == null) throw new IllegalStateException("Player " + PlayerFetcher.getPlayerName(target) + " is not online!");
+        if(targetPlayer == null) throw new IllegalStateException("Player " + context.plugin().userCache().getName(target) + " is not online!");
 
         context.plugin().languageManager().message(LanguageKeys.COMMAND_BUILD_MODE_TARGET)
                 .bool("status", status)
                 .send(targetPlayer);
 
         context.plugin().languageManager().message(langKey)
-                .argument("target", PlayerFetcher.getPlayerName(target))
+                .argument("target", context.plugin().userCache().getName(target))
                 .send(sender);
     }
 }

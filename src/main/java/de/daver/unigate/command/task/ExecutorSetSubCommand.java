@@ -6,7 +6,7 @@ import de.daver.unigate.command.argument.TaskArgument;
 import de.daver.unigate.command.argument.UserArgument;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
-import de.daver.unigate.core.util.PlayerFetcher;
+import de.daver.unigate.core.util.LuckPermsUtil;
 import de.daver.unigate.task.Task;
 
 import java.util.UUID;
@@ -33,7 +33,7 @@ public class ExecutorSetSubCommand extends LiteralNode {
         context.plugin().languageManager()
                 .message(LanguageKeys.TASK_EXECUTOR_SET)
                 .argument("task", task.id())
-                .argument("executor", PlayerFetcher.getPlayerName(target))
+                .argument("executor", context.plugin().userCache().getName(target))
                 .send(player);
 
     }

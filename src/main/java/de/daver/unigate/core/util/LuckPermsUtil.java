@@ -2,25 +2,9 @@ package de.daver.unigate.core.util;
 
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.cacheddata.CachedMetaData;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.UUID;
-
-public class PlayerFetcher {
-
-    public static String getPlayerName(UUID uuid) {
-        if(uuid == null) return "null";
-        var user = LuckPermsProvider.get().getUserManager().getUser(uuid);
-        return user == null ? uuid.toString() : user.getFriendlyName();
-    }
-
-    public static UUID getPlayerUUID(String name) {
-        var user = LuckPermsProvider.get().getUserManager().getUser(name);
-        if(user != null) return user.getUniqueId();
-        var offlineUser = Bukkit.getOfflinePlayer(name);
-        return offlineUser.getUniqueId();
-    }
+public class LuckPermsUtil {
 
     public static String getPrefix(Player player) {
         var meta = getMeta(player);

@@ -6,7 +6,9 @@ import de.daver.unigate.bootstrap.CommandBootstrap;
 import de.daver.unigate.category.CategoryCache;
 import de.daver.unigate.core.lang.LanguagesCache;
 import de.daver.unigate.core.sql.SQLExecutor;
-import de.daver.unigate.core.util.PlayerFetcher;
+import de.daver.unigate.core.user.UserCache;
+import de.daver.unigate.core.user.impl.LazyUserCache;
+import de.daver.unigate.core.util.LuckPermsUtil;
 import de.daver.unigate.core.util.TabList;
 import de.daver.unigate.dimension.DimensionCache;
 import de.daver.unigate.listener.*;
@@ -35,6 +37,7 @@ public class UniversalGatePlugin extends JavaPlugin {
 
     private static UniversalGatePlugin instance;
 
+    private UserCache userCache;
     private TabList tabList;
     private LanguagesCache languageManager;
     private CategoryCache categoryCache;
@@ -131,6 +134,10 @@ public class UniversalGatePlugin extends JavaPlugin {
         sqlExecutor = new SQLExecutor(dataSource);
 
         try {
+            var userCache = new LazyUserCache(this, sqlExecutor);
+            userCache.initialize();
+            this.userCache = userCache;
+
             categoryCache = new CategoryCache(this);
             categoryCache.initialize();
             dimensionCache = new DimensionCache(this);
@@ -189,8 +196,8 @@ public class UniversalGatePlugin extends JavaPlugin {
         tabList.setNameGetter((plugin, user) -> plugin.languageManager()
                 .message(LanguageKeys.TAB_LIST_NAME)
                 .argument("player", user.getName())
-                .text("prefix", PlayerFetcher.getPrefix(user))
-                .text("suffix", PlayerFetcher.getSuffix(user))
+                .text("prefix", LuckPermsUtil.getPrefix(user))
+                .text("suffix", LuckPermsUtil.getSuffix(user))
                 .get(user));
 
         tabList.setSorter(player -> {
@@ -276,7 +283,12 @@ public class UniversalGatePlugin extends JavaPlugin {
         return getServer().getWorldContainer().toPath();
     }
 
+    public UserCache userCache() {
+        return userCache;
+    }
+
     public static UniversalGatePlugin getInstance() {
         return instance;
     }
+
 }

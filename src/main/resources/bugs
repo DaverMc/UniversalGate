@@ -56,10 +56,10 @@
 - allowed umbauen auf local zusätzlich umbauen
 - Die Dimensionsliste soll ein Argument haben womit nach Anfängen gesucht werden kann. Als Vorschläge sollen die Categorien kommen, aber man kann auch freitext benutzen
 - Der Spieler name muss mit einem TextDisplay verlinkt werden
+- LuckPerms PlayerFetcher gegen eigenen playerFetcher tauschen
+- Von Kategorie Prefix zu Kategorie Namen parsen für z.B. dimension info
 
-Von Kategorie Prefix zu Kategorie Namen parsen für z.B. dimension info
 
-LuckPerms PlayerFetcher gegen eigenen playerFetcher tauschen
 End DimensionGen
 help command einbauen für die Commands speed,gamemode,nightvision
 Generieren eines Chunks soll laufen ohne dass ein Spieler auf der Map sein muss

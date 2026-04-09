@@ -6,7 +6,7 @@ import de.daver.unigate.Permissions;
 import de.daver.unigate.command.argument.TaskArgument;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
-import de.daver.unigate.core.util.PlayerFetcher;
+import de.daver.unigate.core.util.LuckPermsUtil;
 import de.daver.unigate.task.Task;
 
 public class InfoSubCommand extends LiteralNode {
@@ -20,14 +20,14 @@ public class InfoSubCommand extends LiteralNode {
 
     void showInfo(PluginContext context) throws CommandSyntaxException {
         var task = context.getArgument("task", Task.class);
-        var executor = task.executor() == null ? "" : PlayerFetcher.getPlayerName(task.executor());
+        var executor = task.executor() == null ? "" : context.plugin().userCache().getName(task.executor());
         context.plugin().languageManager()
                 .message(LanguageKeys.TASK_INFO)
                 .argument("name", task.id())
                 .argument("dimension", task.dimensionId())
                 .argument("type", task.type().name())
                 .argument("state", task.state().name())
-                .argument("creator", PlayerFetcher.getPlayerName(task.creator()))
+                .argument("creator", context.plugin().userCache().getName(task.creator()))
                 .argument("executor", executor)
                 .argument("description", task.description())
                 .send(context.senderPlayer());
