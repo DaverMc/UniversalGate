@@ -58,11 +58,11 @@ public class LazyUserCache extends SimpleUserCache {
 
     @Override
     public void put(User user) {
-        var existingName = getName(user.uuid());
-        if(existingName == null) post(user);
-        else if(!existingName.equals(user.name())) update(user);
-
         super.put(user);
+
+        var existingName = loadName(user.uuid());
+        if(existingName == null) post(user);
+        else update(user);
     }
 
     private void post(User user) {
@@ -75,7 +75,7 @@ public class LazyUserCache extends SimpleUserCache {
 
     private void update(User user) {
         try {
-            database.execute(Queries.UPDATE_USER, user.name(), user.uuid(), System.currentTimeMillis());
+            database.execute(Queries.UPDATE_USER, user.name(), System.currentTimeMillis(), user.uuid());
         } catch (SQLException e) {
             throw new RuntimeException(e); //TODO Bessere Fehlerbehandlung
         }
@@ -112,8 +112,9 @@ public class LazyUserCache extends SimpleUserCache {
                 .build();
 
         SQLStatement UPDATE_USER = SQLStatementBuilder.update("user")
-                .set("name")
+                .set("name", "last_seen")
                 .argument(Arguments.of(SQLDataType.STRING))
+                .argument(Arguments.of(SQLDataType.LONG))
                 .where("uuid = ?")
                 .argument(Arguments.toString(UUID.class))
                 .build();
