@@ -16,7 +16,7 @@ public class DeselectSubCommand extends LiteralNode {
         var player = context.senderPlayer();
         var statueListener = context.plugin().statueInteractListener();
 
-        if(statueListener.get(player) != null) statueListener.deselect(player);
+        if (statueListener.get(player) != null) statueListener.deselect(player);
         else context.plugin().languageManager()
                 .message(LanguageKeys.STATUE_NOT_SELECTED)
                 .send(player);

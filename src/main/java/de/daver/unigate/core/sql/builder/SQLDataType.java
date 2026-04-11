@@ -5,7 +5,7 @@ import de.daver.unigate.core.sql.SQLDataSetter;
 
 public enum SQLDataType {
 
-    STRING(String.class,(value, statement, index) -> statement.setString(index, value)),
+    STRING(String.class, (value, statement, index) -> statement.setString(index, value)),
     LONG(Long.class, (value, statement, index) -> statement.setLong(index, value)),
     INT(Integer.class, (value, statement, index) -> statement.setInt(index, value)),
     BOOL(Boolean.class, (value, statement, index) -> statement.setBoolean(index, value)),

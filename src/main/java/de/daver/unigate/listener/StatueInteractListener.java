@@ -34,7 +34,7 @@ public class StatueInteractListener extends PluginEventListener {
     }
 
     public void remove(Player player) {
-        if(statues.remove(player.getUniqueId()) == null) return;
+        if (statues.remove(player.getUniqueId()) == null) return;
         giveBackInventory(player);
     }
 
@@ -44,22 +44,22 @@ public class StatueInteractListener extends PluginEventListener {
 
     @EventHandler
     public void onArmorstandRightClick(PlayerInteractAtEntityEvent event) {
-        if(!(event.getRightClicked() instanceof ArmorStand armorStand)) return;
+        if (!(event.getRightClicked() instanceof ArmorStand armorStand)) return;
         event.setCancelled(true);
         select(event.getPlayer(), armorStand);
     }
 
     @EventHandler
     public void onArmorstandLeftClick(EntityDamageByEntityEvent event) {
-        if(!(event.getEntity() instanceof ArmorStand armorStand)) return;
-        if(!(event.getDamager() instanceof Player player)) return;
+        if (!(event.getEntity() instanceof ArmorStand armorStand)) return;
+        if (!(event.getDamager() instanceof Player player)) return;
         event.setCancelled(true);
         deselect(player);
     }
 
     public void deselect(Player player) {
         var statue = statues.remove(player.getUniqueId());
-        if(statue == null) return;
+        if (statue == null) return;
         plugin().languageManager()
                 .message(LanguageKeys.STATUE_DESELECTED)
                 .send(player);
@@ -68,7 +68,7 @@ public class StatueInteractListener extends PluginEventListener {
     }
 
     private void select(Player player, ArmorStand armorStand) {
-        if(statues.containsKey(player.getUniqueId())) return;
+        if (statues.containsKey(player.getUniqueId())) return;
         Statue statue = new Statue(armorStand);
         statues.put(player.getUniqueId(), statue);
         plugin().languageManager()
@@ -82,7 +82,7 @@ public class StatueInteractListener extends PluginEventListener {
         player.getInventory().setContents(playerInventories.get(player.getUniqueId()));
     }
 
-    private void giveTools(Player player){
+    private void giveTools(Player player) {
         var inventory = player.getInventory();
         playerInventories.put(player.getUniqueId(), inventory.getContents());
 
@@ -131,7 +131,7 @@ public class StatueInteractListener extends PluginEventListener {
                 .itemStack();
     }
 
-    private ItemStack inventoryItem( Player player) {
+    private ItemStack inventoryItem(Player player) {
         return new ItemWrapper(plugin(), Material.BROWN_BUNDLE)
                 .displayName(plugin -> plugin.languageManager()
                         .message(LanguageKeys.ITEM_STATUE_INVENTORY_TITLE)

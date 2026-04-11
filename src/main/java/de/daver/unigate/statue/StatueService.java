@@ -42,7 +42,7 @@ public class StatueService {
 
     public boolean copyStatue(Player player) {
         var selectedStatue = get(player);
-        if(selectedStatue == null) return false;
+        if (selectedStatue == null) return false;
         var newStand = player.getWorld().spawn(player.getLocation(), ArmorStand.class);
         var newStatue = new Statue(newStand);
         selectedStatue.copyAttributes(newStatue);

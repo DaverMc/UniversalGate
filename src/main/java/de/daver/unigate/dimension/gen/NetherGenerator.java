@@ -8,7 +8,7 @@ public class NetherGenerator implements DimensionGenerator {
     @Override
     public CompoundTag getNBT(Dimension dimension) {
         CompoundTag root = DimensionGenerator.createRootNBT(dimension, true);
-        CompoundTag overworld = DimensionGenerator.createDimensionNBT(root,"minecraft:the_nether");
+        CompoundTag overworld = DimensionGenerator.createDimensionNBT(root, "minecraft:the_nether");
 
         CompoundTag generator = new CompoundTag();
         overworld.put("generator", generator);

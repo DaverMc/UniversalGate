@@ -52,8 +52,8 @@ public record ChunkGenerationTask(
 
     public void run(BukkitTask task) {
         var world = Bukkit.getWorld(worldName);
-        if(world == null) throw new IllegalStateException("World not found");
-        if(!nextCoordinate() || cancelled.get()) {
+        if (world == null) throw new IllegalStateException("World not found");
+        if (!nextCoordinate() || cancelled.get()) {
             task.cancel();
             return;
         }
@@ -63,9 +63,8 @@ public record ChunkGenerationTask(
     }
 
 
-
     private boolean nextCoordinate() {
-        if(chunkX.get() > radius) {
+        if (chunkX.get() > radius) {
             chunkX.set(-radius);
             chunkZ.incrementAndGet();
         }
@@ -76,14 +75,16 @@ public record ChunkGenerationTask(
         chunk.unload(true);
         generated.incrementAndGet();
 
-        if(progressListener != null && generated.get() % 50 == 0)
+        if (progressListener != null && generated.get() % 50 == 0)
             progressListener.accept(new ProgressEvent(this, (float) generated.get() / totalChunks));
 
-        if(generated.get() >= totalChunks && completionListener != null)
+        if (generated.get() >= totalChunks && completionListener != null)
             completionListener.accept(new CompletionEvent(this));
     }
 
-    public record CompletionEvent(ChunkGenerationTask task) {}
+    public record CompletionEvent(ChunkGenerationTask task) {
+    }
 
-    public record ProgressEvent(ChunkGenerationTask task, float progress) {}
+    public record ProgressEvent(ChunkGenerationTask task, float progress) {
+    }
 }

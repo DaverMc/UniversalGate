@@ -35,7 +35,7 @@ public class DeclineSubCommand extends LiteralNode {
         var player = context.senderPlayer();
         var task = context.getArgument("task", Task.class);
 
-        if(task.state() != TaskState.FINISHED)
+        if (task.state() != TaskState.FINISHED)
             throw new IllegalStateException("Task is not finished!");
 
         task.setState(TaskState.DECLINED);

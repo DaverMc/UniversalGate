@@ -8,7 +8,7 @@ public class Loggers {
     private static Logger LOGGER = null;
 
     public static Logger get() {
-        if(LOGGER != null) return LOGGER;
+        if (LOGGER != null) return LOGGER;
         return LoggerFactory.getLogger(Loggers.class);
     }
 

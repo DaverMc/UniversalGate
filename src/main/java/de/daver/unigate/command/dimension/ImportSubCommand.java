@@ -32,11 +32,11 @@ public class ImportSubCommand extends LiteralNode {
                 .executor(this::importDimensionCustom);
     }
 
-    void importDimension(PluginContext context) throws Exception{
+    void importDimension(PluginContext context) throws Exception {
         importDimension(context, DimensionType.VOID);
     }
 
-    void importDimensionCustom(PluginContext context) throws Exception{
+    void importDimensionCustom(PluginContext context) throws Exception {
         var type = context.getArgument("type", DimensionType.class);
         importDimension(context, type);
     }
@@ -51,12 +51,12 @@ public class ImportSubCommand extends LiteralNode {
 
         var worldContainer = context.plugin().getServer().getWorldContainer().toPath();
         var newDir = worldContainer.resolve(Dimension.buildName(category, theme));
-        if(Files.exists(newDir))
+        if (Files.exists(newDir))
             throw new FileAlreadyExistsException(id);
 
         var source = context.plugin().importDir().resolve(file);
         FileUtils.copyContents(source, newDir);
-        var dimension = new Dimension(category, theme, type ,creator.getUniqueId());
+        var dimension = new Dimension(category, theme, type, creator.getUniqueId());
         dimension.create();
         context.plugin().dimensionCache().insert(dimension);
         context.plugin().languageManager()
@@ -68,7 +68,7 @@ public class ImportSubCommand extends LiteralNode {
 
 
     Stream<String> files(PluginContext context) {
-        try{
+        try {
             var stream = Files.list(context.plugin().importDir());
             return stream.map(Path::getFileName).map(Path::toString);
         } catch (IOException exception) {

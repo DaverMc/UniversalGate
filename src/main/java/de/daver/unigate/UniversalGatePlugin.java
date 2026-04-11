@@ -171,14 +171,15 @@ public class UniversalGatePlugin extends JavaPlugin {
     private File createDatabaseFile() {
         var file = new File(getDataFolder(), "database.db");
         var parent = file.getParentFile();
-        if(!parent.exists()&& parent.mkdirs()) logger().debug("Created database directory: {}", parent.getAbsolutePath());
+        if (!parent.exists() && parent.mkdirs())
+            logger().debug("Created database directory: {}", parent.getAbsolutePath());
         return file;
     }
 
     private void closeDatabaseConnection() {
-        if(sqlExecutor == null) return;
+        if (sqlExecutor == null) return;
         var dataSource = sqlExecutor.dataSource();
-        if(dataSource instanceof HikariDataSource hikariDataSource) hikariDataSource.close();
+        if (dataSource instanceof HikariDataSource hikariDataSource) hikariDataSource.close();
         sqlExecutor = null;
     }
 
@@ -203,7 +204,7 @@ public class UniversalGatePlugin extends JavaPlugin {
         tabList.setSorter(player -> {
             var api = LuckPermsProvider.get();
             var user = api.getUserManager().getUser(player.getUniqueId());
-            if(user == null) return 0;
+            if (user == null) return 0;
             return user.getNodes().stream()
                     .filter(NodeType.INHERITANCE::matches)
                     .map(NodeType.INHERITANCE::cast)
@@ -219,9 +220,9 @@ public class UniversalGatePlugin extends JavaPlugin {
     private void onLuckPermsGroupChange() {
         var eventBus = LuckPermsProvider.get().getEventBus();
         eventBus.subscribe(NodeAddEvent.class, event -> {
-            if(!event.isUser()) return;
+            if (!event.isUser()) return;
             var node = event.getNode();
-            if(!(node instanceof InheritanceNode)) return;
+            if (!(node instanceof InheritanceNode)) return;
             Bukkit.getOnlinePlayers().forEach(tabList::update);
         });
 

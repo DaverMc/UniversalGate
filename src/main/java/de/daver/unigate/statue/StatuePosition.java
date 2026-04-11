@@ -37,7 +37,7 @@ public class StatuePosition extends Vector3D {
 
     public void update() {
         var stand = this.statue.getEntity();
-        if(stand == null) return;
+        if (stand == null) return;
         update(stand);
     }
 

@@ -8,7 +8,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 public interface UniGateAPI {
 
     LanguagesCache languages();
+
     DimensionCache dimensions();
+
     StatueService statues();
+
     JavaPlugin plugin();
 }

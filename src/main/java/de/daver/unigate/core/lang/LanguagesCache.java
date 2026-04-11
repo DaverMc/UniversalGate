@@ -24,7 +24,7 @@ public class LanguagesCache {
 
     private String setDefaultLanguage(Locale locale) {
         String language = locale.getLanguage();
-        if(getLanguage(language) != null) return language;
+        if (getLanguage(language) != null) return language;
         languages.put(language, new Language(locale));
         return language;
     }
@@ -35,9 +35,9 @@ public class LanguagesCache {
     }
 
     protected Language getLanguage(Locale locale) {
-        if(locale == null) return getLanguage(defaultLanguage);
+        if (locale == null) return getLanguage(defaultLanguage);
         Language lang = getLanguage(locale.getLanguage());
-        if(lang != null) return lang;
+        if (lang != null) return lang;
         return getLanguage(defaultLanguage);
     }
 
@@ -54,7 +54,7 @@ public class LanguagesCache {
     }
 
     public <E extends Enum<E> & LanguageKey> void loadAll(Class<E> keyEnum) throws IOException {
-        for(Language language : languages.values()) {
+        for (Language language : languages.values()) {
             language.addDefaultKeys(keyEnum);
             language.load(languageDirectory);
         }

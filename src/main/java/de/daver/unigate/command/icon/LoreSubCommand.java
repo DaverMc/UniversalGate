@@ -19,7 +19,7 @@ public class LoreSubCommand extends LiteralNode {
     protected LoreSubCommand() {
         super("lore", "Edits the lore of the icon in your hand");
         permission(Permissions.COMMAND_ICON_LORE);
-        then(new NumberArgument<>("index",Integer.class, 0, 20))
+        then(new NumberArgument<>("index", Integer.class, 0, 20))
                 .executor(this::deleteLoreLine)
                 .then(new TextArgument("lines"))
                 .suggestions(this::suggestExistingLine, true)
@@ -29,17 +29,17 @@ public class LoreSubCommand extends LiteralNode {
     Stream<String> suggestExistingLine(PluginContext context) throws CommandSyntaxException {
         var player = context.senderPlayer();
         var itemStack = player.getInventory().getItemInMainHand();
-        if(itemStack.getType() == Material.AIR) return Stream.empty();
+        if (itemStack.getType() == Material.AIR) return Stream.empty();
         var itemWrapper = new ItemWrapper(context.plugin(), itemStack);
         var index = context.getArgument("index", Integer.class);
         var lineComponent = itemWrapper.getLore(index);
-        return Stream.of( MiniMessage.miniMessage().serialize(lineComponent));
+        return Stream.of(MiniMessage.miniMessage().serialize(lineComponent));
     }
 
     private void setItemLoreLines(PluginContext context) throws CommandSyntaxException {
         var player = context.senderPlayer();
         var itemStack = player.getInventory().getItemInMainHand();
-        if(itemStack.getType() == Material.AIR) return;
+        if (itemStack.getType() == Material.AIR) return;
         var itemWrapper = new ItemWrapper(context.plugin(), itemStack);
         var lineString = context.getArgument("lines", String.class);
         var index = context.getArgument("index", Integer.class);
@@ -56,7 +56,7 @@ public class LoreSubCommand extends LiteralNode {
     private void deleteLoreLine(PluginContext context) throws CommandSyntaxException {
         var player = context.senderPlayer();
         var itemStack = player.getInventory().getItemInMainHand();
-        if(itemStack.getType() == Material.AIR) return;
+        if (itemStack.getType() == Material.AIR) return;
         var itemWrapper = new ItemWrapper(context.plugin(), itemStack);
         var index = context.getArgument("index", Integer.class);
         itemWrapper.lore(index, null);

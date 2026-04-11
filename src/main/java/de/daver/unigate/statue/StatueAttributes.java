@@ -27,7 +27,7 @@ public class StatueAttributes {
         this.visible = stand.isVisible();
         this.arms = stand.hasArms();
         this.glowing = stand.isGlowing();
-        if(stand.isCustomNameVisible()) this.name = stand.customName();
+        if (stand.isCustomNameVisible()) this.name = stand.customName();
     }
 
     public boolean isSmall() {
@@ -55,7 +55,7 @@ public class StatueAttributes {
     }
 
     public String nameString() {
-        if(name == null) return "";
+        if (name == null) return "";
         return MiniMessage.miniMessage().serialize(name);
     }
 
@@ -85,7 +85,7 @@ public class StatueAttributes {
 
     public void update() {
         var stand = this.statue.getEntity();
-        if(stand == null) return;
+        if (stand == null) return;
         update(stand);
     }
 
@@ -95,7 +95,7 @@ public class StatueAttributes {
         stand.setVisible(this.visible);
         stand.setArms(this.arms);
         stand.setGlowing(this.glowing);
-        if(name == null) return;
+        if (name == null) return;
         stand.setCustomNameVisible(true);
         stand.customName(this.name);
     }

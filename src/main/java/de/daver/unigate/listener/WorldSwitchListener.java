@@ -2,9 +2,7 @@ package de.daver.unigate.listener;
 
 import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.UniversalGatePlugin;
-import de.daver.unigate.dimension.Dimension;
 import de.daver.unigate.dimension.DimensionCache;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
@@ -27,10 +25,10 @@ public class WorldSwitchListener extends PluginEventListener {
         var to = event.getTo().getWorld().getName();
         var toDimension = plugin().dimensionCache().getActive(to);
         var player = event.getPlayer();
-        if(toDimension == null) return;
+        if (toDimension == null) return;
 
         var invite = INVITES.remove(player.getUniqueId());
-        if(toDimension.name().equals(invite) || toDimension.canEnter(player)) return;
+        if (toDimension.name().equals(invite) || toDimension.canEnter(player)) return;
 
         event.setCancelled(true);
         plugin().languageManager()
@@ -43,10 +41,10 @@ public class WorldSwitchListener extends PluginEventListener {
         event.getPlayer().setGameMode(GameMode.CREATIVE);
 
         var from = event.getFrom();
-        if(from == DimensionCache.getServerMainWorld()) return;
-        if(from.getPlayerCount() > 0) return;
+        if (from == DimensionCache.getServerMainWorld()) return;
+        if (from.getPlayerCount() > 0) return;
         var dimension = plugin().dimensionCache().getActive(from.getName());
-        if(dimension == null) return;
+        if (dimension == null) return;
         dimension.unload(true);
     }
 }

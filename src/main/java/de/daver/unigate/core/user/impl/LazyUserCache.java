@@ -29,7 +29,7 @@ public class LazyUserCache extends SimpleUserCache {
     @Override
     public UUID getUUID(String name) {
         var uuid = super.getUUID(name);
-        if(uuid != null) return uuid;
+        if (uuid != null) return uuid;
         return loadUUID(name);
     }
 
@@ -37,14 +37,15 @@ public class LazyUserCache extends SimpleUserCache {
         try {
             return database.query(Queries.SELECT_BY_NAME, Queries.UUID_TRANSFORMER, name);
         } catch (SQLException e) {
-            throw new RuntimeException(e); //TODO Bessere Fehlerbehandlung
+            logSQLException(e);
+            return null;
         }
     }
 
     @Override
     public String getName(UUID uuid) {
         var name = super.getName(uuid);
-        if(name != null) return name;
+        if (name != null) return name;
         return loadName(uuid);
     }
 
@@ -52,8 +53,13 @@ public class LazyUserCache extends SimpleUserCache {
         try {
             return database.query(Queries.SELECT_BY_UUID, Queries.NAME_TRANSFORMER, uuid);
         } catch (SQLException e) {
-            throw new RuntimeException(e); //TODO Bessere Fehlerbehandlung
+            logSQLException(e);
+            return null;
         }
+    }
+
+    private void logSQLException(SQLException e) {
+        plugin.getSLF4JLogger().error("Database Error: ", e);
     }
 
     @Override
@@ -61,7 +67,7 @@ public class LazyUserCache extends SimpleUserCache {
         super.put(user);
 
         var existingName = loadName(user.uuid());
-        if(existingName == null) post(user);
+        if (existingName == null) post(user);
         else update(user);
     }
 
@@ -69,7 +75,7 @@ public class LazyUserCache extends SimpleUserCache {
         try {
             database.execute(Queries.INSERT_USER, user.uuid(), user.name(), System.currentTimeMillis(), System.currentTimeMillis());
         } catch (SQLException e) {
-            throw new RuntimeException(e); //TODO Bessere Fehlerbehandlung
+            logSQLException(e);
         }
     }
 
@@ -77,7 +83,7 @@ public class LazyUserCache extends SimpleUserCache {
         try {
             database.execute(Queries.UPDATE_USER, user.name(), System.currentTimeMillis(), user.uuid());
         } catch (SQLException e) {
-            throw new RuntimeException(e); //TODO Bessere Fehlerbehandlung
+            logSQLException(e);
         }
     }
 

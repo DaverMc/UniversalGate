@@ -5,7 +5,6 @@ import de.daver.unigate.core.command.ArgumentNode;
 import de.daver.unigate.core.command.SuggestionProvider;
 import de.daver.unigate.core.command.argument.StringArgumentType;
 import de.daver.unigate.core.user.UserCache;
-import de.daver.unigate.core.util.LuckPermsUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -24,7 +23,7 @@ public class UserArgument extends ArgumentNode<UUID> {
 
     SuggestionProvider<UUID> suggestionProvider() {
         return context ->
-            Bukkit.getOnlinePlayers().stream().map(Player::getUniqueId);
+                Bukkit.getOnlinePlayers().stream().map(Player::getUniqueId);
     }
 
     static class Type extends StringArgumentType<UUID> {

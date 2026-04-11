@@ -18,7 +18,7 @@ public class JoinListener extends PluginEventListener {
         var player = event.getPlayer();
         plugin().tabList().update(player);
 
-        for(var online : plugin().getServer().getOnlinePlayers()) {
+        for (var online : plugin().getServer().getOnlinePlayers()) {
             plugin().languageManager()
                     .message(LanguageKeys.EVENT_JOIN)
                     .argument("player", player.getName())

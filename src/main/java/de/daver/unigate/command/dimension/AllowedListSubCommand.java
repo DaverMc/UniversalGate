@@ -5,7 +5,6 @@ import de.daver.unigate.Permissions;
 import de.daver.unigate.command.argument.DimensionArgument;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
-import de.daver.unigate.core.util.LuckPermsUtil;
 import de.daver.unigate.dimension.Dimension;
 
 public class AllowedListSubCommand extends LiteralNode {
@@ -37,8 +36,8 @@ public class AllowedListSubCommand extends LiteralNode {
                 .argument("players", allowedPlayers.size())
                 .send(context.sender());
 
-        if(allowedPlayers.isEmpty()) return;
-        for(var uuid : allowedPlayers) {
+        if (allowedPlayers.isEmpty()) return;
+        for (var uuid : allowedPlayers) {
             var name = context.plugin().userCache().getName(uuid);
 
             context.plugin().languageManager()

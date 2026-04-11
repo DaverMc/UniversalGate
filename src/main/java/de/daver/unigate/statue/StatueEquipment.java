@@ -31,7 +31,6 @@ public class StatueEquipment {
     }
 
 
-
     public ItemStack mainHand() {
         return this.mainHand;
     }

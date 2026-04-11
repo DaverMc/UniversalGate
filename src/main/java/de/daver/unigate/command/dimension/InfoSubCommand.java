@@ -6,7 +6,6 @@ import de.daver.unigate.Permissions;
 import de.daver.unigate.command.argument.DimensionArgument;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
-import de.daver.unigate.core.util.LuckPermsUtil;
 import de.daver.unigate.dimension.Dimension;
 
 import java.time.Instant;
@@ -32,7 +31,7 @@ public class InfoSubCommand extends LiteralNode {
     void showLocalInfo(PluginContext context) throws CommandSyntaxException {
         var worldName = context.senderPlayer().getWorld().getName();
         var dimension = context.plugin().dimensionCache().getActive(worldName);
-        if(dimension == null) throw new IllegalArgumentException("This world " + worldName + " is not a dimension!");
+        if (dimension == null) throw new IllegalArgumentException("This world " + worldName + " is not a dimension!");
         showDimensionInfo(context, dimension);
     }
 

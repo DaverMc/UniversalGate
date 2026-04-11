@@ -30,7 +30,7 @@ public class TaskCache {
     }
 
     public boolean put(Task task) throws SQLException {
-        if(cache.containsKey(task.id())) return false;
+        if (cache.containsKey(task.id())) return false;
         cache.put(task.id(), task);
 
         var executor = task.executor();
@@ -47,7 +47,7 @@ public class TaskCache {
     }
 
     public void delete(Task task) throws SQLException {
-        if(!cache.containsKey(task.id())) return;
+        if (!cache.containsKey(task.id())) return;
         cache.remove(task.id());
         plugin.sqlExecutor().execute(Queries.DELETE, task.id());
     }

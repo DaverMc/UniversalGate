@@ -37,7 +37,7 @@ interface Queries {
 
     ResultTransformer<Category> TRANSFORMER = set -> {
         var idS = set.getString("id");
-        if(idS == null) return null;
+        if (idS == null) return null;
         var id = UUID.fromString(idS);
         var name = set.getString("name");
         if (name == null) return null;

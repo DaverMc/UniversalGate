@@ -21,10 +21,10 @@ public class CancelSubCommand extends LiteralNode {
         var player = context.senderPlayer();
         var task = context.getArgument("task", Task.class);
 
-        if(task.executor() == null)
+        if (task.executor() == null)
             throw new IllegalStateException("Task is not assigned to anyone");
 
-        if(task.state() != TaskState.IN_WORK)
+        if (task.state() != TaskState.IN_WORK)
             throw new IllegalStateException("Task is not in work state");
 
         task.setExecutor(null);

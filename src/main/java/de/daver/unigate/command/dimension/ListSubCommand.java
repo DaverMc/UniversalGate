@@ -1,6 +1,5 @@
 package de.daver.unigate.command.dimension;
 
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.Permissions;
 import de.daver.unigate.category.Category;
@@ -32,7 +31,6 @@ public class ListSubCommand extends LiteralNode {
     }
 
 
-
     public void listDimensions(PluginContext context) throws Exception {
         sendDimensionList(context, null);
     }
@@ -46,7 +44,7 @@ public class ListSubCommand extends LiteralNode {
         final var player = context.senderPlayer();
         Predicate<Dimension> predicate = filter == null ? dim -> true :
                 dim -> dim.name().toLowerCase()
-                        .contains(filter.toLowerCase());
+                       .contains(filter.toLowerCase());
 
         var dimensions = context.plugin().dimensionCache().getAll().stream()
                 .filter(dim -> dim.canEnter(player))
@@ -55,7 +53,7 @@ public class ListSubCommand extends LiteralNode {
 
         sendHeader(context, dimensions);
 
-        if(!dimensions.isEmpty())
+        if (!dimensions.isEmpty())
             for (var dimension : dimensions) sendEntry(context, dimension);
     }
 

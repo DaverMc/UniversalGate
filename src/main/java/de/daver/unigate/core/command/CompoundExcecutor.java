@@ -14,6 +14,6 @@ public class CompoundExcecutor implements Executor {
 
     @Override
     public void execute(PluginContext context) throws Exception {
-        for(Executor executor : executors) if(executor != null) executor.execute(context);
+        for (Executor executor : executors) if (executor != null) executor.execute(context);
     }
 }

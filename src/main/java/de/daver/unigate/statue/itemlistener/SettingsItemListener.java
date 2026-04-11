@@ -11,11 +11,10 @@ public class SettingsItemListener implements ItemActionListener {
     public void onClick(Context context) {
         var player = context.player();
         var statue = context.plugin().statueInteractListener().get(player);
-        if(statue == null) return;
+        if (statue == null) return;
         var dialog = StatueSettingsDialog.create(context.plugin(), player, statue);
         player.showDialog(dialog);
     }
-
 
 
 }

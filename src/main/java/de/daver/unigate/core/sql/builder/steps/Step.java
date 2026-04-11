@@ -8,7 +8,7 @@ public interface Step<SELF extends Step<SELF>> {
 
     SELF argument(SQLArgument<?> argument);
 
-    interface Buildable<SELF extends Buildable<SELF>> extends Step <SELF> {
+    interface Buildable<SELF extends Buildable<SELF>> extends Step<SELF> {
         SQLStatement build();
     }
 
@@ -36,9 +36,11 @@ public interface Step<SELF extends Step<SELF>> {
         WhereStep where(String condition);
     }
 
-    interface WhereStep extends Buildable<WhereStep> {}
+    interface WhereStep extends Buildable<WhereStep> {
+    }
 
-    interface ValuesStep extends Buildable<ValuesStep> {}
+    interface ValuesStep extends Buildable<ValuesStep> {
+    }
 
     interface IntoStep extends Step<IntoStep> {
         ValuesStep columns(String... columns);

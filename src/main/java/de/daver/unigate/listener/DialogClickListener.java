@@ -25,7 +25,7 @@ public class DialogClickListener extends PluginEventListener {
     @EventHandler
     public void onDialogClick(PlayerCustomClickEvent event) {
         var listener = listeners.get(event.getIdentifier());
-        if(listener == null) return;
+        if (listener == null) return;
         listener.onAction(event, plugin());
     }
 

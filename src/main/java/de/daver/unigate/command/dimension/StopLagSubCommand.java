@@ -32,7 +32,7 @@ public class StopLagSubCommand extends LiteralNode {
     }
 
     private void toggleStoplag(PluginContext context, Dimension dimension) {
-        if(dimension == null)
+        if (dimension == null)
             throw new IllegalArgumentException("This world is not a dimension!");
 
         //Toggled bool

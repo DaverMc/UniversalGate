@@ -15,7 +15,8 @@ public class NumberArgument<N extends Number> extends ArgumentNode<N> {
         return (ArgumentType<N>) switch (clazz) {
             case Class<?> c when c == Integer.class -> IntegerArgumentType.integer(min.intValue(), max.intValue());
             case Class<?> c when c == Long.class -> LongArgumentType.longArg(min.longValue(), max.longValue());
-            case Class<?> c when c == Double.class -> DoubleArgumentType.doubleArg(min.doubleValue(), max.doubleValue());
+            case Class<?> c when c == Double.class ->
+                    DoubleArgumentType.doubleArg(min.doubleValue(), max.doubleValue());
             case Class<?> c when c == Float.class -> FloatArgumentType.floatArg(min.floatValue(), max.floatValue());
             default -> throw new IllegalArgumentException("Unsupported number type: " + clazz);
         };

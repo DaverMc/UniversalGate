@@ -21,7 +21,7 @@ public class LeaveListener extends PluginEventListener {
         event.quitMessage(null);
         plugin().tabList().displayName().clearPlayer(player);
 
-        for(var online : Bukkit.getOnlinePlayers()) {
+        for (var online : Bukkit.getOnlinePlayers()) {
             plugin().languageManager()
                     .message(LanguageKeys.EVENT_LEAVE)
                     .argument("player", player.getName())
@@ -33,9 +33,9 @@ public class LeaveListener extends PluginEventListener {
     }
 
     private void unloadDimension(Player player) {
-        if(player.getWorld().getPlayerCount() > 1) return;
+        if (player.getWorld().getPlayerCount() > 1) return;
         var dimension = plugin().dimensionCache().getActive(player.getWorld().getName());
-        if(dimension == null) return;
+        if (dimension == null) return;
 
         dimension.unload(true);
         try {

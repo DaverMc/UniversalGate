@@ -6,7 +6,6 @@ import de.daver.unigate.command.argument.TaskArgument;
 import de.daver.unigate.command.argument.UserArgument;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
-import de.daver.unigate.core.util.LuckPermsUtil;
 import de.daver.unigate.task.Task;
 
 import java.util.UUID;

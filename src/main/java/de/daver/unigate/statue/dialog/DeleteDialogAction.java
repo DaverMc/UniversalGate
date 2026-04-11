@@ -15,7 +15,7 @@ public class DeleteDialogAction implements DialogAction {
         if (!(event.getCommonConnection() instanceof PlayerGameConnection connection)) return;
 
         var player = connection.getPlayer();
-        if(!player.hasPermission(Permissions.STATUE_DELETE)) return;
+        if (!player.hasPermission(Permissions.STATUE_DELETE)) return;
         var statue = plugin.statueInteractListener().get(player);
         if (statue == null) return;
         statue.delete();

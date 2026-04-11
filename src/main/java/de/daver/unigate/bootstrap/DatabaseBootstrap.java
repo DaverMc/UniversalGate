@@ -26,8 +26,8 @@ public class DatabaseBootstrap {
         var dataFolder = plugin.getDataFolder();
         var file = dataFolder.toPath().resolve(fileName);
         var parent = file.getParent();
-        if(Files.notExists(parent)) Files.createDirectories(parent);
-        if(Files.notExists(file)) Files.createFile(file);
+        if (Files.notExists(parent)) Files.createDirectories(parent);
+        if (Files.notExists(file)) Files.createFile(file);
         return file;
     }
 

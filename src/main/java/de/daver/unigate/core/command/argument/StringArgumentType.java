@@ -22,7 +22,7 @@ public abstract class StringArgumentType<T> implements CustomArgumentType.Conver
     @Override
     public T convert(String nativeType) throws CommandSyntaxException {
         T value = deserialize(nativeType);
-        if(value == null) throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherUnknownArgument().create();
+        if (value == null) throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherUnknownArgument().create();
         return value;
     }
 

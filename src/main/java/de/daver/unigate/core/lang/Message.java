@@ -25,6 +25,7 @@ public class Message {
 
     /**
      * Schnittstelle zu MiniMessage, lässt einen TagResolver registrieren
+     *
      * @param resolver TagResolver
      * @return this
      */
@@ -35,7 +36,8 @@ public class Message {
 
     /**
      * Lässt ein String Argument in der Message ersetzen
-     * @param key placeholder
+     *
+     * @param key   placeholder
      * @param value argument
      * @return this
      */
@@ -46,6 +48,7 @@ public class Message {
     /**
      * Lässt ein Object Argument in der Message ersetzen
      * Es wird String.valueOf aufgerufen
+     *
      * @param key
      * @param value
      * @return
@@ -57,11 +60,12 @@ public class Message {
     /**
      * Lässt ein Object Argument in der Message ersetzen
      * Der Serializer übernimmt das parsing des Objekts
+     *
      * @param key
      * @param value
      * @param serializer
-     * @return
      * @param <T>
+     * @return
      */
     public <T> Message argument(String key, T value, Function<T, String> serializer) {
         return resolver(Placeholder.unparsed(key, serializer.apply(value)));
@@ -69,6 +73,7 @@ public class Message {
 
     /**
      * Akzeptiert einen String der noch von MiniMessage formatiert werden muss
+     *
      * @param key
      * @param value
      * @return
@@ -79,6 +84,7 @@ public class Message {
 
     /**
      * Akzeptiert ein Component welches an die Stelle eines placeholders eingefügt wird
+     *
      * @param key
      * @param component
      * @return
@@ -90,6 +96,7 @@ public class Message {
     /**
      * Akzeptiert einen index auf Basis dessen aus der Roh-Nachricht der gewünschte Text eingesetzt wird
      * Nutzung <choice:demo:Null:Eins:Zwei:...>
+     *
      * @param key
      * @param index
      * @return
@@ -100,6 +107,7 @@ public class Message {
 
     /**
      * Basiert auf choice akzeptiert allerdings nur true oder false
+     *
      * @param key
      * @param value
      * @return
@@ -110,10 +118,11 @@ public class Message {
 
     /**
      * Benutzt choice um Enum-Konstanten zu behandeln
+     *
      * @param key
      * @param value
-     * @return
      * @param <E>
+     * @return
      */
     public <E extends Enum<E>> Message enumState(String key, E value) {
         return choice(key, value.ordinal());
@@ -121,6 +130,7 @@ public class Message {
 
     /**
      * Gibt den Rohen String der Nachricht zurück
+     *
      * @param locale
      * @return
      */
@@ -130,6 +140,7 @@ public class Message {
 
     /**
      * Gibt das MiniMessage formatierte Component zurück
+     *
      * @param locale
      * @return
      */
@@ -139,6 +150,7 @@ public class Message {
 
     /**
      * Gibt das fertige Component für einen CommandSender wieder
+     *
      * @param sender
      * @return
      */
@@ -148,6 +160,7 @@ public class Message {
 
     /**
      * Gibt das Component in der DefaultLanguage zurück
+     *
      * @return
      */
     public Component getDefault() {
@@ -156,6 +169,7 @@ public class Message {
 
     /**
      * Gibt mehrere Components zurück die die einzelnen Zeilen der Nachricht enthalten
+     *
      * @param locale
      * @return
      */
@@ -180,6 +194,7 @@ public class Message {
 
     /**
      * Sendet die fertige nachricht direkt an den CommandSender
+     *
      * @param sender
      */
     public void send(CommandSender sender) {
@@ -188,10 +203,11 @@ public class Message {
 
     /**
      * Sendet die Nachricht an die gegebenen CommandSenders
+     *
      * @param senders
      */
     public void broadcast(Collection<? extends CommandSender> senders) {
-        for(CommandSender sender : senders) send(sender);
+        for (CommandSender sender : senders) send(sender);
     }
 
     private Component deserialize(Locale locale, String raw) {

@@ -36,30 +36,30 @@ public class Language {
     public void load(Path directory) throws IOException {
         Path file = directory.resolve(tag + ".lang");
 
-        if(file.toFile().exists()) readFile(file);
+        if (file.toFile().exists()) readFile(file);
 
         writeFile(file);
     }
 
     private void readFile(Path file) throws IOException {
-        try(BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
+        try (BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
             readFile(reader);
         }
     }
 
     private void readFile(BufferedReader reader) throws IOException {
         String line;
-        while((line = reader.readLine()) != null) {
+        while ((line = reader.readLine()) != null) {
             putLine(line);
         }
     }
 
     private void putLine(String line) {
-        if(line.isBlank()) return;
-        if(line.startsWith("#")) return;
+        if (line.isBlank()) return;
+        if (line.startsWith("#")) return;
 
         int sepIndex = line.indexOf('=');
-        if(sepIndex == -1) return;
+        if (sepIndex == -1) return;
 
         String key = line.substring(0, sepIndex).trim();
         String value = line.substring(sepIndex + 1);
@@ -68,9 +68,9 @@ public class Language {
 
 
     private void writeFile(Path file) throws IOException {
-        if(file.getParent() != null) Files.createDirectories(file.getParent());
+        if (file.getParent() != null) Files.createDirectories(file.getParent());
 
-        try(BufferedWriter writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8)) {
+        try (BufferedWriter writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8)) {
             writeFile(writer);
         }
     }
@@ -78,7 +78,7 @@ public class Language {
     private void writeFile(BufferedWriter writer) throws IOException {
         List<String> sortedKeys = keys.keySet().stream().sorted().toList();
 
-        for(String key : sortedKeys) {
+        for (String key : sortedKeys) {
             writeLine(writer, key);
         }
     }
@@ -92,9 +92,9 @@ public class Language {
     public <E extends Enum<E> & LanguageKey> void addDefaultKeys(Class<E> keyEnum) {
         LanguageKey[] constants = keyEnum.getEnumConstants();
 
-        for(LanguageKey languageKey : constants) {
+        for (LanguageKey languageKey : constants) {
             String key = languageKey.key();
-            if(keys.containsKey(key)) continue;
+            if (keys.containsKey(key)) continue;
             keys.put(key, languageKey.defaultMessage());
         }
     }

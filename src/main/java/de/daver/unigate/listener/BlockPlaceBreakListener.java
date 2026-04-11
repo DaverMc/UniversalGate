@@ -15,14 +15,14 @@ public class BlockPlaceBreakListener extends PluginEventListener {
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
         var statue = plugin().statueInteractListener().get(event.getPlayer());
-        if(statue == null) return;
+        if (statue == null) return;
         event.setCancelled(true);
     }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         var statue = plugin().statueInteractListener().get(event.getPlayer());
-        if(statue == null) return;
+        if (statue == null) return;
         event.setCancelled(true);
     }
 

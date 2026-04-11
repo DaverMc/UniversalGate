@@ -54,7 +54,7 @@ public class CreativeItemsCommand extends LiteralNode {
     }
 
     private void fillLightBlocks(Inventory inventory, LanguagesCache languageManager, Player player) {
-        for(int i = 0; i < 15; i++) {
+        for (int i = 0; i < 15; i++) {
             var lightBlockAir = createLightItem(i + 1, false, languageManager, player);
             var lightBlockWater = createLightItem(i + 1, true, languageManager, player);
             inventory.addItem(lightBlockAir, lightBlockWater);
@@ -69,7 +69,7 @@ public class CreativeItemsCommand extends LiteralNode {
         light.setWaterlogged(waterlogged);
         meta.setBlockData(light);
         LanguageKey languageKey;
-        if(waterlogged) languageKey = LanguageKeys.ITEM_LIGHT_WATER_TITLE;
+        if (waterlogged) languageKey = LanguageKeys.ITEM_LIGHT_WATER_TITLE;
         else languageKey = LanguageKeys.ITEM_LIGHT_AIR_TITLE;
         meta.displayName(languageManager.message(languageKey)
                 .argument("level", level)

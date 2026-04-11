@@ -29,7 +29,7 @@ public class CategoryArgument extends ArgumentNode<Category> {
         }
 
         @Override
-        protected Category deserialize(String value)  {
+        protected Category deserialize(String value) {
             return UniversalGatePlugin.getInstance().categoryCache().get(value);
         }
 

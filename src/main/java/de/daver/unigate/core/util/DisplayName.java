@@ -23,15 +23,15 @@ public class DisplayName {
 
     public void clearPlayer(Player player) {
         var entityId = playerDisplays.remove(player.getUniqueId());
-        if(entityId != null) {
+        if (entityId != null) {
             var entity = Bukkit.getEntity(entityId);
-            if(entity != null) {
+            if (entity != null) {
                 entity.remove();
             }
         }
 
         player.getPassengers().forEach(e -> {
-            if(e instanceof TextDisplay display) {
+            if (e instanceof TextDisplay display) {
                 display.remove();
             }
         });
@@ -39,16 +39,16 @@ public class DisplayName {
 
     void updateDisplayName(Player player, Component name) {
         var entityId = playerDisplays.get(player.getUniqueId());
-        if(entityId == null) {
+        if (entityId == null) {
             createNewDisplay(player, name);
             return;
         }
         var display = isDisplayValid(entityId, player);
 
-        if(display != null) {
+        if (display != null) {
             display.text(name);
 
-            if(!player.getPassengers().contains(display))
+            if (!player.getPassengers().contains(display))
                 player.addPassenger(display);
 
             return;
@@ -93,7 +93,7 @@ public class DisplayName {
 
     private void removeDisplay(UUID uuid) {
         var entity = Bukkit.getEntity(uuid);
-        if(entity != null) {
+        if (entity != null) {
             entity.remove();
         }
     }

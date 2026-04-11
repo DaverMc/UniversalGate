@@ -41,16 +41,16 @@ public class ItemInteractListener extends PluginEventListener {
         if (item == null || item.getType() == Material.AIR) return;
 
         Action action = event.getAction();
-        if(action.isLeftClick() && ignoreLeftClick.remove(event.getPlayer().getUniqueId())) return;
+        if (action.isLeftClick() && ignoreLeftClick.remove(event.getPlayer().getUniqueId())) return;
         var itemAction = ItemAction.fromClick(action.isLeftClick(), event.getPlayer().isSneaking());
         execute(item, itemAction, event.getPlayer());
-}
+    }
 
     @EventHandler
     public void onDrop(PlayerDropItemEvent event) {
         var item = event.getItemDrop().getItemStack();
         var itemAction = ItemAction.fromDrop(event.getPlayer().isSneaking());
-        if(execute(item, itemAction, event.getPlayer())) {
+        if (execute(item, itemAction, event.getPlayer())) {
             ignoreLeftClick.add(event.getPlayer().getUniqueId());
             event.setCancelled(true);
         }

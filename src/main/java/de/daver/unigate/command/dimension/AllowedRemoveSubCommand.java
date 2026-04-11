@@ -7,7 +7,6 @@ import de.daver.unigate.command.argument.UserArgument;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.core.command.SuggestionProvider;
-import de.daver.unigate.core.util.LuckPermsUtil;
 import de.daver.unigate.dimension.Dimension;
 
 import java.util.UUID;
@@ -45,8 +44,8 @@ public class AllowedRemoveSubCommand extends LiteralNode {
     void removePlayer(PluginContext context, Dimension dimension) throws Exception {
         UUID uuid = context.getArgument("user", UUID.class);
 
-        if(!dimension.meta().allowedPlayers().contains(uuid))
-                throw new IllegalAccessException("Player is not allowed in this dimension");
+        if (!dimension.meta().allowedPlayers().contains(uuid))
+            throw new IllegalAccessException("Player is not allowed in this dimension");
 
         context.plugin().dimensionCache().disallow(dimension, uuid);
         var name = context.plugin().userCache().getName(uuid);

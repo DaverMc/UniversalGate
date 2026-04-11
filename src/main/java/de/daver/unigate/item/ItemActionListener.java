@@ -7,5 +7,6 @@ import org.bukkit.inventory.ItemStack;
 public interface ItemActionListener {
     void onClick(Context context);
 
-    record Context(ItemStack itemStack, ItemAction action, Player player, UniversalGatePlugin plugin) { }
+    record Context(ItemStack itemStack, ItemAction action, Player player, UniversalGatePlugin plugin) {
+    }
 }

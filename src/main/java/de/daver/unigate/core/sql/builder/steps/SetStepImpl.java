@@ -13,9 +13,9 @@ class SetStepImpl extends BuildableStepBase<Step.SetStep> implements Step.SetSte
     }
 
     private void appendColumns(StringBuilder builder, String[] columns) {
-        for(int i = 0; i < columns.length; i++) {
+        for (int i = 0; i < columns.length; i++) {
             builder.append(columns[i]).append(" = ?");
-            if(i < columns.length - 1) builder.append(", ");
+            if (i < columns.length - 1) builder.append(", ");
         }
     }
 

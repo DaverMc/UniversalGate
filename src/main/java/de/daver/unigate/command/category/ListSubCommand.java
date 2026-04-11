@@ -20,12 +20,13 @@ public class ListSubCommand extends LiteralNode {
                 .argument("categories", categories.size())
                 .send(context.sender());
 
-        if(categories.isEmpty()) return;
+        if (categories.isEmpty()) return;
 
-        for (var category : categories) context.plugin().languageManager()
-                .message(LanguageKeys.CATEGORY_LIST_ENTRY)
-                .argument("category", category.name())
-                .argument("id", category.id())
-                .send(context.sender());
+        for (var category : categories)
+            context.plugin().languageManager()
+                    .message(LanguageKeys.CATEGORY_LIST_ENTRY)
+                    .argument("category", category.name())
+                    .argument("id", category.id())
+                    .send(context.sender());
     }
 }

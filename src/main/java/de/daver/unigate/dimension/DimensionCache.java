@@ -3,11 +3,9 @@ package de.daver.unigate.dimension;
 import de.daver.unigate.UniversalGatePlugin;
 import de.daver.unigate.core.sql.ResultTransformer;
 import de.daver.unigate.core.sql.SQLExecutor;
-import de.daver.unigate.core.util.DisplayName;
 import de.daver.unigate.dimension.chunk.ChunkGenerationService;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -38,7 +36,7 @@ public class DimensionCache {
 
     private void loadActive() throws SQLException {
         var dimensions = sqlExecutor.query(Queries.SELECT_ACTIVE, ResultTransformer.asList(Queries.DIMENSION_TRANSFORMER));
-        for(var dimension : dimensions) {
+        for (var dimension : dimensions) {
             var allowedUsers = sqlExecutor.query(Queries.SELECT_ALLOWED, ResultTransformer.asSet(Queries.ALLOWED_TRANSFORMER), dimension.id());
             dimension.meta().allowedPlayers().addAll(allowedUsers);
             active.put(dimension.id(), dimension);
@@ -73,9 +71,9 @@ public class DimensionCache {
 
     public Dimension select(String name) throws SQLException {
         var dimension = getActive(name);
-        if(dimension != null) return dimension;
+        if (dimension != null) return dimension;
         dimension = sqlExecutor.query(Queries.SELECT_DIMENSION, Queries.DIMENSION_TRANSFORMER, name);
-        if(dimension == null) return null;
+        if (dimension == null) return null;
         active.put(dimension.id(), dimension);
         var allowedUsers = sqlExecutor.query(Queries.SELECT_ALLOWED, ResultTransformer.asSet(Queries.ALLOWED_TRANSFORMER), dimension.id());
         dimension.meta().allowedPlayers().addAll(allowedUsers);
@@ -127,7 +125,7 @@ public class DimensionCache {
     }
 
     public void archive(Dimension dimension) throws SQLException {
-        if(dimension.meta().state() == DimensionState.LOADED) dimension.unload(true);
+        if (dimension.meta().state() == DimensionState.LOADED) dimension.unload(true);
         dimension.meta().state(DimensionState.ARCHIVED);
         updateState(dimension);
         active.remove(dimension.id());
@@ -136,7 +134,7 @@ public class DimensionCache {
 
     public boolean activate(String name) throws SQLException {
         var dimension = sqlExecutor.query(Queries.SELECT_ARCHIVED_DIMENSION, Queries.DIMENSION_TRANSFORMER, name);
-        if(dimension == null) return false;
+        if (dimension == null) return false;
 
         var allowedUsers = sqlExecutor.query(Queries.SELECT_ALLOWED, ResultTransformer.asSet(Queries.ALLOWED_TRANSFORMER), dimension.id());
         dimension.meta().allowedPlayers().addAll(allowedUsers);

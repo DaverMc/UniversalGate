@@ -80,16 +80,16 @@ public class Statue {
 
     public ArmorStand getEntity() {
         var world = Bukkit.getWorld(this.worldName);
-        if(world == null) return null;
+        if (world == null) return null;
         var entity = world.getEntity(this.entityId);
-        if(!(entity instanceof ArmorStand stand)) return null;
-        if(!stand.isValid()) return null;
+        if (!(entity instanceof ArmorStand stand)) return null;
+        if (!stand.isValid()) return null;
         return stand;
     }
 
     public void delete() {
         var stand = getEntity();
-        if(stand == null) return;
+        if (stand == null) return;
         stand.remove();
     }
 
@@ -122,7 +122,7 @@ public class Statue {
 
     public void update() {
         var entity = getEntity();
-        if(entity == null) return;
+        if (entity == null) return;
         position.update(entity);
         equipment.update(entity);
         attributes.update(entity);

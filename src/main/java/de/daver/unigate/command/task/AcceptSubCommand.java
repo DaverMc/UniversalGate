@@ -21,10 +21,10 @@ public class AcceptSubCommand extends LiteralNode {
         var player = context.senderPlayer();
         var task = context.getArgument("task", Task.class);
 
-        if(task.executor() != null)
+        if (task.executor() != null)
             throw new IllegalAccessException("Task is already taken!");
 
-        if(task.state() != TaskState.OPEN)
+        if (task.state() != TaskState.OPEN)
             throw new IllegalStateException("Task is not open!");
 
         task.setExecutor(player.getUniqueId());

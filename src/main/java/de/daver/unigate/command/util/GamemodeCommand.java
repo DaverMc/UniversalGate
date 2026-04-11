@@ -35,7 +35,7 @@ public class GamemodeCommand extends LiteralNode {
     void setOtherGamemode(PluginContext context) {
         var target = context.getArgument("target", UUID.class);
         var targetPlayer = Bukkit.getPlayer(target);
-        if(targetPlayer == null) throw new IllegalStateException("Player " + target + " is not online!");
+        if (targetPlayer == null) throw new IllegalStateException("Player " + target + " is not online!");
         var gamemode = context.getArgument("mode", GameMode.class);
         targetPlayer.setGameMode(gamemode);
 

@@ -23,7 +23,7 @@ public class RenameSubCommand extends LiteralNode {
     private void renameItem(PluginContext context) throws CommandSyntaxException {
         var player = context.senderPlayer();
         var itemStack = player.getInventory().getItemInMainHand();
-        if(itemStack.getType() == Material.AIR) return;
+        if (itemStack.getType() == Material.AIR) return;
         var nameString = context.getArgument("name", String.class);
         var nameComponent = MiniMessage.miniMessage().deserialize(nameString)
                 .decoration(TextDecoration.ITALIC, false);

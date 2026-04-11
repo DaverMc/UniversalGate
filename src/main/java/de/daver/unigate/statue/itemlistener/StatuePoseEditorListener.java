@@ -18,7 +18,7 @@ public abstract class StatuePoseEditorListener implements ItemActionListener {
     @Override
     public void onClick(Context context) {
         var statue = context.plugin().statueInteractListener().get(context.player());
-        if(statue == null) return;
+        if (statue == null) return;
 
         var item = new ItemWrapper(context.plugin(), context.itemStack());
 
@@ -50,7 +50,7 @@ public abstract class StatuePoseEditorListener implements ItemActionListener {
     }
 
     protected void nexMode(int mode, ItemWrapper item, Context context) {
-        if(mode == AXIS_Z) item.mode(0);
+        if (mode == AXIS_Z) item.mode(0);
         else item.mode(mode + 1);
         mode = item.getMode();
 

@@ -25,7 +25,7 @@ public class TaskArgument extends ArgumentNode<Task> {
 
     private boolean filterPermitted(Task task, Player player, UniversalGatePlugin plugin) {
         var dimension = plugin.dimensionCache().getActive(task.id());
-        if(dimension == null) return false;
+        if (dimension == null) return false;
         return dimension.enter(player);
     }
 

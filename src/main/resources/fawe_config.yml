@@ -103,14 +103,14 @@ web:
   #  - Adding '*' to the list will allow any host, but this is NOT adviseable
   #  - Crash exploits exist with malformed images
   #  - See: https://medium.com/chargebee-engineering/perils-of-parsing-pixel-flood-attack-on-java-imageio-a97aeb06637d
-  allowed-image-hosts: 
-  - "i.imgur.com"
+  allowed-image-hosts:
+    - "i.imgur.com"
 
 extent:
   # Don't bug console when these plugins slow down WorldEdit operations
   #  - You'll see a message in console or ingame if you need to change this option
-  allowed-plugins: 
-  - "com.example.ExamplePlugin"
+  allowed-plugins:
+    - "com.example.ExamplePlugin"
   # Should debug messages be sent when third party extents are used?
   debug: true
 
@@ -291,8 +291,8 @@ region-restrictions-options:
   # managers are not checked if an exclusive manager allows an edit.
   #  - May be useful to add PlotSquared if using both P2 and WorldGuard on a server
   #  - Some custom-implementations in other plugins may override this setting
-  exclusive-managers: 
-  - "ExamplePlugin"
+  exclusive-managers:
+    - "ExamplePlugin"
   # If a worldguard-protected world should be considered as a region blacklist.
   #  - This will create a blacklist of regions where an edit cannot operate.
   #  - Useful for a "freebuild" worlds with few protected areas.
@@ -423,7 +423,7 @@ limits:
     #  - Prevents scenarios where players can delete/reset a region, and then continue to undo/redo on it
     restrict-history-to-regions: true
     # List of nbt tags to strip from blocks, e.g. Items
-    strip-nbt: []
+    strip-nbt: [ ]
     # If the disallowed blocks listed in worldedit-fawe_config.yml should be disallowed in all edits,
     # not just where blocks patterns are used.
     #  - Can prevent blocks being pasted from clipboards, etc.
@@ -451,4 +451,4 @@ limits:
     #  - "waterlogged[true:false]"
     #  - "age[7:4,6:4,5:4]"
     #  - "extended[true:false]"
-    remap-properties: []
+    remap-properties: [ ]

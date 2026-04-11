@@ -25,9 +25,10 @@ public class CategoryCache {
         plugin.sqlExecutor().query(Queries.SELECT_ALL, ResultTransformer.asList(Queries.TRANSFORMER))
                 .forEach(category -> cache.put(category.id(), category));
 
-        if(get("default") != null) return;
+        if (get("default") != null) return;
         put(new Category(UUID.randomUUID(), "default", ""));
     }
+
     public Category get(String name) {
         return cache.values().stream()
                 .filter(c -> c.name().equalsIgnoreCase(name))

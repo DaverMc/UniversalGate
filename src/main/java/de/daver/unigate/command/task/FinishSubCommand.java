@@ -21,10 +21,10 @@ public class FinishSubCommand extends LiteralNode {
         var player = context.senderPlayer();
         var task = context.getArgument("task", Task.class);
 
-        if(task.state() != TaskState.IN_WORK)
+        if (task.state() != TaskState.IN_WORK)
             throw new IllegalStateException("Task is not in work state");
 
-        if(task.executor() == null)
+        if (task.executor() == null)
             throw new IllegalStateException("Task has no executor");
 
         task.setState(TaskState.FINISHED);

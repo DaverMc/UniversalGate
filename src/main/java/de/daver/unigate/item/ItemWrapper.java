@@ -38,14 +38,14 @@ public record ItemWrapper(UniversalGatePlugin plugin, ItemStack itemStack) {
     public ItemWrapper lore(int index, Component line) {
         return modifyMeta(meta -> {
             var lore = meta.lore();
-            if(line == null) {
-                if(lore == null || lore.size() <= index) return;
+            if (line == null) {
+                if (lore == null || lore.size() <= index) return;
                 lore.remove(index);
                 meta.lore(lore);
                 return;
             }
-            if(lore == null) lore = new ArrayList<>();
-            for(int i = lore.size(); i <= index; i++) lore.add(Component.empty());
+            if (lore == null) lore = new ArrayList<>();
+            for (int i = lore.size(); i <= index; i++) lore.add(Component.empty());
             lore.set(index, line);
             meta.lore(lore);
         });
@@ -53,9 +53,10 @@ public record ItemWrapper(UniversalGatePlugin plugin, ItemStack itemStack) {
 
     public Component getLore(int index) {
         var lore = itemStack.getItemMeta().lore();
-        if(lore == null || index >= lore.size()) return Component.empty();
+        if (lore == null || index >= lore.size()) return Component.empty();
         return lore.get(index);
     }
+
     public ItemWrapper clickAction(String actionId) {
         NamespacedKey key = new NamespacedKey(plugin, "custom_action_id");
         return modifyMeta(meta -> meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, actionId));

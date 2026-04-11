@@ -19,7 +19,7 @@ class TeleportSubCommand extends LiteralNode {
     void teleport(PluginContext context) {
         Dimension dimension = context.getArgument("dimension", Dimension.class);
         context.plugin().tabList().displayName().clearPlayer(context.senderPlayer());
-        if(dimension.enter(context.senderPlayer())) context.plugin().languageManager()
+        if (dimension.enter(context.senderPlayer())) context.plugin().languageManager()
                 .message(LanguageKeys.DIMENSION_ENTER_SUCCESS)
                 .argument("dimension", dimension.name())
                 .send(context.sender());

@@ -31,19 +31,19 @@ public class StopLagListener extends PluginEventListener {
     public void onBlockPhysics(BlockPhysicsEvent event) {
         var block = event.getBlock();
         var data = block.getBlockData();
-        if(data instanceof Bisected || data instanceof Bed) return;
+        if (data instanceof Bisected || data instanceof Bed) return;
         cancel(event, block.getWorld().getName());
     }
 
     @EventHandler
     public void onBlockExplode(BlockExplodeEvent event) {
-        if(!(isCancelled(event.getBlock().getWorld().getName()))) return;
+        if (!(isCancelled(event.getBlock().getWorld().getName()))) return;
         event.blockList().clear();
     }
 
     @EventHandler
     public void onEntityExplode(EntityExplodeEvent event) {
-        if(!(isCancelled(event.getEntity().getWorld().getName()))) return;
+        if (!(isCancelled(event.getEntity().getWorld().getName()))) return;
         event.blockList().clear();
     }
 
@@ -70,9 +70,9 @@ public class StopLagListener extends PluginEventListener {
     @EventHandler
     public void onFallingBlockSpawn(EntitySpawnEvent event) {
         var dimension = plugin().dimensionCache().getActive(event.getLocation().getWorld().getName());
-        if(dimension == null || !dimension.meta().stopLag()) return;
-        if(!(event.getEntity() instanceof FallingBlock fallingBlock)) return;
-        if(!isCancelled(event.getLocation().getWorld().getName())) return;
+        if (dimension == null || !dimension.meta().stopLag()) return;
+        if (!(event.getEntity() instanceof FallingBlock fallingBlock)) return;
+        if (!isCancelled(event.getLocation().getWorld().getName())) return;
         event.setCancelled(true);
         var block = event.getLocation().getBlock();
         if (block.getType() == Material.AIR) {
@@ -84,9 +84,9 @@ public class StopLagListener extends PluginEventListener {
     public void onGrasBoneMeal(PlayerInteractEvent event) {
         var item = event.getItem();
         var block = event.getClickedBlock();
-        if(item == null || item.getType() != Material.BONE_MEAL) return;
-        if(block == null || block.getType() != Material.GRASS_BLOCK) return;
-        if(!(isCancelled(block.getWorld().getName()))) return;
+        if (item == null || item.getType() != Material.BONE_MEAL) return;
+        if (block == null || block.getType() != Material.GRASS_BLOCK) return;
+        if (!(isCancelled(block.getWorld().getName()))) return;
         cancel(event, block.getWorld().getName());
     }
 
@@ -94,8 +94,8 @@ public class StopLagListener extends PluginEventListener {
     public void onDoubleBlockBreak(BlockBreakEvent event) {
         var block = event.getBlock();
         var data = block.getBlockData();
-        if(!(data instanceof Bisected || data instanceof Bed)) return;
-        if(!(isCancelled(block.getWorld().getName()))) return;
+        if (!(data instanceof Bisected || data instanceof Bed)) return;
+        if (!(isCancelled(block.getWorld().getName()))) return;
         event.setCancelled(true);
         block.setType(Material.AIR, false);
     }
@@ -103,17 +103,17 @@ public class StopLagListener extends PluginEventListener {
     @EventHandler
     public void onEntitySpawn(CreatureSpawnEvent event) {
         var reason = event.getSpawnReason();
-        if(reason == CreatureSpawnEvent.SpawnReason.COMMAND ||
-        reason == CreatureSpawnEvent.SpawnReason.CUSTOM) return;
+        if (reason == CreatureSpawnEvent.SpawnReason.COMMAND ||
+                reason == CreatureSpawnEvent.SpawnReason.CUSTOM) return;
 
-        if(event.getEntityType() == org.bukkit.entity.EntityType.ARMOR_STAND) return;
+        if (event.getEntityType() == org.bukkit.entity.EntityType.ARMOR_STAND) return;
 
         cancel(event, event.getLocation().getWorld().getName());
     }
 
     @EventHandler
     public void onHangingBreak(HangingBreakEvent event) {
-        if(event.getCause() != HangingBreakEvent.RemoveCause.PHYSICS) return;
+        if (event.getCause() != HangingBreakEvent.RemoveCause.PHYSICS) return;
         cancel(event, event.getEntity().getWorld().getName());
     }
 
@@ -135,7 +135,7 @@ public class StopLagListener extends PluginEventListener {
     }
 
     private void cancel(Cancellable event, String id) {
-        if(isCancelled(id)) event.setCancelled(true);
+        if (isCancelled(id)) event.setCancelled(true);
     }
 
     private boolean isCancelled(String id) {

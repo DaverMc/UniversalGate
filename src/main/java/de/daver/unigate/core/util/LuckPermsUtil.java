@@ -8,14 +8,14 @@ public class LuckPermsUtil {
 
     public static String getPrefix(Player player) {
         var meta = getMeta(player);
-        if(meta == null) return "";
+        if (meta == null) return "";
         var prefix = meta.getPrefix();
         return prefix != null ? prefix : "";
     }
 
     public static String getSuffix(Player player) {
         var meta = getMeta(player);
-        if(meta == null) return "";
+        if (meta == null) return "";
         var suffix = meta.getSuffix();
         return suffix != null ? suffix : "";
     }
@@ -23,7 +23,7 @@ public class LuckPermsUtil {
     private static CachedMetaData getMeta(Player player) {
         var luckperms = LuckPermsProvider.get();
         var user = luckperms.getUserManager().getUser(player.getUniqueId());
-        if(user == null) return null;
+        if (user == null) return null;
         var queryOptions = luckperms.getContextManager().getQueryOptions(player);
         return user.getCachedData().getMetaData(queryOptions);
     }

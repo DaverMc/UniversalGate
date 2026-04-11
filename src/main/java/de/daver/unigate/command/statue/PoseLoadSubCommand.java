@@ -20,7 +20,7 @@ public class PoseLoadSubCommand extends LiteralNode {
 
     private void loadPose(PluginContext context) throws Exception {
         var statue = context.plugin().statueInteractListener().get(context.senderPlayer());
-        if(statue == null) return;
+        if (statue == null) return;
 
         var poseId = context.getArgument("pose", String.class);
         var path = context.plugin().poseDir().resolve(poseId + ".pose");

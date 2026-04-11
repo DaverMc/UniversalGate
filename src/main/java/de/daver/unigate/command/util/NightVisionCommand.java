@@ -20,7 +20,7 @@ public class NightVisionCommand extends LiteralNode {
 
     void toggleVision(PluginContext context) throws CommandSyntaxException {
         var player = context.senderPlayer();
-        if(player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
+        if (player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
             removeNightVision(player, context.plugin().languageManager());
         } else {
             addNightVision(player, context.plugin().languageManager());

@@ -20,7 +20,7 @@ public class PathArgument extends ArgumentNode<Path> {
     }
 
     Stream<Path> listFiles(PluginContext context) throws CommandSyntaxException {
-        try (var stream = Files.list(root)){
+        try (var stream = Files.list(root)) {
             return stream.toList().stream();
         } catch (IOException e) {
             throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherParseException().create(e);

@@ -18,13 +18,13 @@ public class PositionItemListener extends StatuePoseEditorListener {
 
     @Override
     protected void move(Statue statue, int amount, int axis, Context context) {
-        if(axis == AXIS_ROTATION) moveYaw(statue, amount);
+        if (axis == AXIS_ROTATION) moveYaw(statue, amount);
         super.move(statue, amount, axis, context);
     }
 
     @Override
     protected void nexMode(int mode, ItemWrapper item, Context context) {
-        if(mode == AXIS_ROTATION) item.mode(0);
+        if (mode == AXIS_ROTATION) item.mode(0);
         else item.mode(mode + 1);
         mode = item.getMode();
 

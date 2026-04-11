@@ -10,7 +10,7 @@ public enum LanguageKeys implements LanguageKey {
     DIMENSION_GENERATE_CHUNKS_STARTED("dimension.generate.chunks.started", "dimension", "chunks"),
     DIMENSION_GENERATE_CHUNKS_PROGRESS("dimension.generate.chunks.progress", "dimension", "radius", "progress"),
     DIMENSION_GENERATE_CHUNKS_FINISHED("dimension.generate.chunks.finished", "dimension", "radius"),
-    COMMAND_GAMEMODE_OTHER_SENT("command.gamemode.other.sent","target", "mode"),
+    COMMAND_GAMEMODE_OTHER_SENT("command.gamemode.other.sent", "target", "mode"),
     COMMAND_GAMEMODE_OTHER_RECEIVE("command.gamemode.other.receive", "mode"),
     COMMAND_GAMEMODE_SELF("command.gamemode.self", "mode"),
     COMMAND_SUB_COMMAND_HEADER("command.sub-command.header", "name", "description"),
@@ -50,12 +50,12 @@ public enum LanguageKeys implements LanguageKey {
     ITEM_STATUE_LEG_LEFT_NAME("item.statue.leg.left.name"),
     ITEM_STATUE_LEG_RIGHT_NAME("item.statue.leg.right.name"),
     ITEM_STATUE_POSITION_NAME("item.statue.position.name"),
-    ITEM_STATUE_EDITOR_LORE_X( "item.statue.editor.lore.x"),
-    ITEM_STATUE_EDITOR_LORE_Y( "item.statue.editor.lore.y"),
-    ITEM_STATUE_EDITOR_LORE_Z( "item.statue.editor.lore.z"),
-    ITEM_STATUE_HEAD_LORE_X( "item.statue.head.lore.x"),
-    ITEM_STATUE_HEAD_LORE_Y( "item.statue.head.lore.y"),
-    ITEM_STATUE_HEAD_LORE_Z( "item.statue.head.lore.z"),
+    ITEM_STATUE_EDITOR_LORE_X("item.statue.editor.lore.x"),
+    ITEM_STATUE_EDITOR_LORE_Y("item.statue.editor.lore.y"),
+    ITEM_STATUE_EDITOR_LORE_Z("item.statue.editor.lore.z"),
+    ITEM_STATUE_HEAD_LORE_X("item.statue.head.lore.x"),
+    ITEM_STATUE_HEAD_LORE_Y("item.statue.head.lore.y"),
+    ITEM_STATUE_HEAD_LORE_Z("item.statue.head.lore.z"),
     ITEM_STATUE_HEAD_LORE_ROTATION("item.statue.head.lore.rotation"),
     STATUE_TOOLS_CHANGE_AXIS("statue.tools.change.axis", "axis"),
     STATUE_TOOLS_RECEIVED("statue.tools.received"),
@@ -72,14 +72,14 @@ public enum LanguageKeys implements LanguageKey {
     TASK_NOT_IN_WORK("task.not.in.work", "task"),
     TASK_ACCEPT_SUCCESS("task.accept.success", "task"),
     TASK_APPROVE_SUCCESS("task.approve.success", "task"),
-    TASK_DECLINE_CONFIRM( "task.decline.confirm", "task"),
+    TASK_DECLINE_CONFIRM("task.decline.confirm", "task"),
     TASK_NOT_FINISHED("task.not.finished", "task"),
     TASK_DECLINE_SUCCESS("task.decline.success", "task"),
     TASK_DESCRIPTION_SET("task.description.set", "task", "description"),
     TASK_DELETE_SUCCESS("task.delete.success", "task"),
     TASK_DELETE_CONFIRM("task.delete.confirm", "task"),
-    TASK_INFO( "task.info", "name", "dimension", "type", "state", "creator", "executor", "description"),
-    TASK_LIST_ENTRY( "task.list.entry", "name", "type"),
+    TASK_INFO("task.info", "name", "dimension", "type", "state", "creator", "executor", "description"),
+    TASK_LIST_ENTRY("task.list.entry", "name", "type"),
     TASK_LIST_HEADER("task.list.header", "tasks"),
     TASK_CREATE_NEW("task.create.new", "task", "dimension"),
     TASK_CREATE_CHANGE("task.create.change", "task", "dimension"),
@@ -141,7 +141,7 @@ public enum LanguageKeys implements LanguageKey {
     @Override
     public String defaultMessage() {
         StringBuilder builder = new StringBuilder("new:").append(key());
-        for(String argName : argNames) builder.append("[").append("<").append(argName).append(">").append("]");
+        for (String argName : argNames) builder.append("[").append("<").append(argName).append(">").append("]");
         return builder.toString();
     }
 

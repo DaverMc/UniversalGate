@@ -49,7 +49,7 @@ public class ArgumentNode<T> extends CommandNodeWrapper<
 
 
     private void buildSuggestions() {
-        if(suggestionsProvider == null) return;
+        if (suggestionsProvider == null) return;
         builder.suggests((context, suggestions) -> {
             String input = suggestions.getRemaining().toLowerCase();
             PluginContext contextWrapper = PluginContext.wrap(context);
@@ -62,8 +62,8 @@ public class ArgumentNode<T> extends CommandNodeWrapper<
     }
 
     private void buildSuggestionsOnly() {
-        if(!suggestionsOnly) return;
-        if(suggestionsProvider == null) return;
+        if (!suggestionsOnly) return;
+        if (suggestionsProvider == null) return;
 
         CompoundExcecutor combined = new CompoundExcecutor(2);
         if (executor != null) combined.set(1, executor);

@@ -6,7 +6,6 @@ import de.daver.unigate.command.argument.DimensionArgument;
 import de.daver.unigate.command.argument.UserArgument;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
-import de.daver.unigate.core.util.LuckPermsUtil;
 import de.daver.unigate.dimension.Dimension;
 
 import java.util.UUID;
@@ -36,7 +35,7 @@ public class AllowedAddSubCommand extends LiteralNode {
     void allowPlayer(PluginContext context, Dimension dimension) throws Exception {
         UUID uuid = context.getArgument("user", UUID.class);
 
-        if(dimension.meta().allowedPlayers().contains(uuid))
+        if (dimension.meta().allowedPlayers().contains(uuid))
             throw new IllegalArgumentException("Already contains player " + context.plugin().userCache().getName(uuid));
 
         var name = context.plugin().userCache().getName(uuid);

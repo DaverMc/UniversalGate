@@ -15,7 +15,7 @@ public class PoseSaveSubCommand extends LiteralNode {
 
     private void savePose(PluginContext context) throws Exception {
         var statue = context.plugin().statueInteractListener().get(context.senderPlayer());
-        if(statue == null) return;
+        if (statue == null) return;
         var name = context.getArgument("name", String.class);
         var path = context.plugin().poseDir().resolve(name + ".pose");
         statue.parseToFile(path);

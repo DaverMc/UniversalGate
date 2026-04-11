@@ -23,23 +23,23 @@ public class ChoiceTagResolver implements TagResolver {
     private final int index;
 
     public ChoiceTagResolver(String key, int index) {
-        if(index < 0) throw new IndexOutOfBoundsException("Index must be greater than 0");
+        if (index < 0) throw new IndexOutOfBoundsException("Index must be greater than 0");
         this.key = key;
         this.index = index;
     }
 
     @Override
     public @Nullable Tag resolve(@NotNull String name, @NotNull ArgumentQueue arguments, @NotNull Context ctx) throws ParsingException {
-        if(!has(name)) return null;
+        if (!has(name)) return null;
 
         if (!arguments.hasNext()) return null;
         String providedKey = arguments.pop().value();
-        if(!providedKey.equalsIgnoreCase(key)) return null;
+        if (!providedKey.equalsIgnoreCase(key)) return null;
 
         List<String> options = new ArrayList<>();
         while (arguments.hasNext()) options.add(arguments.pop().value());
 
-        if(options.isEmpty() || index >= options.size()) {
+        if (options.isEmpty() || index >= options.size()) {
             return Tag.inserting(Component.text(providedKey));
         }
 

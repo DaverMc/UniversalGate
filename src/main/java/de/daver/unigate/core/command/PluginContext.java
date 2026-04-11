@@ -25,7 +25,7 @@ public record PluginContext(UniversalGatePlugin plugin, CommandContext<CommandSo
     public Player senderPlayer() {
         var sender = sender();
 
-        if(sender instanceof Player player)  return player;
+        if (sender instanceof Player player) return player;
 
         throw new IllegalStateException("Sender is not a player!");
     }

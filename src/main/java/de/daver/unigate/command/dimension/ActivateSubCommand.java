@@ -25,7 +25,7 @@ public class ActivateSubCommand extends LiteralNode {
     void activateDimension(PluginContext context) throws Exception {
         var name = context.getArgument("dimension", String.class);
 
-        if(!context.plugin().dimensionCache().activate(name))
+        if (!context.plugin().dimensionCache().activate(name))
             throw new IllegalArgumentException("Dimension not found " + name);
 
         context.plugin().languageManager()

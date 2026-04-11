@@ -10,7 +10,6 @@ import net.querz.nbt.io.NBTUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerTeleportEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -86,14 +85,15 @@ public class Dimension {
         var worldFolder = Bukkit.getWorldContainer().toPath().resolve(name());
         Files.createDirectories(worldFolder);
         var dimensionTag = LevelData.create(this);
-        File levelDatFile =  worldFolder.resolve( "level.dat").toFile();
-        if(!levelDatFile.createNewFile()) return;
+        File levelDatFile = worldFolder.resolve("level.dat").toFile();
+        if (!levelDatFile.createNewFile()) return;
         NBTUtil.write(dimensionTag, levelDatFile, true);
     }
 
     public static String buildName(Category category, String theme) {
-        if(!theme.matches("[a-zA-Z0-9_]+")) throw new IllegalArgumentException("Theme contains illegal characters! Please only use a-Z, 0-9, _");
-        if(category.prefix() == null || category.prefix().isBlank()) return theme;
+        if (!theme.matches("[a-zA-Z0-9_]+"))
+            throw new IllegalArgumentException("Theme contains illegal characters! Please only use a-Z, 0-9, _");
+        if (category.prefix() == null || category.prefix().isBlank()) return theme;
         return category.prefix() + SEPARATOR + theme;
     }
 
@@ -103,15 +103,15 @@ public class Dimension {
     }
 
     public void load() {
-        if(meta.state() != DimensionState.ACTIVE) return;
+        if (meta.state() != DimensionState.ACTIVE) return;
         Bukkit.createWorld(new WorldCreator(name));
         meta.state(DimensionState.LOADED);
     }
 
     public void unload(boolean save) {
-        if(meta.state() != DimensionState.LOADED) return;
+        if (meta.state() != DimensionState.LOADED) return;
         var bukkitWorld = Bukkit.getWorld(name);
-        if(bukkitWorld == DimensionCache.getServerMainWorld()) {
+        if (bukkitWorld == DimensionCache.getServerMainWorld()) {
             meta.state(DimensionState.ACTIVE);
             return;
         }
@@ -123,17 +123,17 @@ public class Dimension {
 
     public void kick(Player player) {
         var world = Bukkit.getWorld(name);
-        if(world == null) return;
+        if (world == null) return;
         var worldHub = DimensionCache.getServerMainWorld();
         player.teleport(worldHub.getSpawnLocation(), TeleportFlag.Relative.VELOCITY_ROTATION);
     }
 
     public boolean enter(Player player, boolean bypass) {
-        if(meta.state() == DimensionState.ARCHIVED) return false;
-        if(meta.state() == DimensionState.ACTIVE) load();
-        if(!canEnter(player) && !bypass) return false;
+        if (meta.state() == DimensionState.ARCHIVED) return false;
+        if (meta.state() == DimensionState.ACTIVE) load();
+        if (!canEnter(player) && !bypass) return false;
         var world = Bukkit.getWorld(name);
-        if(world == null) return false;
+        if (world == null) return false;
         player.teleport(world.getSpawnLocation());
         return true;
     }
@@ -150,7 +150,7 @@ public class Dimension {
 
     public String categoryPrefix() {
         var parts = name.split(SEPARATOR, 2);
-        if(parts.length < 2) return "";
+        if (parts.length < 2) return "";
         return name.split(SEPARATOR)[0];
     }
 }

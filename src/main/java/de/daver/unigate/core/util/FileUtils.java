@@ -41,6 +41,7 @@ public class FileUtils {
     public static void copyContents(Path source, Path target) throws IOException {
         Files.walkFileTree(source, new CopyFileVisitor(source, target));
     }
+
     private static class CopyFileVisitor extends SimpleFileVisitor<Path> {
         private final Path source;
         private final Path target;
@@ -96,7 +97,7 @@ public class FileUtils {
         @Override
         public @NonNull FileVisitResult visitFile(@NonNull Path path, @NonNull BasicFileAttributes attrs) throws IOException {
             Path relativized = source.relativize(path);
-            if(!isAllowed(relativized)) return FileVisitResult.CONTINUE;
+            if (!isAllowed(relativized)) return FileVisitResult.CONTINUE;
 
             String entryName = source.getFileName().toString() + "/" + relativized;
 
@@ -111,7 +112,7 @@ public class FileUtils {
         @Override
         public @NonNull FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
             Path relativized = source.relativize(dir);
-            if(!isAllowed(relativized)) return FileVisitResult.CONTINUE;
+            if (!isAllowed(relativized)) return FileVisitResult.CONTINUE;
 
             // Erzeugt den Namen für den Ordner-Eintrag (muss auf / enden)
             String entryName = source.getFileName().toString() + "/";
@@ -127,10 +128,10 @@ public class FileUtils {
         }
 
         private boolean isAllowed(Path path) {
-            if(allowedEntries.isEmpty()) return true;
+            if (allowedEntries.isEmpty()) return true;
 
-            for(var entry : allowedEntries) {
-                if(path.startsWith(entry)) return true;
+            for (var entry : allowedEntries) {
+                if (path.startsWith(entry)) return true;
             }
 
             return false;

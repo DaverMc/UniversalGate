@@ -22,7 +22,7 @@ public class ViewerModeListener extends PluginEventListener {
     }
 
     public static boolean addViewer(UUID uuid) {
-        if(VIEWERS.contains(uuid)) return false;
+        if (VIEWERS.contains(uuid)) return false;
         VIEWERS.add(uuid);
         return true;
     }
@@ -47,7 +47,7 @@ public class ViewerModeListener extends PluginEventListener {
     }
 
     private void cancel(Player player, Cancellable event) {
-        if(player.hasPermission(Permissions.DIMENSION_MODE_VIEWER) &&
+        if (player.hasPermission(Permissions.DIMENSION_MODE_VIEWER) &&
                 !VIEWERS.contains(player.getUniqueId())) event.setCancelled(true);
     }
 

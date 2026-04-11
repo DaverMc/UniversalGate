@@ -8,7 +8,7 @@ import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.task.Task;
 import de.daver.unigate.task.TaskState;
 
-public class ReOpenSubCommand extends LiteralNode  {
+public class ReOpenSubCommand extends LiteralNode {
 
     protected ReOpenSubCommand() {
         super("reopen", "Reopens a declined task");

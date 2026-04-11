@@ -13,7 +13,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class CommandNodeWrapper<BUILDER extends ArgumentBuilder<CommandSourceStack, BUILDER>,
-        SELF extends CommandNodeWrapper<BUILDER, SELF>>  {
+        SELF extends CommandNodeWrapper<BUILDER, SELF>> {
 
     private static final DynamicCommandExceptionType EXCEPTION = new DynamicCommandExceptionType(s -> new LiteralMessage("Error: " + s));
 
@@ -61,7 +61,7 @@ public class CommandNodeWrapper<BUILDER extends ArgumentBuilder<CommandSourceSta
     }
 
     private void buildExecutor() {
-        if(executor == null) return;
+        if (executor == null) return;
         builder.executes(context -> {
             PluginContext contextWrapper = PluginContext.wrap(context);
             try {

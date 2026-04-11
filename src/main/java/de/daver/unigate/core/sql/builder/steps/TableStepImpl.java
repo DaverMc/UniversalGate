@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class TableStepImpl extends BuildableStepBase<Step.TableStep> implements Step.TableStep{
+public class TableStepImpl extends BuildableStepBase<Step.TableStep> implements Step.TableStep {
 
     private final Set<String> primaryKeys;
 
@@ -23,17 +23,18 @@ public class TableStepImpl extends BuildableStepBase<Step.TableStep> implements 
 
     @Override
     public TableStep column(String columnName, ColumnType dataType, boolean primaryKey, boolean nullable) {
-        if(!first) builder.append(",");
+        if (!first) builder.append(",");
         builder.append(columnName).append(" ").append(dataType.sqlType());
-        if(!nullable) builder.append(" NOT NULL");
-        if(primaryKey) primaryKeys.add(columnName);
+        if (!nullable) builder.append(" NOT NULL");
+        if (primaryKey) primaryKeys.add(columnName);
         first = false;
         return this;
     }
 
     @Override
     public SQLStatement build() {
-        if(!primaryKeys.isEmpty()) builder.append(", PRIMARY KEY (").append(String.join(", ", primaryKeys)).append(")");
+        if (!primaryKeys.isEmpty())
+            builder.append(", PRIMARY KEY (").append(String.join(", ", primaryKeys)).append(")");
         builder.append(")");
         return super.build();
     }

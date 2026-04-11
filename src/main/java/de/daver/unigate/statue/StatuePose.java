@@ -10,7 +10,7 @@ public class StatuePose extends Vector3D {
     private final PoseBridge applier;
 
     StatuePose(Statue statue, double x, double y, double z) {
-        super(x,y,z);
+        super(x, y, z);
         this.statue = statue;
         this.applier = new PoseBridges.Empty();
     }
@@ -24,7 +24,7 @@ public class StatuePose extends Vector3D {
 
     public void update() {
         var entity = this.statue.getEntity();
-        if(entity == null) return;
+        if (entity == null) return;
         update(entity);
     }
 

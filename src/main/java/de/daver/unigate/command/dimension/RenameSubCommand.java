@@ -37,7 +37,7 @@ public class RenameSubCommand extends LiteralNode {
         var targetPath = plugin.worldContainer().resolve(newName);
 
 
-        if(dimension.meta().state() == DimensionState.LOADED) {
+        if (dimension.meta().state() == DimensionState.LOADED) {
             dimension.unload(true);
             plugin.dimensionCache().updateState(dimension);
         }

@@ -46,13 +46,13 @@ public class StatueInventoryGui implements InventoryHolder {
     }
 
     public boolean onClick(int slot, Player player) {
-        if(slot < 0 || slot > inv.getSize()) return false;
+        if (slot < 0 || slot > inv.getSize()) return false;
         return slot > 5;
     }
 
     public void onClose(Player player) {
         var statue = plugin.statueInteractListener().get(player);
-        if(statue == null) return;
+        if (statue == null) return;
 
         var helmet = inv.getItem(0);
         var chestplate = inv.getItem(1);

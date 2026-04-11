@@ -19,7 +19,7 @@ public class ExportSubCommand extends LiteralNode {
             "level.dat",
             "region",
             "entities"
-            ));
+    ));
 
     protected ExportSubCommand() {
         super("export", "Export a dimension to a tar.gz archive");

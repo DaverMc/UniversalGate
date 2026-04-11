@@ -1,7 +1,6 @@
 package de.daver.unigate.command.dimension;
 
 import de.daver.unigate.Permissions;
-import de.daver.unigate.command.argument.DimensionArgument;
 import de.daver.unigate.core.command.LiteralNode;
 
 public class AllowedSubCommand extends LiteralNode {

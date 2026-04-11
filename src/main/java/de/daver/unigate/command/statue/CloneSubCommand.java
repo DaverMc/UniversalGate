@@ -22,7 +22,7 @@ public class CloneSubCommand extends LiteralNode {
         var statue = context.plugin().statueInteractListener().get(player);
 
 
-        if(statue == null) {
+        if (statue == null) {
             context.plugin().languageManager()
                     .message(LanguageKeys.STATUE_NOT_SELECTED)
                     .send(player);

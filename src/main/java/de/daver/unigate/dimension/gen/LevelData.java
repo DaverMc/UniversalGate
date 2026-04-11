@@ -97,7 +97,7 @@ public interface LevelData {
     static void addDataFields(CompoundTag data, Dimension dimension) {
         data.put("ScheduledEvents", new ListTag<>(CompoundTag.class));
 
-        data.putBoolean("allowCommands",false);
+        data.putBoolean("allowCommands", false);
         data.putInt("clearWeatherTime", 0);
         data.putInt("DataVersion", NBT_VERSION);
         data.putLong("DayTime", 0L);

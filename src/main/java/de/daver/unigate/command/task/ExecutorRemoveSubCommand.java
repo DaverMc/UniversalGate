@@ -5,7 +5,6 @@ import de.daver.unigate.Permissions;
 import de.daver.unigate.command.argument.TaskArgument;
 import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
-import de.daver.unigate.core.util.LuckPermsUtil;
 import de.daver.unigate.task.Task;
 
 public class ExecutorRemoveSubCommand extends LiteralNode {
@@ -22,7 +21,7 @@ public class ExecutorRemoveSubCommand extends LiteralNode {
         var task = context.getArgument("task", Task.class);
         var executor = task.executor();
 
-        if(executor == null)
+        if (executor == null)
             throw new IllegalStateException("Task has no executor!");
 
         task.setExecutor(null);

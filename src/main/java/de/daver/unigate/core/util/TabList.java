@@ -48,29 +48,29 @@ public class TabList {
     }
 
     public void sendName(Player player) {
-        if(nameGetter != null) {
+        if (nameGetter != null) {
             var name = nameGetter.get(plugin, player);
             player.playerListName(name);
             //displayName.updateDisplayName(player, name);
         }
-        if(sorter == null) return;
+        if (sorter == null) return;
 
         int priority = 9999 - sorter.apply(player);
         String teamName = String.format("%04d", priority) + player.getName();
 
         Scoreboard board = player.getScoreboard();
         Team team = board.getEntryTeam(teamName);
-        if(team != null && !team.getName().equals(teamName)) team.unregister();
+        if (team != null && !team.getName().equals(teamName)) team.unregister();
 
         team = board.getTeam(teamName);
-        if(team == null) team = board.registerNewTeam(teamName);
+        if (team == null) team = board.registerNewTeam(teamName);
         team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
-        if(!team.hasEntry(player.getName())) team.addEntry(player.getName());
+        if (!team.hasEntry(player.getName())) team.addEntry(player.getName());
     }
 
     public void sendHeaderFooter(Player player) {
-        if(headerGetter != null) player.sendPlayerListHeader(headerGetter.get(plugin, player));
-        if(footerGetter != null) player.sendPlayerListFooter(footerGetter.get(plugin, player));
+        if (headerGetter != null) player.sendPlayerListHeader(headerGetter.get(plugin, player));
+        if (footerGetter != null) player.sendPlayerListFooter(footerGetter.get(plugin, player));
     }
 
     public DisplayName displayName() {

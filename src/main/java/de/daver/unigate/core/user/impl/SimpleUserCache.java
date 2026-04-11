@@ -13,9 +13,12 @@ public class SimpleUserCache implements UserCache {
     private final Map<String, UUID> nameToUUID;
     private final Map<UUID, String> uuidToName;
 
+    protected final JavaPlugin plugin;
+
     public SimpleUserCache(JavaPlugin plugin) {
         this.nameToUUID = new ConcurrentHashMap<>();
         this.uuidToName = new ConcurrentHashMap<>();
+        this.plugin = plugin;
         registerListener(plugin);
     }
 

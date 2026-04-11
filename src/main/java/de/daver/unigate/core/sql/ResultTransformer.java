@@ -18,9 +18,9 @@ public interface ResultTransformer<T> {
     }
 
     static <T, C extends Collection<T>> ResultTransformer<C> asCollection(Supplier<C> supplier, ResultTransformer<T> transformer) {
-        return set ->  {
+        return set -> {
             C collection = supplier.get();
-            while(set.next()) collection.add(transformer.transform(set));
+            while (set.next()) collection.add(transformer.transform(set));
             return collection;
         };
     }

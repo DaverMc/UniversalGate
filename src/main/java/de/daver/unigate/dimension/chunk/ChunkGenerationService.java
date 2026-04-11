@@ -52,7 +52,7 @@ public class ChunkGenerationService {
 
     public void start(CommandSender executor, String worldName, int radius) {
         var world = Bukkit.getWorld(worldName);
-        if(world == null) throw new IllegalStateException("World not found");
+        if (world == null) throw new IllegalStateException("World not found");
         var task = new ChunkGenerationTask(plugin, executor, worldName, radius, onCompletion, onProgress);
         tasks.put(worldName.toLowerCase(), task);
         Bukkit.getScheduler().runTaskTimer(plugin, task::run, 0, 1);
@@ -60,7 +60,7 @@ public class ChunkGenerationService {
 
     public void stop(String worldName) {
         var task = this.tasks.remove(worldName.toLowerCase());
-        if(task == null) return;
+        if (task == null) return;
         task.stop();
     }
 

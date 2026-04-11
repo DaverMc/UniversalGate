@@ -57,9 +57,10 @@ public class LiteralNode extends CommandNodeWrapper<LiteralArgumentBuilder<Comma
     protected Component createArgumentComponent() {
         Component arguments = Component.empty();
 
-        for(var child : children) {
-            if(!(child instanceof ArgumentNode<?> argument)) continue;
-            if(argument.children.isEmpty()) arguments = arguments.append(Component.text(argument.name, NamedTextColor.GREEN));
+        for (var child : children) {
+            if (!(child instanceof ArgumentNode<?> argument)) continue;
+            if (argument.children.isEmpty())
+                arguments = arguments.append(Component.text(argument.name, NamedTextColor.GREEN));
             else arguments = arguments.append(Component.text(argument.name, NamedTextColor.RED));
         }
         return arguments;
