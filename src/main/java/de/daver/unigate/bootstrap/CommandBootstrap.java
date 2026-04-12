@@ -31,9 +31,9 @@ public class CommandBootstrap {
         commands.forEach(command -> command.register(registry));
     }
 
-    public static CommandBootstrap create(UniGateAPI api) {
+    public static CommandBootstrap create() {
         return new CommandBootstrap()
-                .add(new DimensionCommand(api))
+                .add(new DimensionCommand())
                 .add(new CategoryCommand())
                 .add(new LanguageCommand())
                 .add(new SpeedCommand())
@@ -44,7 +44,7 @@ public class CommandBootstrap {
                 .add(new HubCommand())
                 .add(new StatueCommand())
                 .add(new IconCommand())
-                .add(new BuildModeCommand(api))
+                .add(new BuildModeCommand())
                 .add(new GamemodeCommand());
     }
 }

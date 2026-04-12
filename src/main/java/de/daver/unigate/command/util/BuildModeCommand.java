@@ -3,8 +3,8 @@ package de.daver.unigate.command.util;
 import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.Permissions;
 import de.daver.unigate.UniGateAPI;
-import de.daver.unigate.command.UniGateCommand;
 import de.daver.unigate.command.argument.UserArgument;
+import de.daver.unigate.core.command.LiteralNode;
 import de.daver.unigate.core.command.PluginContext;
 import de.daver.unigate.core.lang.LanguageKey;
 import de.daver.unigate.listener.ViewerModeListener;
@@ -12,10 +12,10 @@ import org.bukkit.Bukkit;
 
 import java.util.UUID;
 
-public class BuildModeCommand extends UniGateCommand {
+public class BuildModeCommand extends LiteralNode {
 
-    public BuildModeCommand(UniGateAPI context) {
-        super(context, "buildmode", "Toggles the build mode", "bm", "build");
+    public BuildModeCommand() {
+        super("buildmode", "Toggles the build mode", "bm", "build");
         permission(Permissions.COMMAND_BUILD_MODE);
         then(new UserArgument("user"))
                 .executor(this::setBuildMode);

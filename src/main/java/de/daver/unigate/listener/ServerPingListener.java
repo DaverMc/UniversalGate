@@ -16,8 +16,6 @@ import java.util.UUID;
 
 public class ServerPingListener extends PluginEventListener {
 
-    private static final String SEPRATOR = "<br>";
-
     private Component motd;
     private List<PaperServerListPingEvent.ListedPlayerInfo> listedPlayers;
     private String version;

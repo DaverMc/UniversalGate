@@ -43,7 +43,6 @@ public class UniversalGatePlugin extends JavaPlugin {
     private CategoryCache categoryCache;
     private DimensionCache dimensionCache;
     private SQLExecutor sqlExecutor;
-    private ServerPingListener serverPingListener;
     private TaskCache taskCache;
     private StatueInteractListener statueInteractListener;
     private ItemInteractListener itemInteractListener;
@@ -79,7 +78,7 @@ public class UniversalGatePlugin extends JavaPlugin {
 
     private void registerCommands() {
         getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> CommandBootstrap.create(null)
+                event -> CommandBootstrap.create()
                         .registerAll(event.registrar())); //TODO Null API
     }
 
@@ -88,9 +87,6 @@ public class UniversalGatePlugin extends JavaPlugin {
         new JoinListener(this).register();
         new ChatListener(this).register();
         new StopLagListener(this).register();
-
-        this.serverPingListener = new ServerPingListener(this);
-        this.serverPingListener.register();
 
         new LeaveListener(this).register();
         new PortalListener(this).register();
@@ -252,16 +248,8 @@ public class UniversalGatePlugin extends JavaPlugin {
         return dimensionCache;
     }
 
-    public ServerPingListener serverPingListener() {
-        return serverPingListener;
-    }
-
     public TaskCache taskCache() {
         return taskCache;
-    }
-
-    public ItemInteractListener itemInteractListener() {
-        return itemInteractListener;
     }
 
     public StatueInteractListener statueInteractListener() {
