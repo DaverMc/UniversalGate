@@ -10,6 +10,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -35,18 +36,35 @@ public record ItemWrapper(UniversalGatePlugin plugin, ItemStack itemStack) {
         return modifyMeta(meta -> meta.lore(lore));
     }
 
-    public ItemWrapper lore(int index, Component line) {
+    public ItemWrapper setLoreLine(int index, Component line) {
+        return editLore(index, (lore, i) -> {
+            while (lore.size() <= index) lore.add(Component.empty());
+            lore.set(index, line);
+        });
+    }
+
+    public ItemWrapper removeLoreLine(int index) {
+        return editLore(index, (lore, i) -> {
+            if(i >= lore.size()) return;
+            var value = lore.get(i);
+            lore.remove(value);
+        });
+    }
+
+    public ItemWrapper insertLoreLine(int index, Component line) {
+        return editLore(index, (lore, i) -> {
+            while(lore.size() <= index) lore.add(Component.empty());
+            lore.add(index, line);
+        });
+    }
+
+    private ItemWrapper editLore(int index, BiConsumer<List<Component>, Integer> consumer) {
         return modifyMeta(meta -> {
             var lore = meta.lore();
-            if (line == null) {
-                if (lore == null || lore.size() <= index) return;
-                lore.remove(index);
-                meta.lore(lore);
-                return;
+            if(lore == null) {
+                lore = new ArrayList<>();
             }
-            if (lore == null) lore = new ArrayList<>();
-            for (int i = lore.size(); i <= index; i++) lore.add(Component.empty());
-            lore.set(index, line);
+            consumer.accept(lore, index);
             meta.lore(lore);
         });
     }

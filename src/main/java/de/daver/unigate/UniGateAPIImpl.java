@@ -3,6 +3,7 @@ package de.daver.unigate;
 import de.daver.unigate.bootstrap.DatabaseBootstrap;
 import de.daver.unigate.bootstrap.DirectoryRegistry;
 import de.daver.unigate.core.lang.LanguagesCache;
+import de.daver.unigate.core.logging.LoggingHandler;
 import de.daver.unigate.core.sql.SQLExecutor;
 import de.daver.unigate.dimension.DimensionCache;
 import de.daver.unigate.statue.StatueService;
@@ -29,6 +30,11 @@ public class UniGateAPIImpl implements UniGateAPI {
         var bootstrap = new DatabaseBootstrap();
         var file = bootstrap.createDatabaseFile(plugin, "database.db");
         return bootstrap.initSQLiteConnection(file, config -> config.setPoolName("UniGate-Pool"));
+    }
+
+    @Override
+    public LoggingHandler errorHandler() {
+        return null;
     }
 
     @Override

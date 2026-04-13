@@ -11,7 +11,9 @@ import de.daver.unigate.item.ItemWrapper;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
+import org.bukkit.plugin.Plugin;
 
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 public class LoreSubCommand extends LiteralNode {
@@ -19,50 +21,30 @@ public class LoreSubCommand extends LiteralNode {
     protected LoreSubCommand() {
         super("lore", "Edits the lore of the icon in your hand");
         permission(Permissions.COMMAND_ICON_LORE);
-        then(new NumberArgument<>("index", Integer.class, 0, 20))
-                .executor(this::deleteLoreLine)
-                .then(new TextArgument("lines"))
-                .suggestions(this::suggestExistingLine, true)
-                .executor(this::setItemLoreLines);
+        then(new LoreRemoveSubCommand());
+        then(new LoreSetSubCommand());
+        then(new LoreInsertSubCommand());
     }
 
-    Stream<String> suggestExistingLine(PluginContext context) throws CommandSyntaxException {
+    public static void editLoreLine(PluginContext context, Consumer<ItemWrapper> consumer) {
         var player = context.senderPlayer();
-        var itemStack = player.getInventory().getItemInMainHand();
-        if (itemStack.getType() == Material.AIR) return Stream.empty();
-        var itemWrapper = new ItemWrapper(context.plugin(), itemStack);
-        var index = context.getArgument("index", Integer.class);
-        var lineComponent = itemWrapper.getLore(index);
-        return Stream.of(MiniMessage.miniMessage().serialize(lineComponent));
-    }
+        var item = player.getInventory().getItemInMainHand();
+        if(item.getType() == Material.AIR) return;
+        var wrapper = new ItemWrapper(context.plugin(), item);
+        consumer.accept(wrapper);
 
-    private void setItemLoreLines(PluginContext context) throws CommandSyntaxException {
-        var player = context.senderPlayer();
-        var itemStack = player.getInventory().getItemInMainHand();
-        if (itemStack.getType() == Material.AIR) return;
-        var itemWrapper = new ItemWrapper(context.plugin(), itemStack);
-        var lineString = context.getArgument("lines", String.class);
-        var index = context.getArgument("index", Integer.class);
-        var lineComponent = MiniMessage.miniMessage().deserialize(lineString)
-                .decoration(TextDecoration.ITALIC, false);
+        player.getInventory().setItemInMainHand(wrapper.itemStack());
 
-        itemWrapper.lore(index, lineComponent);
-
-        context.plugin().languageManager()
-                .message(LanguageKeys.COMMAND_ITEM_LORE)
+        context.plugin().languageManager().message(LanguageKeys.COMMAND_ITEM_LORE)
                 .send(player);
     }
 
-    private void deleteLoreLine(PluginContext context) throws CommandSyntaxException {
+    public static Stream<Integer> suggestFirstAndLast(PluginContext context) {
         var player = context.senderPlayer();
-        var itemStack = player.getInventory().getItemInMainHand();
-        if (itemStack.getType() == Material.AIR) return;
-        var itemWrapper = new ItemWrapper(context.plugin(), itemStack);
-        var index = context.getArgument("index", Integer.class);
-        itemWrapper.lore(index, null);
-
-        context.plugin().languageManager()
-                .message(LanguageKeys.COMMAND_ITEM_LORE)
-                .send(player);
+        var item = player.getInventory().getItemInMainHand();
+        if(item.getType() == Material.AIR) return Stream.empty();
+        var lore = item.lore();
+        int max = lore == null ? 0 : lore.size() - 1;
+        return Stream.of(0, max);
     }
 }

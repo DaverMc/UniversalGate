@@ -47,6 +47,7 @@ public class UniversalGatePlugin extends JavaPlugin {
     private StatueInteractListener statueInteractListener;
     private ItemInteractListener itemInteractListener;
     private DialogClickListener dialogClickListener;
+    private ServerPingListener serverPingListener;
 
     @Override
     public void onDisable() {
@@ -90,6 +91,9 @@ public class UniversalGatePlugin extends JavaPlugin {
 
         new LeaveListener(this).register();
         new PortalListener(this).register();
+
+        this.serverPingListener = new ServerPingListener(this);
+        serverPingListener.register();
 
         this.itemInteractListener = new ItemInteractListener(this);
         this.itemInteractListener.register();
@@ -280,4 +284,7 @@ public class UniversalGatePlugin extends JavaPlugin {
         return instance;
     }
 
+    public ServerPingListener serverPingListener() {
+        return this.serverPingListener;
+    }
 }

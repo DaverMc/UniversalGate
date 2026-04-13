@@ -11,22 +11,32 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 
+import javax.swing.*;
+import java.util.stream.Stream;
+
 public class RenameSubCommand extends LiteralNode {
 
     protected RenameSubCommand() {
         super("rename", "Renames the Icon in your Main Hand");
         permission(Permissions.COMMAND_ICON_RENAME);
         then(new TextArgument("name"))
+                .suggestions(this::suggestExistingLine, true)
                 .executor(this::renameItem);
     }
 
-    private void renameItem(PluginContext context) throws CommandSyntaxException {
+    Stream<String> suggestExistingLine(PluginContext context) {
+        var player = context.senderPlayer();
+        var itemStack = player.getInventory().getItemInMainHand();
+        if (itemStack.getType() == Material.AIR) return Stream.empty();
+        return Stream.of(MiniMessage.miniMessage().serialize(itemStack.displayName()));
+    }
+
+    private void renameItem(PluginContext context) {
         var player = context.senderPlayer();
         var itemStack = player.getInventory().getItemInMainHand();
         if (itemStack.getType() == Material.AIR) return;
         var nameString = context.getArgument("name", String.class);
-        var nameComponent = MiniMessage.miniMessage().deserialize(nameString)
-                .decoration(TextDecoration.ITALIC, false);
+        var nameComponent = IconCommand.deserialize(nameString);
         var itemWrapper = new ItemWrapper(context.plugin(), itemStack);
         itemWrapper.displayName(nameComponent);
 

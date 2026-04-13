@@ -60,6 +60,7 @@
 - Von Kategorie Prefix zu Kategorie Namen parsen für z.B. dimension info
 
 
+Icon Lore append, remove, clear, set Umbauen und last und first als Argumente Suggestions kommen
 End DimensionGen
 help command einbauen für die Commands speed,gamemode,nightvision
 Generieren eines Chunks soll laufen ohne dass ein Spieler auf der Map sein muss
