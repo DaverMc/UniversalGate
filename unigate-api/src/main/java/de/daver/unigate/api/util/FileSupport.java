@@ -1,4 +1,4 @@
-package de.daver.unigate.api.io;
+package de.daver.unigate.api.util;
 
 import java.nio.file.Path;
 

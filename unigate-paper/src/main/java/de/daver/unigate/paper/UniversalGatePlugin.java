@@ -6,6 +6,7 @@ import de.daver.unigate.paper.lang.SimpleMessageCache;
 import de.daver.unigate.paper.nanosql.SQLExecutors;
 import de.daver.unigate.paper.util.PluginLoggingHandler;
 import de.daver.unigate.paper.util.PluginPathStorage;
+import de.daver.unigate.paper.util.SimpleFileSupport;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class UniversalGatePlugin extends JavaPlugin {
@@ -22,6 +23,7 @@ public class UniversalGatePlugin extends JavaPlugin {
 
         this.api = new UniGateAPIImpl(
                 logger,
+                new SimpleFileSupport(logger),
                 pathStorage,
                 database,
                 new SimpleMessageCache(),

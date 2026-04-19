@@ -6,7 +6,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public record UniversalGateTerminatorImpl(UniversalGateAPI api, JavaPlugin plugin) implements UniversalGateTerminator {
 
-
     @Override
     public void terminate() {
 
