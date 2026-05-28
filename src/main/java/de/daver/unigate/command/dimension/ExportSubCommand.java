@@ -37,7 +37,7 @@ public class ExportSubCommand extends LiteralNode {
         var worldContainer = context.plugin().getServer().getWorldContainer().toPath();
         var source = worldContainer.resolve(dimension.name());
         var target = context.plugin().exportDir().resolve(dimension.name() + ".tar.gz");
-        FileUtils.compressDirectory(source, target, allowedEntries);
+        FileUtils.compressDirectory(source, target, Set.of()); //TODO Temporarly removed allowed Entry Set 
 
         context.plugin().languageManager()
                 .message(LanguageKeys.DIMENSION_EXPORT_SUCCESS)

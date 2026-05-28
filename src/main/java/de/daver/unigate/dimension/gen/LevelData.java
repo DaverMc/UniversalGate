@@ -9,7 +9,7 @@ import org.bukkit.GameRules;
 
 public interface LevelData {
 
-    int NBT_VERSION = 4671;
+    int NBT_VERSION = 4790;
 
     static Tag<?> create(Dimension dimension) {
         CompoundTag root = new CompoundTag();
@@ -84,7 +84,7 @@ public interface LevelData {
     static CompoundTag createVersion(Dimension dimension) {
         CompoundTag root = new CompoundTag();
         root.putInt("Id", NBT_VERSION);
-        root.putString("Name", "1.21.11");
+        root.putString("Name", "26.1.2");
         root.putString("Series", "main");
         root.putBoolean("Snapshot", false);
         return root;

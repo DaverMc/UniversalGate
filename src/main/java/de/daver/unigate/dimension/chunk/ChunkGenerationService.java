@@ -2,7 +2,6 @@ package de.daver.unigate.dimension.chunk;
 
 import de.daver.unigate.LanguageKeys;
 import de.daver.unigate.UniversalGatePlugin;
-import de.daver.unigate.core.command.PluginContext;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
@@ -63,18 +62,4 @@ public class ChunkGenerationService {
         if (task == null) return;
         task.stop();
     }
-
-    private void sendSuccessMessage(PluginContext context, String world, int chunks) {
-        context.plugin().languageManager()
-                .message(LanguageKeys.DIMENSION_GENERATE_CHUNKS_FINISHED)
-                .argument("dimension", world)
-                .argument("chunks", chunks)
-                .send(context.sender());
-    }
-
-    private void sendProgressMessage(PluginContext context, String world, float progress) {
-        String progressString = String.format("%.2f", progress);
-
-    }
-
 }
