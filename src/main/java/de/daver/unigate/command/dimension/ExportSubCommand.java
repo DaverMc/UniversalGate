@@ -30,12 +30,13 @@ public class ExportSubCommand extends LiteralNode {
 
     private void exportDimension(PluginContext context) throws Exception {
         var dimension = context.getArgument("dimension", Dimension.class);
+        
+        var source = dimension.getDirectoryPath();
+        context.plugin().logger().info(source.toString());
 
         dimension.unload(true);
         context.plugin().dimensionCache().updateState(dimension);
 
-        var worldContainer = context.plugin().getServer().getWorldContainer().toPath();
-        var source = worldContainer.resolve(dimension.name());
         var target = context.plugin().exportDir().resolve(dimension.name() + ".tar.gz");
         FileUtils.compressDirectory(source, target, Set.of()); //TODO Temporarly removed allowed Entry Set 
 

@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "de.daver.unigate"
-version = "1.5.6"
+version = "1.6.0"
 
 repositories {
     mavenCentral()
@@ -46,6 +46,7 @@ paper {
 }
 
 tasks.register<Copy>("copyJar") {
+    dependsOn(tasks.clean)
     dependsOn(tasks.shadowJar)
 
     from(layout.buildDirectory.dir("libs"))
