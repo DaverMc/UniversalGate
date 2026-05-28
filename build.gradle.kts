@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "de.daver.unigate"
-version = "1.5.5"
+version = "1.5.6"
 
 repositories {
     mavenCentral()
@@ -27,8 +27,14 @@ dependencies {
     implementation(libs.apache.compess)
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25);
+    }
+}
+
 paper {
-    apiVersion = "1.21"
+    apiVersion = "26.1"
     main = "de.daver.unigate.UniversalGatePlugin"
 
     serverDependencies {

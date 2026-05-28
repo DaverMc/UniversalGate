@@ -1,12 +1,12 @@
 [versions]
-paper = "1.21.11-R0.1-SNAPSHOT"
+paper = "26.1.2.build.+"
 shadow = "8.1.1"
-paper-yml = "0.8.0"
+paper-yml = "0.9.0"
 hikari  = "7.0.2"
 nbt = "6.1"
 luckperms = "5.5"
-apache-compress = "1.26.0"
-chunky = "1.4.40"
+apache-compress = "1.27.1"
+chunky = "1.4.45"
 
 [plugins]
 shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
