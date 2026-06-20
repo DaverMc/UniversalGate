@@ -1,16 +1,21 @@
 package de.daver.unigate.core.util;
 
+import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
+import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Set;
+import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 public class FileUtils {
@@ -79,6 +84,30 @@ public class FileUtils {
             Files.walkFileTree(source, new CompressVisitor(source, tOut, allowedEntries));
 
             tOut.finish();
+        }
+    }
+
+    public static void decompressArchive(Path archive, Path targetDir) throws IOException {
+        Files.createDirectories(targetDir);
+
+        try (InputStream fIn = Files.newInputStream(archive);
+             BufferedInputStream bIn = new BufferedInputStream(fIn);
+             GZIPInputStream gzIn = new GZIPInputStream(bIn);
+             TarArchiveInputStream tIn = new TarArchiveInputStream(gzIn)) {
+
+            ArchiveEntry entry;
+            while ((entry = tIn.getNextEntry()) != null) {
+                Path resolved = targetDir.resolve(entry.getName()).normalize();
+                if (!resolved.startsWith(targetDir)) continue;
+
+                if (entry.isDirectory()) {
+                    Files.createDirectories(resolved);
+                    continue;
+                }
+
+                if (resolved.getParent() != null) Files.createDirectories(resolved.getParent());
+                Files.copy(tIn, resolved, StandardCopyOption.REPLACE_EXISTING);
+            }
         }
     }
 

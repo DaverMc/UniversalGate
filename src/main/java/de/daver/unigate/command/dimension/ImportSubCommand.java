@@ -16,9 +16,12 @@ import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class ImportSubCommand extends LiteralNode {
+
+    private static final List<String> WORLD_CONTENTS = List.of("region", "entities", "poi");
 
     public ImportSubCommand() {
         super("import", "Imports a Dimension from a file");
@@ -46,18 +49,22 @@ public class ImportSubCommand extends LiteralNode {
         Category category = context.getArgument("category", Category.class);
         String theme = context.getArgument("theme", String.class);
 
-        var id = Dimension.buildName(category, theme);
         var creator = context.senderPlayer();
+        var dimension = new Dimension(category, theme, type, creator.getUniqueId());
 
-        var worldContainer = context.plugin().getServer().getWorldContainer().toPath();
-        var newDir = worldContainer.resolve(Dimension.buildName(category, theme));
-        if (Files.exists(newDir))
-            throw new FileAlreadyExistsException(id);
+        var targetDir = dimension.getDirectoryPath();
+        if (Files.exists(targetDir)) throw new FileAlreadyExistsException(dimension.name());
 
         var source = context.plugin().importDir().resolve(file);
-        FileUtils.copyContents(source, newDir);
-        var dimension = new Dimension(category, theme, type, creator.getUniqueId());
-        dimension.create();
+        var staging = context.plugin().importDir().resolve(".import");
+        try {
+            var worldDir = extractWorld(source, staging);
+            copyWorldContents(worldDir, targetDir);
+        } finally {
+            FileUtils.deleteDir(staging);
+        }
+
+        dimension.register();
         context.plugin().dimensionCache().insert(dimension);
         context.plugin().languageManager()
                 .message(LanguageKeys.DIMENSION_IMPORT_SUCCESS)
@@ -66,6 +73,28 @@ public class ImportSubCommand extends LiteralNode {
                 .send(context.sender());
     }
 
+    private Path extractWorld(Path source, Path staging) throws IOException {
+        if (Files.isDirectory(source)) return worldRoot(source);
+        FileUtils.deleteDir(staging);
+        FileUtils.decompressArchive(source, staging);
+        return worldRoot(staging);
+    }
+
+    private Path worldRoot(Path dir) throws IOException {
+        var overworld = dir.resolve("dimensions").resolve("minecraft").resolve("overworld");
+        if (Files.exists(overworld.resolve("region"))) return overworld;
+        if (Files.exists(dir.resolve("region")) || Files.exists(dir.resolve("level.dat"))) return dir;
+        try (var children = Files.list(dir)) {
+            return children.filter(Files::isDirectory).findFirst().orElse(dir);
+        }
+    }
+
+    private void copyWorldContents(Path worldDir, Path targetDir) throws IOException {
+        for (var content : WORLD_CONTENTS) {
+            var from = worldDir.resolve(content);
+            if (Files.exists(from)) FileUtils.copyContents(from, targetDir.resolve(content));
+        }
+    }
 
     Stream<String> files(PluginContext context) {
         try {
