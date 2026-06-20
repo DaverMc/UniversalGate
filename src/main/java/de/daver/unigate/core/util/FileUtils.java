@@ -58,6 +58,7 @@ public class FileUtils {
 
         @Override
         public @NonNull FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+            if (isMacJunk(dir)) return FileVisitResult.SKIP_SUBTREE;
             Path targetDir = target.resolve(source.relativize(dir));
             Files.createDirectories(targetDir);
             return FileVisitResult.CONTINUE;
@@ -65,13 +66,20 @@ public class FileUtils {
 
         @Override
         public @NonNull FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+            if (isMacJunk(file)) return FileVisitResult.CONTINUE;
             Files.copy(file, target.resolve(source.relativize(file)), StandardCopyOption.REPLACE_EXISTING);
             return FileVisitResult.CONTINUE;
         }
     }
 
+    static boolean isMacJunk(Path path) {
+        Path name = path.getFileName();
+        if (name == null) return false;
+        String fileName = name.toString();
+        return fileName.startsWith("._") || fileName.equals(".DS_Store");
+    }
+
     public static void compressDirectory(Path source, Path target, Set<Path> allowedEntries) throws IOException {
-        // Erstelle Zielordner falls nötig
         if (target.getParent() != null) Files.createDirectories(target.getParent());
 
         try (OutputStream fOut = Files.newOutputStream(target);
@@ -99,6 +107,7 @@ public class FileUtils {
             while ((entry = tIn.getNextEntry()) != null) {
                 Path resolved = targetDir.resolve(entry.getName()).normalize();
                 if (!resolved.startsWith(targetDir)) continue;
+                if (isMacJunk(resolved)) continue;
 
                 if (entry.isDirectory()) {
                     Files.createDirectories(resolved);
@@ -125,6 +134,7 @@ public class FileUtils {
 
         @Override
         public @NonNull FileVisitResult visitFile(@NonNull Path path, @NonNull BasicFileAttributes attrs) throws IOException {
+            if (isMacJunk(path)) return FileVisitResult.CONTINUE;
             Path relativized = source.relativize(path);
             if (!isAllowed(relativized)) return FileVisitResult.CONTINUE;
 

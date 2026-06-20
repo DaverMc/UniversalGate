@@ -11,12 +11,17 @@ public interface LevelData {
     int NBT_VERSION = 4790;
 
     static Tag<?> create(Dimension dimension) {
+        return create(dimension, 0L);
+    }
+
+    static Tag<?> create(Dimension dimension, long dayTime) {
         CompoundTag root = new CompoundTag();
         CompoundTag data = new CompoundTag();
         root.put("Data", data);
 
         data.put("difficulty_settings", createDifficultySettings());
         data.putLong("Time", 0L);
+        data.putLong("DayTime", dayTime);
         data.putInt("GameType", 1);
         data.putInt("version", 19133);
         data.putLong("LastPlayed", System.currentTimeMillis());

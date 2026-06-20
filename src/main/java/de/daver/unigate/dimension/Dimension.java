@@ -86,7 +86,15 @@ public class Dimension {
     }
 
     public void register() {
+        register(-1L);
+    }
+
+    public void register(long dayTime) {
         load();
+        if (dayTime >= 0) {
+            var world = Bukkit.getWorld(name);
+            if (world != null) world.setFullTime(dayTime);
+        }
         unload(true);
     }
 
@@ -99,8 +107,12 @@ public class Dimension {
     }
 
     public void writeLevelData(Path worldDir) throws IOException {
+        writeLevelData(worldDir, 0L);
+    }
+
+    public void writeLevelData(Path worldDir, long dayTime) throws IOException {
         Files.createDirectories(worldDir);
-        writeLevelDat(LevelData.create(this), worldDir.resolve("level.dat"));
+        writeLevelDat(LevelData.create(this, dayTime), worldDir.resolve("level.dat"));
     }
 
     private static void writeLevelDat(Tag<?> tag, Path levelDat) throws IOException {

@@ -11,13 +11,17 @@ import de.daver.unigate.core.command.argument.WordArgument;
 import de.daver.unigate.core.util.FileUtils;
 import de.daver.unigate.dimension.Dimension;
 import de.daver.unigate.dimension.gen.DimensionType;
+import net.querz.nbt.io.NBTDeserializer;
+import net.querz.nbt.tag.CompoundTag;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Stream;
+import java.util.zip.GZIPInputStream;
 
 public class ImportSubCommand extends LiteralNode {
 
@@ -52,19 +56,30 @@ public class ImportSubCommand extends LiteralNode {
         var creator = context.senderPlayer();
         var dimension = new Dimension(category, theme, type, creator.getUniqueId());
 
+        var stageWorld = dimension.legacyDirectoryPath();
         var targetDir = dimension.getDirectoryPath();
-        if (Files.exists(targetDir)) throw new FileAlreadyExistsException(dimension.name());
+        if (Files.exists(targetDir)) throw new FileAlreadyExistsException(
+                "Dimension '" + dimension.name() + "' already exists at " + targetDir);
+        if (Files.exists(stageWorld)) throw new FileAlreadyExistsException(
+                "A leftover world folder '" + dimension.name() + "' exists at " + stageWorld
+                        + " - remove it before importing");
 
         var source = context.plugin().importDir().resolve(file);
-        var staging = context.plugin().importDir().resolve(".import");
+        var extraction = context.plugin().importDir().resolve(".import");
         try {
-            var worldDir = extractWorld(source, staging);
-            copyWorldContents(worldDir, targetDir);
+            var worldDir = extractWorld(source, extraction);
+            long dayTime = readDayTime(worldDir);
+            copyWorldContents(contentRoot(worldDir), stageWorld);
+            dimension.writeLevelData(stageWorld, Math.max(dayTime, 0L));
+            dimension.register(dayTime);
+        } catch (Exception exception) {
+            FileUtils.deleteDir(stageWorld);
+            FileUtils.deleteDir(targetDir);
+            throw exception;
         } finally {
-            FileUtils.deleteDir(staging);
+            FileUtils.deleteDir(extraction);
         }
 
-        dimension.register();
         context.plugin().dimensionCache().insert(dimension);
         context.plugin().languageManager()
                 .message(LanguageKeys.DIMENSION_IMPORT_SUCCESS)
@@ -81,18 +96,46 @@ public class ImportSubCommand extends LiteralNode {
     }
 
     private Path worldRoot(Path dir) throws IOException {
-        var overworld = dir.resolve("dimensions").resolve("minecraft").resolve("overworld");
-        if (Files.exists(overworld.resolve("region"))) return overworld;
-        if (Files.exists(dir.resolve("region")) || Files.exists(dir.resolve("level.dat"))) return dir;
+        if (hasWorldData(dir)) return dir;
         try (var children = Files.list(dir)) {
             return children.filter(Files::isDirectory).findFirst().orElse(dir);
         }
     }
 
-    private void copyWorldContents(Path worldDir, Path targetDir) throws IOException {
+    private boolean hasWorldData(Path dir) {
+        return Files.exists(dir.resolve("level.dat"))
+                || Files.exists(dir.resolve("region"))
+                || Files.exists(overworldDir(dir).resolve("region"));
+    }
+
+    private Path overworldDir(Path worldDir) {
+        return worldDir.resolve("dimensions").resolve("minecraft").resolve("overworld");
+    }
+
+    private Path contentRoot(Path worldDir) {
+        var overworld = overworldDir(worldDir);
+        if (Files.exists(overworld.resolve("region"))) return overworld;
+        return worldDir;
+    }
+
+    private void copyWorldContents(Path contentDir, Path targetDir) throws IOException {
         for (var content : WORLD_CONTENTS) {
-            var from = worldDir.resolve(content);
+            var from = contentDir.resolve(content);
             if (Files.exists(from)) FileUtils.copyContents(from, targetDir.resolve(content));
+        }
+    }
+
+    private long readDayTime(Path worldDir) {
+        var levelDat = worldDir.resolve("level.dat");
+        if (Files.notExists(levelDat)) return -1L;
+        try (InputStream in = new GZIPInputStream(Files.newInputStream(levelDat))) {
+            var named = new NBTDeserializer(false).fromStream(in);
+            if (!(named.getTag() instanceof CompoundTag root) || !root.containsKey("Data")) return -1L;
+            var data = root.getCompoundTag("Data");
+            if (data == null || !data.containsKey("DayTime")) return -1L;
+            return data.getLong("DayTime");
+        } catch (IOException exception) {
+            return -1L;
         }
     }
 
