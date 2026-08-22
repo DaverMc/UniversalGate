@@ -10,7 +10,6 @@ import net.querz.nbt.io.NBTSerializer;
 import net.querz.nbt.io.NamedTag;
 import net.querz.nbt.tag.Tag;
 import org.bukkit.Bukkit;
-import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -154,7 +153,7 @@ public class Dimension {
 
     public void load() {
         if (meta.state() != DimensionState.ACTIVE) return;
-        Bukkit.createWorld(new WorldCreator(name));
+        Bukkit.createWorld(type.creator(name, seed));
         meta.state(DimensionState.LOADED);
     }
 

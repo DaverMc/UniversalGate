@@ -53,6 +53,11 @@ public class StopLagListener extends PluginEventListener {
     }
 
     @EventHandler
+    public void onLeavesDecay(LeavesDecayEvent event) {
+        cancel(event, event.getBlock().getWorld().getName());
+    }
+
+    @EventHandler
     public void onBlockGrow(BlockGrowEvent event) {
         cancel(event, event.getBlock().getWorld().getName());
     }

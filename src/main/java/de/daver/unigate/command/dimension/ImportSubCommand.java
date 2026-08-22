@@ -71,8 +71,10 @@ public class ImportSubCommand extends LiteralNode {
             long dayTime = readDayTime(worldDir);
             copyWorldContents(contentRoot(worldDir), stageWorld);
             dimension.writeLevelData(stageWorld, Math.max(dayTime, 0L));
+            context.plugin().dimensionCache().insert(dimension);
             dimension.register(dayTime);
         } catch (Exception exception) {
+            context.plugin().dimensionCache().delete(dimension);
             FileUtils.deleteDir(stageWorld);
             FileUtils.deleteDir(targetDir);
             throw exception;
@@ -80,7 +82,6 @@ public class ImportSubCommand extends LiteralNode {
             FileUtils.deleteDir(extraction);
         }
 
-        context.plugin().dimensionCache().insert(dimension);
         context.plugin().languageManager()
                 .message(LanguageKeys.DIMENSION_IMPORT_SUCCESS)
                 .argument("dimension", dimension.name())
