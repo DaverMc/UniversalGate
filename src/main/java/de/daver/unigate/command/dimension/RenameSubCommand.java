@@ -33,17 +33,16 @@ public class RenameSubCommand extends LiteralNode {
         var newName = Dimension.buildName(newCategory, newTheme);
         var oldName = dimension.name();
 
-        var sourcePath = plugin.worldContainer().resolve(dimension.name());
-        var targetPath = plugin.worldContainer().resolve(newName);
-
-
         if (dimension.meta().state() == DimensionState.LOADED) {
             dimension.unload(true);
             plugin.dimensionCache().updateState(dimension);
         }
 
-        FileUtils.copyContents(sourcePath, targetPath);
+        var sourcePath = dimension.resolveExistingWorldDir();
         dimension.setName(newName);
+        var targetPath = dimension.getDirectoryPath();
+
+        FileUtils.copyContents(sourcePath, targetPath);
         plugin.dimensionCache().update(dimension);
 
         FileUtils.deleteDir(sourcePath);

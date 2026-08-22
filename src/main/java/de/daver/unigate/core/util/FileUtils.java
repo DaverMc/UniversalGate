@@ -1,16 +1,21 @@
 package de.daver.unigate.core.util;
 
+import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
+import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Set;
+import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 public class FileUtils {
@@ -53,6 +58,7 @@ public class FileUtils {
 
         @Override
         public @NonNull FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+            if (isMacJunk(dir)) return FileVisitResult.SKIP_SUBTREE;
             Path targetDir = target.resolve(source.relativize(dir));
             Files.createDirectories(targetDir);
             return FileVisitResult.CONTINUE;
@@ -60,13 +66,20 @@ public class FileUtils {
 
         @Override
         public @NonNull FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+            if (isMacJunk(file)) return FileVisitResult.CONTINUE;
             Files.copy(file, target.resolve(source.relativize(file)), StandardCopyOption.REPLACE_EXISTING);
             return FileVisitResult.CONTINUE;
         }
     }
 
+    static boolean isMacJunk(Path path) {
+        Path name = path.getFileName();
+        if (name == null) return false;
+        String fileName = name.toString();
+        return fileName.startsWith("._") || fileName.equals(".DS_Store");
+    }
+
     public static void compressDirectory(Path source, Path target, Set<Path> allowedEntries) throws IOException {
-        // Erstelle Zielordner falls nötig
         if (target.getParent() != null) Files.createDirectories(target.getParent());
 
         try (OutputStream fOut = Files.newOutputStream(target);
@@ -79,6 +92,31 @@ public class FileUtils {
             Files.walkFileTree(source, new CompressVisitor(source, tOut, allowedEntries));
 
             tOut.finish();
+        }
+    }
+
+    public static void decompressArchive(Path archive, Path targetDir) throws IOException {
+        Files.createDirectories(targetDir);
+
+        try (InputStream fIn = Files.newInputStream(archive);
+             BufferedInputStream bIn = new BufferedInputStream(fIn);
+             GZIPInputStream gzIn = new GZIPInputStream(bIn);
+             TarArchiveInputStream tIn = new TarArchiveInputStream(gzIn)) {
+
+            ArchiveEntry entry;
+            while ((entry = tIn.getNextEntry()) != null) {
+                Path resolved = targetDir.resolve(entry.getName()).normalize();
+                if (!resolved.startsWith(targetDir)) continue;
+                if (isMacJunk(resolved)) continue;
+
+                if (entry.isDirectory()) {
+                    Files.createDirectories(resolved);
+                    continue;
+                }
+
+                if (resolved.getParent() != null) Files.createDirectories(resolved.getParent());
+                Files.copy(tIn, resolved, StandardCopyOption.REPLACE_EXISTING);
+            }
         }
     }
 
@@ -96,6 +134,7 @@ public class FileUtils {
 
         @Override
         public @NonNull FileVisitResult visitFile(@NonNull Path path, @NonNull BasicFileAttributes attrs) throws IOException {
+            if (isMacJunk(path)) return FileVisitResult.CONTINUE;
             Path relativized = source.relativize(path);
             if (!isAllowed(relativized)) return FileVisitResult.CONTINUE;
 

@@ -1,24 +1,31 @@
 package de.daver.unigate.dimension.gen;
 
 
+import org.bukkit.World;
+import org.bukkit.WorldCreator;
+import org.bukkit.WorldType;
+
 import java.util.Optional;
+import java.util.function.UnaryOperator;
 
 public enum DimensionType {
 
-    OVERWORLD(new OverworldGenerator()),
-    NETHER(new NetherGenerator()),
-    //THE_END(new TheEndGenerator()),
-    VOID(new VoidGenerator());
+    OVERWORLD(UnaryOperator.identity()),
+    NETHER(creator -> creator.environment(World.Environment.NETHER)),
+    //THE_END(creator -> creator.environment(World.Environment.THE_END)),
+    VOID(creator -> creator.type(WorldType.FLAT)
+            .generateStructures(false)
+            .generatorSettings("{\"layers\":[{\"block\":\"minecraft:air\",\"height\":1}],\"biome\":\"minecraft:the_void\",\"structure_overrides\":[],\"lakes\":false,\"features\":false}"));
 
 
-    private final DimensionGenerator generator;
+    private final UnaryOperator<WorldCreator> options;
 
-    DimensionType(DimensionGenerator generator) {
-        this.generator = generator;
+    DimensionType(UnaryOperator<WorldCreator> options) {
+        this.options = options;
     }
 
-    public DimensionGenerator generator() {
-        return this.generator;
+    public WorldCreator creator(String name, long seed) {
+        return this.options.apply(new WorldCreator(name).seed(seed));
     }
 
     public static Optional<DimensionType> fromString(String string) {

@@ -6,18 +6,20 @@ import de.daver.unigate.core.util.FileUtils;
 import de.daver.unigate.dimension.gen.DimensionType;
 import de.daver.unigate.dimension.gen.LevelData;
 import io.papermc.paper.entity.TeleportFlag;
-import net.querz.nbt.io.NBTUtil;
+import net.querz.nbt.io.NBTSerializer;
+import net.querz.nbt.io.NamedTag;
+import net.querz.nbt.tag.Tag;
 import org.bukkit.Bukkit;
-import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Random;
 import java.util.UUID;
+import java.util.zip.GZIPOutputStream;
 
 public class Dimension {
 
@@ -82,13 +84,41 @@ public class Dimension {
         unload(true);
     }
 
+    public void register() {
+        register(-1L);
+    }
+
+    public void register(long dayTime) {
+        load();
+        if (dayTime >= 0) {
+            var world = Bukkit.getWorld(name);
+            if (world != null) world.setFullTime(dayTime);
+        }
+        unload(true);
+    }
+
     private void createLevelDatFile() throws IOException {
         var worldFolder = Bukkit.getWorldContainer().toPath().resolve(name());
         Files.createDirectories(worldFolder);
-        var dimensionTag = LevelData.create(this);
-        File levelDatFile = worldFolder.resolve("level.dat").toFile();
-        if (!levelDatFile.createNewFile()) return;
-        NBTUtil.write(dimensionTag, levelDatFile, true);
+        var levelDat = worldFolder.resolve("level.dat");
+        if (Files.exists(levelDat)) return;
+        writeLevelDat(LevelData.create(this), levelDat);
+    }
+
+    public void writeLevelData(Path worldDir) throws IOException {
+        writeLevelData(worldDir, 0L);
+    }
+
+    public void writeLevelData(Path worldDir, long dayTime) throws IOException {
+        Files.createDirectories(worldDir);
+        writeLevelDat(LevelData.create(this, dayTime), worldDir.resolve("level.dat"));
+    }
+
+    private static void writeLevelDat(Tag<?> tag, Path levelDat) throws IOException {
+        try (OutputStream out = Files.newOutputStream(levelDat);
+             GZIPOutputStream gzip = new GZIPOutputStream(out)) {
+            new NBTSerializer(false).toStream(new NamedTag(null, tag), gzip);
+        }
     }
 
     public static String buildName(Category category, String theme) {
@@ -100,7 +130,7 @@ public class Dimension {
 
     public void delete() throws IOException {
         unload(false);
-        FileUtils.deleteDir(getDirectoryPath());
+        FileUtils.deleteDir(resolveExistingWorldDir());
     }
 
     public Path getDirectoryPath() {
@@ -111,9 +141,19 @@ public class Dimension {
             .resolve(name.toLowerCase());
     }
 
+    public Path legacyDirectoryPath() {
+        return Bukkit.getWorldContainer().toPath().resolve(name);
+    }
+
+    public Path resolveExistingWorldDir() {
+        var dimensionPath = getDirectoryPath();
+        if (Files.exists(dimensionPath)) return dimensionPath;
+        return legacyDirectoryPath();
+    }
+
     public void load() {
         if (meta.state() != DimensionState.ACTIVE) return;
-        Bukkit.createWorld(new WorldCreator(name));
+        Bukkit.createWorld(type.creator(name, seed));
         meta.state(DimensionState.LOADED);
     }
 
